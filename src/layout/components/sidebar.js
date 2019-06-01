@@ -22,6 +22,7 @@ export class Sidebar extends React.Component {
       { pathname: '/tabs-demo', label: 'Tabs', icon: 'list-ul' },
       { pathname: '/input-demo', label: 'Inputs', icon: 'check-square' },
       { pathname: '/notifications-demo', label: 'Notifications', icon: 'exclamation' },
+      { pathname: '/welcome', label: 'Welcome', icon: 'home' },
     ],
   }
 
