@@ -2,6 +2,8 @@ import React from 'react';
 import { Page, Panel, Select } from 'react-blur-admin';
 import { Row, Col } from 'react-flex-proto';
 import { GMap } from 'src/layout/components/gmap';
+// SERVICES
+const UsersService = require('../services/users');
 
 export class Home extends React.Component {
 
@@ -9,6 +11,17 @@ export class Home extends React.Component {
     super(props);
     this.state = {
     };
+  }
+
+  componentWillMount() {
+    this.loadDevices();
+  }
+
+  loadDevices() {
+    const usersService = new UsersService();
+    usersService.getDevicesByUserID(1).then((response) => {
+      this.setState({devices: response});
+    }).catch(console.log);
   }
 
   render() {
@@ -20,7 +33,7 @@ export class Home extends React.Component {
               <Select
                 placeholder='Eliga una opción'
                 value={this.state.selectOne}
-                options={[{ value: 1, label: 'Ford' }, { value: 2, label: 'Toyota' }]}
+                options={this.state.devices}
                 onChange={value => this.setState({ selectOne: value })} />
             </Panel>
           </Col>

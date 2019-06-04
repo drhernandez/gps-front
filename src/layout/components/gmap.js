@@ -88,74 +88,72 @@ export class GMap extends React.Component {
         defaultZoom={13}
         defaultCenter={{ lat: -31.422130, lng: -64.186510}}
         defaultOptions={{ scrollwheel: false }}
-        // defaultStyles={[{
-        //   'featureType': 'all',
-        //   'elementType': 'all',
-        //   'stylers': [
-        //     {'invert_lightness': true},
-        //     {'saturation': 10},
-        //     {'lightness': 30},
-        //     {'gamma': 0.5},
-        //     {'hue': '#00aaff'},
-        //     {
-        //       'featureType': 'road.highway',
-        //       'elementType': 'geometry.fill',
-        //       'stylers': [
-        //         {
-        //           'saturation': '100',
-        //         },
-        //         {
-        //           'lightness': '69',
-        //         },
-        //         {
-        //           'gamma': '1.40',
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       'featureType': 'administrative.province',
-        //       'elementType': 'geometry.stroke',
-        //       'stylers': [
-        //         {
-        //           'saturation': '100',
-        //         },
-        //         {
-        //           'lightness': '27',
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       'featureType': 'road.highway.controlled_access',
-        //       'elementType': 'labels.icon',
-        //       'stylers': [
-        //         {
-        //           'saturation': '100',
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       'featureType': 'road.arterial',
-        //       'elementType': 'geometry.fill',
-        //       'stylers': [
-        //         {
-        //           'saturation': '43',
-        //         },
-        //         {
-        //           'lightness': '51',
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       'featureType': 'landscape',
-        //       'elementType': 'geometry.fill',
-        //       'stylers': [
-        //         {
-        //           'color': '#32373c',
-        //         },
-        //       ],
-        //     },
-        //   ]},
-        // ]}
+        defaultStyles={[{
+          'featureType': 'all',
+          'elementType': 'all',
+          'stylers': [
+            {'saturation': 0},
+            {'lightness': 30},
+            {'gamma': 0.5},
+            // {
+            //   'featureType': 'road.highway',
+            //   'elementType': 'geometry.fill',
+            //   'stylers': [
+            //     {
+            //       'saturation': '100',
+            //     },
+            //     {
+            //       'lightness': '69',
+            //     },
+            //     {
+            //       'gamma': '1.40',
+            //     },
+            //   ],
+            // },
+          //   {
+          //     'featureType': 'administrative.province',
+          //     'elementType': 'geometry.stroke',
+          //     'stylers': [
+          //       {
+          //         'saturation': '100',
+          //       },
+          //       {
+          //         'lightness': '27',
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     'featureType': 'road.highway.controlled_access',
+          //     'elementType': 'labels.icon',
+          //     'stylers': [
+          //       {
+          //         'saturation': '100',
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     'featureType': 'road.arterial',
+          //     'elementType': 'geometry.fill',
+          //     'stylers': [
+          //       {
+          //         'saturation': '43',
+          //       },
+          //       {
+          //         'lightness': '51',
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     'featureType': 'landscape',
+          //     'elementType': 'geometry.fill',
+          //     'stylers': [
+          //       {
+          //         'color': '#32373c',
+          //       },
+          //     ],
+          //   },
+          ]},
+        ]}
         >
         {/* {this.renderMarkers()} */}
       </GoogleMap>
