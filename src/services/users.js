@@ -4,7 +4,7 @@ class UsersService {
       // return await axios.get(`http://localhost:8081/users/${userID}/devices`);
       return await new Promise(resolve => {
         setTimeout(() => {
-          resolve([{ value: 1, label: 'Ford' }, { value: 2, label: 'Toyota' }, { value: 3, label: 'Sarasa' }]);
+          resolve([{ value: 1, label: 'Ford' }, { value: 2, label: 'Toyota' }]);
         }, 500);
       });
     } catch (error) {
