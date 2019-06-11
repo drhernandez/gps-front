@@ -11,7 +11,7 @@ export class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tracking: [],
+      trackings: [],
     };
   }
 
@@ -32,18 +32,16 @@ export class Home extends React.Component {
   }
 
   loadTracking(deviceID) {
-    console.log('leadTracking');
+    // console.log('loadTracking');
     const trackingsService = new TrackingsService();
     trackingsService.getTrackingsByDeviceID(deviceID).then((response) => {
-      this.setState({tracking: response});
+      const trackings = response;
+      let center;
+      if (trackings !== null && trackings.lenght > 0) {
+        center = trackings[0];
+      }
+      this.setState({trackings: trackings, center: center});
     });
-    // this.setState({ tracking: [
-    //   {
-    //     position: {
-    //       lat: -31.422130, lng: -64.186510,
-    //     },
-    //   },
-    // ] });
   }
 
   render() {
@@ -64,7 +62,7 @@ export class Home extends React.Component {
         <Row>
           <Col padding={5}>
             <Panel title='Google Map Component'>
-              <GMap markers={this.state.tracking} />
+              <GMap markers={this.state.trackings} center={this.state.center} />
             </Panel>
           </Col>
         </Row>
