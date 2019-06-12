@@ -62,7 +62,7 @@ export class Home extends React.Component {
         <Row>
           <Col padding={5}>
             <Panel title='Google Map Component'>
-              <GMap markers={this.state.trackings} center={this.state.center} />
+              {/* <GMap markers={this.state.trackings} center={this.state.center} /> */}
             </Panel>
           </Col>
         </Row>
