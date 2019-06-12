@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Panel, Select } from 'react-blur-admin';
 import { Row, Col } from 'react-flex-proto';
-import { GMap } from 'src/layout/components/gmap';
+// import { GMap } from 'src/layout/components/gmap';
 // SERVICES
 const UsersService = require('../services/users');
 const TrackingsService = require('../services/trackings');
