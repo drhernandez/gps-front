@@ -53,7 +53,7 @@ export class Welcome extends React.Component {
         <Row>
           <Col padding={5}>
             <Panel title='Google Map Component'>
-              <GMap/>
+              <GMap markers={[]}/>
             </Panel>
           </Col>
         </Row>
