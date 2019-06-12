@@ -1,4 +1,3 @@
-import Autosuggest from 'react-autosuggest';
 import React from 'react';
 import { Row, Col } from 'react-flex-proto';
 
@@ -104,24 +103,13 @@ export class SearchBar extends React.Component {
   }
 
   render() {
-    const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: 'Search for...',
-      value,
-      onChange: this.onChange,
-    };
-
     return (
       <Row>
         <Col grow={false} padding={0}>
           <i className='ion-ios-search-strong'></i>
         </Col>
         <Col padding={0}>
-          <Autosuggest suggestions={suggestions}
-            onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
-            getSuggestionValue={this.getSuggestionValue}
-            renderSuggestion={this.renderSuggestion}
-            inputProps={inputProps} />
+          Acá iba el autosuggest
         </Col>
       </Row>
     );

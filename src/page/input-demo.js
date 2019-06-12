@@ -176,6 +176,7 @@ export class InputDemo extends React.Component {
                   <EditableSelect
                     placeholder='Disabled'
                     label='Editable Select Label'
+                    onChange={value => console.log(value)}
                     disabled={true} />
                 </Col>
               </Row>
