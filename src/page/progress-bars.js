@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import { Page, Panel, ProgressBar, Breadcrumbs } from 'react-blur-admin';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export class ProgressBars extends React.Component {
 

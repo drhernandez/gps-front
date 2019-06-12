@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Page, Panel, Modal, Button, Breadcrumbs, Input, Select, Switch } from 'react-blur-admin';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 import {Row, Col} from 'react-flex-proto';

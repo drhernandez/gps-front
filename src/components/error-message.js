@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export class ErrorMessage extends React.Component {
   static propTypes = {
-    error: React.PropTypes.node.isRequired,
+    error: PropTypes.node.isRequired,
   }
 
   render() {

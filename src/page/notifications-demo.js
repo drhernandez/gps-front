@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Page, Panel, Button, eventBus, Alert, Breadcrumbs } from 'react-blur-admin';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import {Row, Col} from 'react-flex-proto';
 
 export class NotificationsDemo extends React.Component {

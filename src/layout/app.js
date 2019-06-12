@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
 // Components
@@ -10,10 +11,10 @@ import eventBus from 'src/lib/event-bus';
 
 class AppLayout extends React.Component {
   static propTypes = {
-    router: React.PropTypes.object.isRequired,
-    location: React.PropTypes.shape({
-      pathname: React.PropTypes.string.isRequired,
-      query: React.PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+      query: PropTypes.object.isRequired,
     }),
   }
 
@@ -80,7 +81,8 @@ class AppLayout extends React.Component {
     // @todo main - menu-collapsed
     return (
       <div>
-        <main className=''>
+        hola
+        {/* <main className=''>
           <Sidebar {...this.props} />
           <PageTop location={this.props.location} user={this.state.user} />
 
@@ -105,7 +107,7 @@ class AppLayout extends React.Component {
 
           <back-top></back-top>
         </main>
-        <Notifications />
+        <Notifications /> */}
       </div>
     );
   }

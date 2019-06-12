@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Page, Panel, Button, Breadcrumbs } from 'react-blur-admin';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import {Row, Col} from 'react-flex-proto';
 
 export class ButtonDemo extends React.Component {

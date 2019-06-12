@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Redirect, browserHistory } from 'react-router';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import AppLayout from 'src/layout/app';
 import Login from 'src/layout/login';
@@ -22,22 +22,46 @@ import { NotFound } from 'src/page/not-found';
 // Redirect is got GH pages and can be deleted for forked projects
 const redirect = <Redirect from="/react-webpack-skeleton" to="/" />;
 
-export const AppRouter = (
-  <Router history={browserHistory}>
-    {redirect}
-    <Route path='/login' component={Login} />
-    <Route component={AppLayout}>
-      <Route path='/' component={Home} />
-      <Route path='/about' component={About} />
-      <Route path='/progress-bars' component={ProgressBars} />
-      <Route path='/button-demo' component={ButtonDemo} />
-      <Route path='/modal-demo' component={ModalDemo} />
-      <Route path='/table-demo' component={TableDemo} />
-      <Route path='/tabs-demo' component={TabsDemo} />
-      <Route path='/input-demo' component={InputDemo} />
-      <Route path='/notifications-demo' component={NotificationsDemo} />
-      <Route path='/welcome' component={Welcome} />
-      <Route path="*" component={NotFound}/>
-    </Route>
-  </Router>
-);
+// export const AppRouter = (
+//   <Router>
+//     {redirect}
+//     <Route path='/login' component={Login} />
+//     <Route component={AppLayout}>
+//       <Route path='/' component={Home} />
+//       <Route path='/about' component={About} />
+//       <Route path='/progress-bars' component={ProgressBars} />
+//       <Route path='/button-demo' component={ButtonDemo} />
+//       <Route path='/modal-demo' component={ModalDemo} />
+//       <Route path='/table-demo' component={TableDemo} />
+//       <Route path='/tabs-demo' component={TabsDemo} />
+//       <Route path='/input-demo' component={InputDemo} />
+//       <Route path='/notifications-demo' component={NotificationsDemo} />
+//       <Route path='/welcome' component={Welcome} />
+//       <Route path="*" component={NotFound}/>
+//     </Route>
+//   </Router>
+// );
+
+function AppRouter() {
+  return (
+    <Router>
+      {redirect}
+      <Route path='/login' component={Login} />
+      <Route component={AppLayout}>
+        <Route path='/' component={Home} />
+        <Route path='/about' component={About} />
+        <Route path='/progress-bars' component={ProgressBars} />
+        <Route path='/button-demo' component={ButtonDemo} />
+        <Route path='/modal-demo' component={ModalDemo} />
+        <Route path='/table-demo' component={TableDemo} />
+        <Route path='/tabs-demo' component={TabsDemo} />
+        <Route path='/input-demo' component={InputDemo} />
+        <Route path='/notifications-demo' component={NotificationsDemo} />
+        <Route path='/welcome' component={Welcome} />
+        <Route path="*" component={NotFound} />
+      </Route>
+    </Router>
+  );
+}
+
+export default AppRouter;

@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export class Sidebar extends React.Component {
 
   static propTypes = {
-    location: React.PropTypes.shape({
-      pathname: React.PropTypes.string.isRequired,
-      query: React.PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+      query: PropTypes.object.isRequired,
     }),
   }
 

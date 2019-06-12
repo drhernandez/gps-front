@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { noop } from 'lodash';
 import Person from 'react-blur-admin/dist/assets/img/person.svg';
@@ -14,10 +15,10 @@ import {Row, Col} from 'react-flex-proto';
 export class PageTop extends React.Component {
 
   static propTypes = {
-    user: React.PropTypes.object,
-    location: React.PropTypes.shape({
-      pathname: React.PropTypes.string.isRequired,
-      query: React.PropTypes.object.isRequired,
+    user: PropTypes.object,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+      query: PropTypes.object.isRequired,
     }),
   }
 

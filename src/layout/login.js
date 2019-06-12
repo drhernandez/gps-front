@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
 class Login extends React.Component {
   static propTypes = {
-    router: React.PropTypes.object.isRequired,
-    location: React.PropTypes.shape({
-      pathname: React.PropTypes.string.isRequired,
-      query: React.PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+      query: PropTypes.object.isRequired,
     }),
   }
 
