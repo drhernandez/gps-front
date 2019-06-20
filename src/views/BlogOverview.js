@@ -5,7 +5,7 @@ import { Container, Row, Col } from "shards-react";
 import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/maps/Gmap";
 
-const BlogOverview = ({ smallStats }) => (
+const BlogOverview = (props) => (
   <Container fluid className="main-content-container px-4">
     {/* Page Header */}
     <Row noGutters className="page-header py-4">
@@ -14,7 +14,13 @@ const BlogOverview = ({ smallStats }) => (
 
     <Row>
       <Col>
-        <Gmap />
+        <Gmap
+          isMarkerShown={false}
+          googleMapURL="http://maps.google.com/maps/api/js?key=AIzaSyBmXrI47m1cRcvkozno6qCzRq_R4CxbPWI"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div {...props} style={{ height: '450px' }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
       </Col>
     </Row>
 

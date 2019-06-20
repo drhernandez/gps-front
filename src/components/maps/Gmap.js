@@ -6,8 +6,14 @@ import {
   FormSelect,
   Form,
 } from "shards-react";
+import { 
+  withScriptjs, 
+  withGoogleMap, 
+  GoogleMap, 
+  Marker 
+} from "react-google-maps"
 
-const GoogleMap = (props) => (
+const Gmap = withScriptjs(withGoogleMap((props) =>
   <div>
     <Card small className="mb-4">
       <CardHeader>
@@ -20,10 +26,15 @@ const GoogleMap = (props) => (
         </Form>
       </CardHeader>
       <CardBody>
-        Hola
+        <GoogleMap
+          defaultZoom={12}
+          defaultCenter={{ lat: -31.422130, lng: -64.186510 }}
+        >
+          {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+        </GoogleMap>
       </CardBody>
     </Card>
   </div>
-);
+));
 
-export default GoogleMap;
+export default Gmap;
