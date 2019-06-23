@@ -16,15 +16,29 @@ import Gmap from "./../components/maps/Gmap";
 import UsersService from "./../api/services/usersService";
 
 export default class Home extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // };
+  constructor(props) {
+    super(props);
+    this.state = {
+      vehicles: [],
+      trackings: [],
+    }
+  };
 
   loadDevices() {
     const usersService = new UsersService();
-    usersService.getDevicesByUserID(1).then((response) => {
-      this.setState({ devices: response });
+    usersService.getVehiclesByUserID(10).then((response) => {
+      console.log('Response: ', response)
+      this.setState({ vehicles: response.data });
     }).catch(console.error);
+  }
+
+  handleFormSelectOnChange(event) {
+    event.persist();
+    console.log(event.target.value);
+  }
+
+  componentWillMount() {
+    this.loadDevices();
   }
 
   render() {
@@ -32,7 +46,7 @@ export default class Home extends React.Component {
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle title="Where is my car?!" subtitle="Dashboard" className="text-sm-left mb-3" />
+          <PageTitle title="Where is my f**king car?!" subtitle="Dashboard" className="text-sm-left mb-3 col-sm-12" />
         </Row>
 
         <Row>
@@ -40,17 +54,18 @@ export default class Home extends React.Component {
             <Card small className="mb-4">
               <CardHeader>
                 <Form className="add-new-post">
-                  <FormSelect id="feInputState">
-                    <option value="null">Elija un vehículo...</option>
-                    {/* <option value="ford">Ford</option>
-                <option value="toyota">Toyota</option> */}
+                  <FormSelect id="feInputState" defaultValue="default" onChange={this.handleFormSelectOnChange}>
+                    <option value="default" disabled>Elija un vehículo...</option>
+                    {this.state.vehicles.map((vehicle, idx) => (
+                      <option key={vehicle.device_id} value={vehicle.id}>{`${vehicle.type} - ${vehicle.plate}`}</option>
+                    ))}
                   </FormSelect>
                 </Form>
               </CardHeader>
               <CardBody>
                 <Gmap
                   isMarkerShown={false}
-                  googleMapURL="http://maps.google.com/maps/api/js?key=AIzaSyDRZfEBsaT4szZPW1mS3q6xWa_no_l2unc"
+                  googleMapURL="http://maps.google.com/maps/api/js?key=YOUR_API_KEY"
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: '450px' }} />}
                   mapElement={<div style={{ height: `100%` }} />}
