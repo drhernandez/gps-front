@@ -22,6 +22,7 @@ export default class Home extends React.Component {
     this.state = {
       vehicles: [],
       trackings: [],
+      markers: [],
       center: null,
       zoom: null
     }
@@ -39,12 +40,15 @@ export default class Home extends React.Component {
     const vehiclesServices = new VehiclesService();
     const currentLocation = await vehiclesServices.getCurrentLocation(vehicleID);
     if (currentLocation !== null || currentLocation !== undefined) {
+      const marker = new Marker(currentLocation.id, currentLocation.label, "default", currentLocation.lat, currentLocation.lng);
       this.setState({
         trackings: [currentLocation],
-        center: currentLocation.position,
+        markers: [marker],
+        center: marker.position,
         zoom: 15
       })
     }
+    console.log(this.state);
   }
 
   handleDeviceOnChange(event) {
@@ -79,12 +83,12 @@ export default class Home extends React.Component {
               </CardHeader>
               <CardBody>
                 <Gmap
-                  googleMapURL="http://maps.google.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                  googleMapURL="http://maps.google.com/maps/api/js?key=AIzaSyCFxmIXTWMOu1l6KFKQM_Y0sbdnw97UeVI"
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: '450px' }} />}
                   mapElement={<div style={{ height: `100%` }} />}
                   zoom={this.state.zoom}
-                  markers={this.state.trackings}
+                  markers={this.state.markers}
                   center={this.state.center}
                 />
               </CardBody>
@@ -93,5 +97,31 @@ export default class Home extends React.Component {
         </Row>
       </Container>
     );
+  }
+}
+
+
+class Marker {
+  constructor(id, label, icon, lat, lng) {
+    this.position =
+    this.id = id;
+    this.label = label;
+    // this.icon = icon;
+    this.position = new Position(lat, lng);
+  }
+  // Getter
+  // get area() {
+  //   return this.calcArea();
+  // }
+  // Método
+  // calcArea() {
+  //   return this.height * this.width;
+  // }
+}
+
+class Position {
+  constructor(lat, lng) {
+    this.lat = lat;
+    this.lng = lng;
   }
 }

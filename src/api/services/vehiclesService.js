@@ -24,16 +24,12 @@ export default class UsersService {
 
 const mock1 = {
   id: 10,
-  position: {
-    lat: -31.422130,
-    lng: -64.186510
-  }
+  lat: -31.422130,
+  lng: -64.186510
 };
 
 const mock2 = {
   id: 2,
-  position: {
-    lat: -31.368731,
-    lng: -64.201752
-  }
+  lat: -31.368731,
+  lng: -64.201752
 };
