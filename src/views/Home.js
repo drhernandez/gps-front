@@ -83,7 +83,7 @@ export default class Home extends React.Component {
               </CardHeader>
               <CardBody>
                 <Gmap
-                  googleMapURL="http://maps.google.com/maps/api/js?key=AIzaSyCFxmIXTWMOu1l6KFKQM_Y0sbdnw97UeVI"
+                  googleMapURL="http://maps.google.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: '450px' }} />}
                   mapElement={<div style={{ height: `100%` }} />}
