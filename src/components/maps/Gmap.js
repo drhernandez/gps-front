@@ -8,10 +8,12 @@ import {
 
 const Gmap = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
-    defaultZoom={props.zoom || 12}
-    defaultCenter={{ lat: -31.422130, lng: -64.186510 }}
+    zoom={props.zoom || 12}
+    center={props.center || { lat: -31.422130, lng: -64.186510 }}
   >
-    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+    {props.markers.map((marker, idx) => (
+      <Marker key={marker.id} position={marker.position} />
+    ))}
   </GoogleMap>
 ));
 

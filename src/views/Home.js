@@ -14,6 +14,7 @@ import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/maps/Gmap";
 //services
 import UsersService from "./../api/services/usersService";
+import VehiclesService from "./../api/services/vehiclesService";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -21,20 +22,34 @@ export default class Home extends React.Component {
     this.state = {
       vehicles: [],
       trackings: [],
+      center: null,
+      zoom: null
     }
   };
 
-  loadDevices() {
+  async loadDevices() {
     const usersService = new UsersService();
-    usersService.getVehiclesByUserID(10).then((response) => {
-      console.log('Response: ', response)
-      this.setState({ vehicles: response.data });
-    }).catch(console.error);
+    const vehicles = await usersService.getVehiclesByUserID(10);
+    this.setState({ 
+      vehicles: vehicles 
+    });
   }
 
-  handleFormSelectOnChange(event) {
+  async getCurrentLocation(vehicleID) {
+    const vehiclesServices = new VehiclesService();
+    const currentLocation = await vehiclesServices.getCurrentLocation(vehicleID);
+    if (currentLocation !== null || currentLocation !== undefined) {
+      this.setState({
+        trackings: [currentLocation],
+        center: currentLocation.position,
+        zoom: 15
+      })
+    }
+  }
+
+  handleDeviceOnChange(event) {
     event.persist();
-    console.log(event.target.value);
+    this.getCurrentLocation(event.target.value);
   }
 
   componentWillMount() {
@@ -46,7 +61,7 @@ export default class Home extends React.Component {
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle title="Where is my f**king car?!" subtitle="Dashboard" className="text-sm-left mb-3 col-sm-12" />
+          <PageTitle title="Where is my car?!" subtitle="Dashboard" className="text-sm-left mb-3 col-sm-12" />
         </Row>
 
         <Row>
@@ -54,7 +69,7 @@ export default class Home extends React.Component {
             <Card small className="mb-4">
               <CardHeader>
                 <Form className="add-new-post">
-                  <FormSelect id="feInputState" defaultValue="default" onChange={this.handleFormSelectOnChange}>
+                  <FormSelect id="feInputState" defaultValue="default" onChange={(event) => this.handleDeviceOnChange(event)}>
                     <option value="default" disabled>Elija un vehículo...</option>
                     {this.state.vehicles.map((vehicle, idx) => (
                       <option key={vehicle.device_id} value={vehicle.id}>{`${vehicle.type} - ${vehicle.plate}`}</option>
@@ -64,11 +79,13 @@ export default class Home extends React.Component {
               </CardHeader>
               <CardBody>
                 <Gmap
-                  isMarkerShown={false}
-                  googleMapURL="http://maps.google.com/maps/api/js?key=YOUR_API_KEY"
+                  googleMapURL="http://maps.google.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: '450px' }} />}
                   mapElement={<div style={{ height: `100%` }} />}
+                  zoom={this.state.zoom}
+                  markers={this.state.trackings}
+                  center={this.state.center}
                 />
               </CardBody>
             </Card>

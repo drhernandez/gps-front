@@ -1,17 +1,23 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 export default class UsersService {
   async getVehiclesByUserID(userID) {
     try {
       // return await axios.get(`https://gps-locations-api.herokuapp.com/users/${userID}/vehicles`);
-      return await new Promise(resolve => {
+      const response = await new Promise(resolve => {
         setTimeout(() => {
-          resolve({"data": mock});
+          resolve({ "status": 200, "data": mock});
         }, 500);
       });
+      if (response.status !== 200) {
+        console.log(response);
+        return []
+      }
+      return response.data;
+    
     } catch (error) {
       console.log(`Error in function getDevicesByUserID. Message: ${error}`);
-      return null;
+      return [];
     }
   }
 }
