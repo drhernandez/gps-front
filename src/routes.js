@@ -6,6 +6,7 @@ import { DefaultLayout } from "./layouts";
 
 // Route Views
 import Home from "./views/Home";
+import HeatMap from "./views/HeatMap";
 import BlogOverview from "./views/BlogOverview";
 import UserProfileLite from "./views/UserProfileLite";
 import AddNewPost from "./views/AddNewPost";
@@ -25,6 +26,11 @@ export default [
     path: "/home",
     layout: DefaultLayout,
     component: Home
+  },
+  {
+    path: "/heat-map",
+    layout: DefaultLayout,
+    component: HeatMap
   },
   {
     path: "/blog-overview",

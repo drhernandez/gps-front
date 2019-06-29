@@ -3,8 +3,13 @@ export default function() {
     {
       title: "Home",
       to: "/home",
-      htmlBefore: '<i class="material-icons">home</i>',
+      htmlBefore: '<i class="material-icons">my_location</i>',
       htmlAfter: ""
+    },
+    {
+      title: "Heat map",
+      htmlBefore: '<i class="material-icons">map</i>',
+      to: "/heat-map",
     },
     {
       title: "Blog Dashboard",

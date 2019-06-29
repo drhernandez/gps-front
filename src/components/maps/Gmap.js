@@ -12,7 +12,7 @@ const Gmap = withScriptjs(withGoogleMap((props) =>
     center={props.center || { lat: -31.422130, lng: -64.186510 }}
   >
     {props.markers.map((marker, idx) => (
-      <Marker key={marker.id} position={marker.position} />
+      <Marker key={marker.id} position={marker.position} icon={marker.icon} animation={marker.animation} />
     ))}
   </GoogleMap>
 ));
