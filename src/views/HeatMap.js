@@ -1,6 +1,6 @@
 /*global google*/
-import React from "react";
 // import PropTypes from "prop-types";
+import React from "react";
 import {
   Container,
   Row,
@@ -13,7 +13,6 @@ import {
 } from "shards-react";
 import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/maps/Gmap";
-import { Marker } from "./../components/maps/Marker";
 //services
 import UsersService from "./../api/services/usersService";
 import VehiclesService from "./../api/services/vehiclesService";
@@ -39,23 +38,17 @@ export default class HeatMap extends React.Component {
     });
   }
 
-  async getCurrentLocation(vehicleID) {
+  async getTrackings(vehicleID) {
     const vehiclesServices = new VehiclesService();
-    const location = await vehiclesServices.getCurrentLocation(vehicleID);
-    if (location !== null || location !== undefined) {
-      const marker = new Marker(location.id, location.label, undefined, google.maps.Animation.DROP, location.lat, location.lng);
-      this.setState({
-        trackings: [location],
-        markers: [marker],
-        center: marker.position,
-        zoom: 15
-      })
-    }
+    const trackings = await vehiclesServices.getTrackings(vehicleID);
+    this.setState({
+      trackings: trackings
+    });
   }
 
   handleDeviceOnChange(event) {
     event.persist();
-    this.getCurrentLocation(event.target.value);
+    this.getTrackings(event.target.value);
   }
 
   componentWillMount() {
@@ -85,13 +78,13 @@ export default class HeatMap extends React.Component {
               </CardHeader>
               <CardBody>
                 <Gmap
-                  googleMapURL="http://maps.google.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                  loadingElement={<div style={{ height: `100%` }} />}
+                  isHeatMapLayerShown
                   containerElement={<div style={{ height: '450px' }} />}
                   mapElement={<div style={{ height: `100%` }} />}
-                  zoom={this.state.zoom}
-                  markers={this.state.markers}
+                  // zoom={this.state.zoom}
+                  // markers={this.state.markers}
                   center={this.state.center}
+                  trackings={this.state.trackings}
                 />
               </CardBody>
             </Card>
