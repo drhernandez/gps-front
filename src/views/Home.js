@@ -31,7 +31,7 @@ export default class Home extends React.Component {
     }
   };
 
-  async loadDevices() {
+  async loadVehicles() {
     const usersService = new UsersService();
     const vehicles = await usersService.getVehiclesByUserID(10);
     this.setState({ 
@@ -59,7 +59,7 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    this.loadDevices();
+    this.loadVehicles();
   }
 
   render() {
@@ -67,7 +67,7 @@ export default class Home extends React.Component {
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle title="Where is my car?!" subtitle="Dashboard" className="text-sm-left mb-3 col-sm-12" />
+          <PageTitle title="Ubicación actual" subtitle="Mapa" className="text-sm-left mb-3 col-sm-12" />
         </Row>
 
         <Row>
