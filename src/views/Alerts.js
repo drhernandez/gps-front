@@ -49,7 +49,8 @@ export default class Alerts extends React.Component {
 
         <Row>
           {this.state.vehicles.map((vehicle) => (
-            <Col sm="5">
+            // <Col sm="12" md="5" lg="6">
+            <Col xl="5" lg="6">
               <Card key={vehicle.id} small className="mb-4">
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">{`${vehicle.type} - ${vehicle.plate}`}</h6>
@@ -70,12 +71,12 @@ export default class Alerts extends React.Component {
                           Alarma de velocidad
                       </strong>
                       <Row>
-                        <Col md="4">
+                        <Col lg="4">
                           <FormCheckbox toggle small>
                             Default
                           </FormCheckbox>
                         </Col>
-                        <Col md="8">
+                        <Col lg="8">
                           <InputGroup className="mb-3">
                             <InputGroupAddon type="prepend">
                               {/* <i className="material-icons">map</i> */}
