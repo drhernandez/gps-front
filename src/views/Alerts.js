@@ -18,25 +18,39 @@ import {
 import PageTitle from "./../components/common/PageTitle";
 //services
 import UsersService from "./../api/services/usersService";
+import VehiclesService from "./../api/services/vehiclesService";
 
 export default class Alerts extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      vehicles: []
+      vehicles: [],
+      alerts: []
     }
+    this.toogleAlert = this.toogleAlert.bind(this);
   }
 
   async loadVehicles() {
     const usersService = new UsersService();
-    const vehicles = await usersService.getVehiclesByUserID(10);
+    const vehiclesServices = new VehiclesService();
+    let vehicles = await usersService.getVehiclesByUserID(10);
+    for (let i = 0; i < vehicles.length; i++) {
+      vehicles[i].alerts = await vehiclesServices.getVehicleAlerts(vehicles[i].id)
+    }
     this.setState({
       vehicles: vehicles
     });
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     this.loadVehicles();
+  }
+
+  toogleAlert(alert) {
+    alert.active = !alert.active
+    this.setState({
+      vehicles: this.state.vehicles
+    })
   }
 
   render() {
@@ -49,9 +63,8 @@ export default class Alerts extends React.Component {
 
         <Row>
           {this.state.vehicles.map((vehicle) => (
-            // <Col sm="12" md="5" lg="6">
-            <Col xl="5" lg="6">
-              <Card key={vehicle.id} small className="mb-4">
+            <Col key={vehicle.id} xl="5" lg="6">
+              <Card small className="mb-4">
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">{`${vehicle.type} - ${vehicle.plate}`}</h6>
                 </CardHeader>
@@ -62,30 +75,33 @@ export default class Alerts extends React.Component {
                         <strong className="text-muted d-block mb-2">
                           Alarma de movimiento
                       </strong>
-                        <FormCheckbox toggle small>
-                          Default
+                        <FormCheckbox toggle small 
+                          checked={vehicle.alerts.movementAlert.active} 
+                          onChange={() => this.toogleAlert(vehicle.alerts.movementAlert)}>
+                          { vehicle.alerts.movementAlert.active ? 'Desactivada' : 'Activada' }
                       </FormCheckbox>
                       </div>
                       <div className="py-2">
                         <strong className="text-muted d-block mb-2">
                           Alarma de velocidad
                       </strong>
-                      <Row>
-                        <Col lg="4">
-                          <FormCheckbox toggle small>
-                            Default
-                          </FormCheckbox>
-                        </Col>
-                        <Col lg="8">
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon type="prepend">
-                              {/* <i className="material-icons">map</i> */}
-                              <InputGroupText><i className="material-icons">directions_car</i></InputGroupText>
-                            </InputGroupAddon>
-                            <FormInput placeholder="Velocidad máxima" />
-                          </InputGroup>
-                        </Col>
-                      </Row>
+                        <Row>
+                          <Col lg="4">
+                            <FormCheckbox toggle small
+                              checked={vehicle.alerts.speedAlert.active}
+                              onChange={() => this.toogleAlert(vehicle.alerts.speedAlert)}>
+                              {vehicle.alerts.speedAlert.active ? 'Desactivada' : 'Activada'}
+                            </FormCheckbox>
+                          </Col>
+                          <Col lg="8">
+                            <InputGroup className="mb-3">
+                              <InputGroupAddon type="prepend">
+                                <InputGroupText><i className="material-icons">directions_car</i></InputGroupText>
+                              </InputGroupAddon>
+                              <FormInput placeholder="Velocidad máxima" />
+                            </InputGroup>
+                          </Col>
+                        </Row>
                       </div>
                     </Form>
                   </ListGroupItem>

@@ -31,13 +31,61 @@ export default class UsersService {
       });
       if (response.status !== 200) {
         console.log(response);
-        return []
+        return undefined
       }
       return response.data;
 
     } catch (error) {
       console.log(`Error in function getTrackings. Message: ${error}`);
-      return [];
+      return undefined;
+    }
+  }
+
+  async getVehicleSpeedAlert(vehicleID) {
+    try {
+      // return await axios.get(`https://gps-locations-api.herokuapp.com/vehicles/${vehicle_id}/alerts/speed`);
+      const response = await new Promise(resolve => {
+        setTimeout(() => {
+          resolve({ "status": 200, "data": vehicleID === 10 ? speedAlertMock_10 : speedAlertMock_2 });
+        }, 500);
+      });
+      if (response.status !== 200) {
+        console.log(response);
+        return undefined;
+      }
+      return response.data;
+    } catch(error) {
+      console.log(`Error in function getVehicleSpeedAlert. Message: ${error}`);
+      return undefined;
+    }
+  }
+
+  async getVehicleMovementAlert(vehicleID) {
+    try {
+      // return await axios.get(`https://gps-locations-api.herokuapp.com/vehicles/${vehicle_id}/alerts/movement`);
+      const response = await new Promise(resolve => {
+        setTimeout(() => {
+          resolve({ "status": 200, "data": vehicleID === 10 ? movementAlertMock_10 : movementAlertMock_2 });
+        }, 500);
+      });
+      if (response.status !== 200) {
+        console.log(response);
+        return undefined;
+      }
+      return response.data;
+    } catch (error) {
+      console.log(`Error in function getVehicleMovementAlert. Message: ${error}`);
+      return undefined;
+    }
+  }
+
+  async getVehicleAlerts(vehicleID) {
+    let [speedAlert, movementAlert] = await Promise.all([this.getVehicleSpeedAlert(vehicleID), this.getVehicleMovementAlert(vehicleID)]);
+    if (speedAlert !== undefined && movementAlert !== undefined) {
+      return { speedAlert, movementAlert }
+    } else {
+      console.log(`Error in function getVehicleAlerts.`);
+      return undefined;
     }
   }
 }
@@ -90,3 +138,28 @@ const heatMapmock = [
   { lat: -31.421921, lng: -64.186508 },
   { lat: -31.422068, lng: -64.186497 }
 ];
+
+const speedAlertMock_10 = {
+  id: 1,
+  active: true,
+  speed: 100,
+  deviceId: 1
+};
+
+const speedAlertMock_2 = {
+  id: 2,
+  active: false,
+  deviceId: 3
+};
+
+const movementAlertMock_10 = {
+  id: 1,
+  active: false,
+  deviceId: 1
+};
+
+const movementAlertMock_2 = {
+  id: 2,
+  active: true,
+  deviceId: 3
+};
