@@ -27,7 +27,14 @@ export default class Alerts extends React.Component {
       vehicles: [],
       alerts: []
     }
+    this.loadVehicles = this.loadVehicles.bind(this);
+    this.updateAlerts = this.updateAlerts.bind(this);
     this.toogleAlert = this.toogleAlert.bind(this);
+    this.handleOnchangeSpeedAlert = this.handleOnchangeSpeedAlert.bind(this);
+  }
+
+  async componentWillMount() {
+    this.loadVehicles();
   }
 
   async loadVehicles() {
@@ -42,8 +49,17 @@ export default class Alerts extends React.Component {
     });
   }
 
-  async componentWillMount() {
-    this.loadVehicles();
+  updateAlerts(alerts) {
+    console.log(alerts);
+  }
+
+  handleOnchangeSpeedAlert(vehicleId, value) {
+    let vehicles = this.state.vehicles
+    let target = vehicles.find((vehicle) => vehicle.id === vehicleId)
+    target.alerts.speedAlert.speed = Number(value);
+    this.setState({
+      vehicles: vehicles
+    })
   }
 
   toogleAlert(alert) {
@@ -68,47 +84,52 @@ export default class Alerts extends React.Component {
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">{`${vehicle.type} - ${vehicle.plate}`}</h6>
                 </CardHeader>
-                <ListGroup flush>
-                  <ListGroupItem className="px-3">
-                    <Form>
+                <Form>
+                  <ListGroup flush>
+                    <ListGroupItem className="px-3">
                       <div className="py-2">
                         <strong className="text-muted d-block mb-2">
                           Alarma de movimiento
-                      </strong>
-                        <FormCheckbox toggle small 
-                          checked={vehicle.alerts.movementAlert.active} 
+                        </strong>
+                        <FormCheckbox toggle small
+                          checked={vehicle.alerts.movementAlert.active}
                           onChange={() => this.toogleAlert(vehicle.alerts.movementAlert)}>
-                          { vehicle.alerts.movementAlert.active ? 'Desactivada' : 'Activada' }
-                      </FormCheckbox>
+                          {vehicle.alerts.movementAlert.active ? 'Activada' : 'Desactivada'}
+                        </FormCheckbox>
                       </div>
                       <div className="py-2">
                         <strong className="text-muted d-block mb-2">
                           Alarma de velocidad
-                      </strong>
+                        </strong>
                         <Row>
-                          <Col lg="4">
+                          <Col lg="12" xl="4" className="px-3 py-1">
                             <FormCheckbox toggle small
                               checked={vehicle.alerts.speedAlert.active}
                               onChange={() => this.toogleAlert(vehicle.alerts.speedAlert)}>
-                              {vehicle.alerts.speedAlert.active ? 'Desactivada' : 'Activada'}
+                              {vehicle.alerts.speedAlert.active ? 'Activada' : 'Desactivada'}
                             </FormCheckbox>
                           </Col>
-                          <Col lg="8">
+                          <Col lg="12" xl="8" className="px-3">
                             <InputGroup className="mb-3">
                               <InputGroupAddon type="prepend">
-                                <InputGroupText><i className="material-icons">directions_car</i></InputGroupText>
+                                <InputGroupText>Velocidad max</InputGroupText>
                               </InputGroupAddon>
-                              <FormInput placeholder="Velocidad máxima" />
+                              <FormInput disabled={!vehicle.alerts.speedAlert.active} size="sm" 
+                                value={vehicle.alerts.speedAlert.speed} 
+                                onChange={(event) => this.handleOnchangeSpeedAlert(vehicle.id, event.target.value)} />
+                              <InputGroupAddon type="append">
+                                <InputGroupText>Km / h.</InputGroupText>
+                              </InputGroupAddon>
                             </InputGroup>
                           </Col>
                         </Row>
                       </div>
-                    </Form>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <Button block>Guardar</Button>
-                  </ListGroupItem>
-                </ListGroup>
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      <Button onClick={() => this.updateAlerts(vehicle.alerts)} block>Guardar</Button>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Form>
               </Card>
             </Col>
           ))}
