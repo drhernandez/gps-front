@@ -13,19 +13,28 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Button
+  Button,
+  Alert
 } from "shards-react"
 import PageTitle from "./../components/common/PageTitle";
 //services
 import UsersService from "./../api/services/usersService";
 import VehiclesService from "./../api/services/vehiclesService";
+import AlertsService from "./../api/services/alertsService";
+
+const SUCCESS = "success";
+const ERROR = "danger";
 
 export default class Alerts extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       vehicles: [],
-      alerts: []
+      alerts: [],
+      snackbar: {
+        visible: false,
+        type: SUCCESS
+      }
     }
     this.loadVehicles = this.loadVehicles.bind(this);
     this.updateAlerts = this.updateAlerts.bind(this);
@@ -49,8 +58,22 @@ export default class Alerts extends React.Component {
     });
   }
 
-  updateAlerts(alerts) {
-    console.log(alerts);
+  async updateAlerts(alerts) {
+    const alertsService = new AlertsService();
+    const updated = await alertsService.updateAlerts(alerts);
+    this.setState({
+      snackbar: {
+        visible: true,
+        type: updated ? SUCCESS : ERROR
+      }
+    });
+    setTimeout(() => {
+      this.setState({
+        snackbar: {
+          visible: false
+        }
+      });
+    }, 5000);
   }
 
   handleOnchangeSpeedAlert(vehicleId, value) {
@@ -76,6 +99,11 @@ export default class Alerts extends React.Component {
         <Row noGutters className="page-header py-4">
           <PageTitle title="Alertas" className="text-sm-left mb-3 col-sm-12" />
         </Row>
+
+        <Alert className="mb-3" open={this.state.snackbar.visible} theme={this.state.snackbar.type}>
+          {this.state.snackbar.type === SUCCESS && "Los cambios fueron efectuados con éxito"}
+          {this.state.snackbar.type === ERROR && "Algo salió mal al intentar guardar los cambios. Inténtelo de nuevo."}
+        </Alert>
 
         <Row>
           {this.state.vehicles.map((vehicle) => (
