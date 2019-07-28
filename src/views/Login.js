@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -9,7 +10,7 @@ import {
   FormGroup,
   FormCheckbox,
   Form,
-  Button
+  Button,
 } from "shards-react";
 
 import "../styles/login.css";
@@ -44,7 +45,7 @@ export default class Login extends React.Component {
       <Container fluid className="main-content-container px-4 h-100">
         <Row noGutters className="h-100">
           <Col className="mx-auto login">
-            <Card small className="mb-4">
+            <Card small>
               <CardBody className="px-4">
                 {/* <img class="login__logo d-table mx-auto mb-3" src="../images/shards-dashboards-logo.svg" alt="Login Template" /> */}
                 <h5 className="login__titulo text-center mt-5 mb-4">Ingresa a tu cuenta</h5>
@@ -67,6 +68,10 @@ export default class Login extends React.Component {
                 </Form>
               </CardBody>
             </Card>
+            <div className="px-2 pt-3 login__justify_links">
+              <Link to="/forgot-password">Olvidaste tu contraseña?</Link>
+              <Link to="/#">Crea una cuenta nueva</Link>
+            </div>
           </Col>
         </Row>
       </Container>

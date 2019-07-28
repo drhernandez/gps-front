@@ -6,6 +6,7 @@ import { DefaultLayout } from "./layouts";
 
 // Route Views
 import Login from "./views/Login"; 
+import ForgotPassword from "./views/ForgotPassword";
 import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
@@ -28,6 +29,11 @@ export default [
     path: "/login",
     layout: DefaultLayout,
     component: Login
+  },
+  {
+    path: "/forgot-password",
+    layout: DefaultLayout,
+    component: ForgotPassword
   },
   {
     path: "/home",
