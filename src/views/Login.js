@@ -58,7 +58,6 @@ export default class Login extends React.Component {
                     <label htmlFor="password">Contraseña</label>
                     <FormInput id="password" type="password" placeholder="Contraseña" />
                   </FormGroup>
-                  {/* <FormCheckbox checked={this.state.orange} onChange={e => this.handleChange(e, "orange")}> */}
                   <FormGroup>
                     <FormCheckbox checked={this.state.remember} onChange={() => this.toogleCheckbox()}>
                       Recordarme
@@ -70,7 +69,7 @@ export default class Login extends React.Component {
             </Card>
             <div className="px-2 pt-3 login__justify_links">
               <Link to="/forgot-password">Olvidaste tu contraseña?</Link>
-              <Link to="/#">Crea una cuenta nueva</Link>
+              <Link to="/signup">Crea una cuenta nueva</Link>
             </div>
           </Col>
         </Row>

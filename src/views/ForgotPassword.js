@@ -52,7 +52,7 @@ export default class Login extends React.Component {
               </CardBody>
             </Card>
             <div className="px-2 pt-3 login__center_links">
-              <Link to="/login">Volver al login</Link>
+              <Link to="/signin">Volver al login</Link>
             </div>
           </Col>
         </Row>

@@ -7,6 +7,7 @@ import { DefaultLayout } from "./layouts";
 // Route Views
 import Login from "./views/Login"; 
 import ForgotPassword from "./views/ForgotPassword";
+import Register from "./views/Register";
 import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
@@ -23,12 +24,17 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/login" />
+    component: () => <Redirect to="/signin" />
   },
   {
-    path: "/login",
+    path: "/signin",
     layout: DefaultLayout,
     component: Login
+  },
+  {
+    path: "/signup",
+    layout: DefaultLayout,
+    component: Register
   },
   {
     path: "/forgot-password",
