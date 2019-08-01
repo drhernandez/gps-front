@@ -11,27 +11,72 @@ import {
   Form,
   Button,
 } from "shards-react";
+import validations from "../utils/ValidationsUtil";
 
 import "../styles/register.css";
+
+const initialValues = {
+  nameRequired: false,
+  lastnameRequired: false,
+  emailRequired: false,
+  emailValid: false,
+  telRequired: false,
+  telValid: false,
+  passwordRequired: false,
+  passwordValid: false,
+  confirmPasswordRequired: false,
+  confirmPasswordValid: false,
+  addressRequired: false,
+  zipcodeRequired: false
+}
 
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      errors: initialValues
+    }
     this.createAccount.bind(this);
+    this.invalidateError.bind(this);
   };
 
   createAccount(e) {
     e.preventDefault()
     e.persist();
-    console.log(e.target.name.value);
-    console.log(e.target.lastname.value);
-    console.log(e.target.email.value);
-    console.log(e.target.tel.value);
-    console.log(e.target.password.value);
-    console.log(e.target.repeatPassword.value);
-    console.log(e.target.address.value);
-    console.log(e.target.zipcode.value);
+    const errors = {
+      nameRequired: !validations.validateRequired(e.target.name.value),
+      lastnameRequired: !validations.validateRequired(e.target.lastname.value),
+      emailRequired: !validations.validateRequired(e.target.email.value),
+      emailValid: !validations.validateEmail(e.target.email.value),
+      telRequired: !validations.validateRequired(e.target.tel.value),
+      telValid: !validations.validateNumber(e.target.tel.value),
+      passwordRequired: !validations.validateRequired(e.target.password.value),
+      passwordValid: !validations.validatePassword(e.target.password.value, validations.passwordStrenghts.PASSWORD_STRENGHT_2),
+      confirmPasswordRequired: !validations.validateRequired(e.target.confirmPassword.value),
+      confirmPasswordValid: !validations.validateEquals(e.target.password.value, e.target.confirmPassword.value),
+      addressRequired: !validations.validateRequired(e.target.address.value),
+      zipcodeRequired: !validations.validateRequired(e.target.zipcode.value)
+    }
+
+    if (Object.values(errors).find(hasError => hasError)) {  // Si alguno de los errores está en true...
+      this.setState({
+        errors: errors
+      })
+    } else {
+      this.setState({
+        errors: initialValues
+      })
+      console.log(e.target.name.value);
+      console.log(e.target.lastname.value);
+      console.log(e.target.email.value);
+      console.log(e.target.tel.value);
+      console.log(e.target.password.value);
+      console.log(e.target.confirmPassword.value);
+      console.log(e.target.address.value);
+      console.log(e.target.zipcode.value);
+
+      //call service
+    }
   }
 
   render() {
@@ -42,8 +87,8 @@ export default class Register extends React.Component {
             <Card small>
               <CardBody className="px-4">
                 <h5 className="register__titulo text-center mt-5 mb-4">Crea una cuenta nueva</h5>
-                {/* <Form onSubmit={(e) => this.createAccount(e)} noValidate> */}
-                <Form onSubmit={(e) => this.createAccount(e)}>
+                <Form onSubmit={(e) => this.createAccount(e)} noValidate>
+                {/* <Form onSubmit={(e) => this.createAccount(e)}> */}
                   <Row form>
                     {/* Nombre */}
                     <Col md="6" className="form-group">
@@ -51,9 +96,8 @@ export default class Register extends React.Component {
                       <FormInput
                         id="name"
                         placeholder="Nombre"
-                        required
-                        // invalid={this.state.hasError.name}
-                        // onChange={() => { }}
+                        invalid={this.state.errors.nameRequired}
+                        onChange={() => this.invalidateError("name")}
                       />
                       <FormFeedback>Campo requerido</FormFeedback>
                     </Col>
@@ -63,9 +107,10 @@ export default class Register extends React.Component {
                       <FormInput
                         id="lastname"
                         placeholder="Apellido"
-                        required
-                        // onChange={() => { }}
+                        invalid={this.state.errors.lastnameRequired}
+                        onChange={() => this.invalidateError("lastname")}
                       />
+                      <FormFeedback>Campo requerido</FormFeedback>
                     </Col>
                   </Row>
                   <Row form>
@@ -76,10 +121,12 @@ export default class Register extends React.Component {
                         type="email"
                         id="email"
                         placeholder="Dirección de correo"
-                        required
-                        // onChange={() => { }}
                         autoComplete="email"
+                        invalid={this.state.errors.emailRequired || this.state.errors.emailValid}
+                        onChange={() => this.invalidateError("email")}
                       />
+                      {this.state.errors.emailRequired && <FormFeedback>Campo requerido</FormFeedback>}
+                      {this.state.errors.emailValid && <FormFeedback>Incluye un signo @ en la dirección de correo</FormFeedback>}
                     </Col>
                     {/* Teléfono */}
                     <Col md="5" className="form-group">
@@ -88,9 +135,11 @@ export default class Register extends React.Component {
                         type="tel"
                         id="tel"
                         placeholder="Teléfono"
-                        required
-                        // onChange={() => { }}
+                        invalid={this.state.errors.telRequired || this.state.errors.telValid}
+                        onChange={() => this.invalidateError("tel")}
                       />
+                      {this.state.errors.telRequired && <FormFeedback>Campo requerido</FormFeedback>}
+                      {this.state.errors.telValid && <FormFeedback>Solo se permiten números</FormFeedback>}
                     </Col>
                   </Row>
                   <Row form>
@@ -101,22 +150,27 @@ export default class Register extends React.Component {
                         type="password"
                         id="password"
                         placeholder="Contraseña"
-                        required
-                        // onChange={() => { }}
                         autoComplete="current-password"
+                        invalid={this.state.errors.passwordRequired || this.state.errors.passwordValid || this.state.errors.confirmPasswordValid}
+                        onChange={() => this.invalidateError("password")}
                       />
+                      {this.state.errors.passwordRequired && <FormFeedback>Campo requerido</FormFeedback>}
+                      {this.state.errors.passwordValid && <FormFeedback>La contraseña debe contener un mínimo 
+                        de 8 caracteres, una mayúscula y un número
+                      </FormFeedback>}
                     </Col>
                     {/* Repetir contraseña */}
                     <Col md="6" className="form-group">
-                      <label htmlFor="repeatPassword">Repetir contraseña</label>
+                      <label htmlFor="confirmPassword">Repetir contraseña</label>
                       <FormInput
                         type="password"
-                        id="repeatPassword"
+                        id="confirmPassword"
                         placeholder="Repetir contraseña"
-                        required
-                        // onChange={() => { }}
-                        // autoComplete="current-password"
+                        invalid={this.state.errors.confirmPasswordRequired || this.state.errors.confirmPasswordValid}
+                        onChange={() => this.invalidateError("confirmPassword")}
                       />
+                      {this.state.errors.confirmPasswordRequired && <FormFeedback>Campo requerido</FormFeedback>}
+                      {this.state.errors.confirmPasswordValid && <FormFeedback>Las contraseñas no coinciden</FormFeedback>}
                     </Col>
                   </Row>
                   <Row form>
@@ -126,20 +180,21 @@ export default class Register extends React.Component {
                       <FormInput
                         id="address"
                         placeholder="Dirección"
-                        required
-                        // onChange={() => { }}
+                        invalid={this.state.errors.addressRequired}
+                        onChange={() => this.invalidateError("address")}
                       />
+                      {this.state.errors.addressRequired && <FormFeedback>Campo requerido</FormFeedback>}
                     </Col>
                     {/* Zip Code */}
                     <Col md="3" className="form-group">
                       <label htmlFor="zipcode">CP</label>
                       <FormInput
-                        type="number"
                         id="zipcode"
                         placeholder="CP"
-                        required
-                        // onChange={() => { }}
+                        invalid={this.state.errors.zipcodeRequired}
+                        onChange={() => this.invalidateError("zipcode")}
                       />
+                      {this.state.errors.zipcodeRequired && <FormFeedback>Campo requerido</FormFeedback>}
                     </Col>
                   </Row>
                   <Row>
@@ -156,5 +211,84 @@ export default class Register extends React.Component {
         </Row>
       </Container>
     );
+  }
+
+
+  invalidateError(field) {
+    switch (field) {
+      case "name":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            nameRequired: false
+          }
+        }))
+        break;
+      case "lastname":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            lastnameRequired: false
+          }
+        }))
+        break;
+      case "email":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            emailRequired: false,
+            emailValid: false
+          }
+        }))
+        break;
+      case "tel":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            telRequired: false,
+            telValid: false
+          }
+        }))
+        break;
+      case "password":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            passwordRequired: false,
+            passwordValid: false
+          }
+        }))
+        break;
+      case "confirmPassword":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            confirmPasswordRequired: false,
+            confirmPasswordValid: false
+          }
+        }))
+        break;
+      case "address":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            addressRequired: false
+          }
+        }))
+        break;
+      case "zipcode":
+        this.setState(prevState => ({
+          errors: {
+            ...prevState.errors,
+            zipcodeRequired: false
+          }
+        }))
+        break;
+      default:
+        this.setState({
+          errors: initialValues
+        })
+        break;
+    }
   }
 }
