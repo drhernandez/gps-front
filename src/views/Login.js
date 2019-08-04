@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import {
   Container,
   Row,
@@ -9,21 +9,37 @@ import {
   FormInput,
   FormGroup,
   FormCheckbox,
+  FormFeedback,
   Form,
   Button,
+  Alert,
 } from "shards-react";
-
+import validations from "../utils/ValidationsUtil";
+import constants from "../utils/Constants";
 import "../styles/login.css";
+var _ = require('lodash');
 
-export default class Login extends React.Component {
+const errorsDefault = {
+  email: {
+    required: false
+  },
+  password: {
+    required: false
+  }
+}
+
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      remember: false
+      errors: errorsDefault,
+      remember: false,
+      showAlert: false
     }
 
     this.toogleCheckbox.bind(this);
     this.login.bind(this);
+    this.invalidateError.bind(this);
   };
 
   toogleCheckbox() {
@@ -35,9 +51,42 @@ export default class Login extends React.Component {
   login(e) {
     e.preventDefault()
     e.persist();
-    console.log(e.target.email.value);
-    console.log(e.target.password.value);
-    console.log("remember me: ", this.state.remember)
+    const errors = _.clone(errorsDefault);
+    errors.email.required = !validations.validateRequired(e.target.email.value);
+    errors.password.required = !validations.validateRequired(e.target.password.value);
+
+    if (Object.values(errors).find(fieldValidations => Object.values(fieldValidations).find(value => value))) {  // Si alguno de los errores está en true...
+      this.setState({
+        errors: errors
+      })
+    } else {
+      console.log(e.target.email.value);
+      console.log(e.target.password.value);
+      console.log("remember me: ", this.state.remember)
+
+      //TODO call service
+      const loggedIn = true
+      if (loggedIn) {
+        this.props.history.push("/home");
+      } else {
+        this.setState({
+          showAlert: true
+        })
+        setTimeout(() => {
+          this.setState({
+            showAlert: false
+          })
+        }, 4000);
+      }
+    }
+  }
+
+  invalidateError(field) {
+    let errors = this.state.errors;
+    Object.keys(errors[field]).forEach(validationType => errors[field][validationType] = false)
+    this.setState({
+      errors: errors
+    })
   }
 
   render() {
@@ -47,23 +96,43 @@ export default class Login extends React.Component {
           <Col className="mx-auto login">
             <Card small>
               <CardBody className="px-4">
-                {/* <img class="login__logo d-table mx-auto mb-3" src="../images/shards-dashboards-logo.svg" alt="Login Template" /> */}
                 <h5 className="login__titulo text-center mt-5 mb-4">Ingresa a tu cuenta</h5>
-                <Form onSubmit={e => this.login(e)}>
+                <Form onSubmit={e => this.login(e)} noValidate>
                   <FormGroup>
                     <label htmlFor="email">Email</label>
-                    <FormInput id="email" type="email" placeholder="Email" />
+                    <FormInput
+                      type="email"
+                      id="email"
+                      placeholder="Dirección de correo"
+                      autoComplete="email"
+                      invalid={this.state.errors.email.required}
+                      onChange={() => this.invalidateError("email")}
+                    />
+                    <FormFeedback>Campo requerido</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                     <label htmlFor="password">Contraseña</label>
-                    <FormInput id="password" type="password" placeholder="Contraseña" />
+                    <FormInput 
+                      id="password" 
+                      type="password" 
+                      placeholder="Contraseña"
+                      invalid={this.state.errors.password.required}
+                      onChange={() => this.invalidateError("password")} />
+                    <FormFeedback>Campo requerido</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                     <FormCheckbox checked={this.state.remember} onChange={() => this.toogleCheckbox()}>
                       Recordarme
                     </FormCheckbox>
                   </FormGroup>
-                  <Button type="submit" pill className="d-table mx-auto mb-5">Iniciar Sesión</Button>
+                  <FormGroup>
+                    <Button type="submit" pill className="d-table mx-auto">Iniciar Sesión</Button>
+                  </FormGroup>
+                  <FormGroup>
+                    <Alert className="mb-3" open={this.state.showAlert} theme={constants.Themes.ERROR}>
+                      Los datos ingresados no son correctos. Intentá de nuevo
+                    </Alert>
+                  </FormGroup>
                 </Form>
               </CardBody>
             </Card>
@@ -77,3 +146,5 @@ export default class Login extends React.Component {
     );
   }
 }
+
+export default withRouter(Login);

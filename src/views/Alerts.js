@@ -21,9 +21,7 @@ import PageTitle from "./../components/common/PageTitle";
 import UsersService from "./../api/services/usersService";
 import VehiclesService from "./../api/services/vehiclesService";
 import AlertsService from "./../api/services/alertsService";
-
-const SUCCESS = "success";
-const ERROR = "danger";
+import Constants from "../utils/Constants";
 
 export default class Alerts extends React.Component {
   constructor(props) {
@@ -33,7 +31,7 @@ export default class Alerts extends React.Component {
       alerts: [],
       snackbar: {
         visible: false,
-        type: SUCCESS
+        type: Constants.Themes.SUCCESS
       }
     }
     this.loadVehicles = this.loadVehicles.bind(this);
@@ -64,7 +62,7 @@ export default class Alerts extends React.Component {
     this.setState({
       snackbar: {
         visible: true,
-        type: updated ? SUCCESS : ERROR
+        type: updated ? Constants.Themes.SUCCESS : Constants.Themes.ERROR
       }
     });
     setTimeout(() => {
@@ -101,8 +99,8 @@ export default class Alerts extends React.Component {
         </Row>
 
         <Alert className="mb-3" open={this.state.snackbar.visible} theme={this.state.snackbar.type}>
-          {this.state.snackbar.type === SUCCESS && "Los cambios fueron efectuados con éxito"}
-          {this.state.snackbar.type === ERROR && "Algo salió mal al intentar guardar los cambios. Inténtelo de nuevo."}
+          {this.state.snackbar.type === Constants.Themes.SUCCESS && "Los cambios fueron efectuados con éxito"}
+          {this.state.snackbar.type === Constants.Themes.ERROR && "Algo salió mal al intentar guardar los cambios. Inténtelo de nuevo."}
         </Alert>
 
         <Row>
