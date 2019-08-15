@@ -10,10 +10,6 @@ const app = express()
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
-
 app.use("/alerts", alertsRouter);
 app.use("/users", usersRouter);
 app.use("/vehicles", vehiclesRouter);
