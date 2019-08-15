@@ -23,6 +23,13 @@ export default () => (
                 </route.layout>
               );
             })}
+            // render={props => {
+            //   return (
+            //     <route.layout {...props}>
+            //       <route.component {...props} />
+            //     </route.layout>
+            //   );
+            // }}
           />
         );
       })}
