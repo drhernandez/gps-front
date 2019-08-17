@@ -80,9 +80,9 @@ export default class UsersService {
   }
 
   async getVehicleAlerts(vehicleID) {
-    let [speedAlert, movementAlert] = await Promise.all([this.getVehicleSpeedAlert(vehicleID), this.getVehicleMovementAlert(vehicleID)]);
-    if (speedAlert !== undefined && movementAlert !== undefined) {
-      return { speedAlert, movementAlert }
+    let [speed, movement] = await Promise.all([this.getVehicleSpeedAlert(vehicleID), this.getVehicleMovementAlert(vehicleID)]);
+    if (speed !== undefined && movement !== undefined) {
+      return { speed, movement }
     } else {
       console.log(`Error in function getVehicleAlerts.`);
       return undefined;

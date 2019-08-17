@@ -14,4 +14,5 @@ app.use("/alerts", alertsRouter);
 app.use("/users", usersRouter);
 app.use("/vehicles", vehiclesRouter);
 
-app.listen(3000)
+console.log('Server listening on port 3001');
+app.listen(3001)

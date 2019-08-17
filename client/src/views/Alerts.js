@@ -37,7 +37,7 @@ export default class Alerts extends React.Component {
     this.loadVehicles = this.loadVehicles.bind(this);
     this.updateAlerts = this.updateAlerts.bind(this);
     this.toogleAlert = this.toogleAlert.bind(this);
-    this.handleOnchangeSpeedAlert = this.handleOnchangeSpeedAlert.bind(this);
+    this.handleOnchangeSpeed = this.handleOnchangeSpeed.bind(this);
   }
 
   async componentWillMount() {
@@ -74,10 +74,10 @@ export default class Alerts extends React.Component {
     }, 5000);
   }
 
-  handleOnchangeSpeedAlert(vehicleId, value) {
+  handleOnchangeSpeed(vehicleId, value) {
     let vehicles = this.state.vehicles
     let target = vehicles.find((vehicle) => vehicle.id === vehicleId)
-    target.alerts.speedAlert.speed = Number(value);
+    target.alerts.speed.speed = Number(value);
     this.setState({
       vehicles: vehicles
     })
@@ -118,9 +118,9 @@ export default class Alerts extends React.Component {
                           Alarma de movimiento
                         </strong>
                         <FormCheckbox toggle small
-                          checked={vehicle.alerts.movementAlert.active}
-                          onChange={() => this.toogleAlert(vehicle.alerts.movementAlert)}>
-                          {vehicle.alerts.movementAlert.active ? 'Activada' : 'Desactivada'}
+                          checked={vehicle.alerts.movement.active}
+                          onChange={() => this.toogleAlert(vehicle.alerts.movement)}>
+                          {vehicle.alerts.movement.active ? 'Activada' : 'Desactivada'}
                         </FormCheckbox>
                       </div>
                       <div className="py-2">
@@ -130,9 +130,9 @@ export default class Alerts extends React.Component {
                         <Row>
                           <Col lg="12" xl="4" className="px-3 py-1">
                             <FormCheckbox toggle small
-                              checked={vehicle.alerts.speedAlert.active}
-                              onChange={() => this.toogleAlert(vehicle.alerts.speedAlert)}>
-                              {vehicle.alerts.speedAlert.active ? 'Activada' : 'Desactivada'}
+                              checked={vehicle.alerts.speed.active}
+                              onChange={() => this.toogleAlert(vehicle.alerts.speed)}>
+                              {vehicle.alerts.speed.active ? 'Activada' : 'Desactivada'}
                             </FormCheckbox>
                           </Col>
                           <Col lg="12" xl="8" className="px-3">
@@ -140,9 +140,9 @@ export default class Alerts extends React.Component {
                               <InputGroupAddon type="prepend">
                                 <InputGroupText>Velocidad max</InputGroupText>
                               </InputGroupAddon>
-                              <FormInput disabled={!vehicle.alerts.speedAlert.active} size="sm" 
-                                value={vehicle.alerts.speedAlert.speed} 
-                                onChange={(event) => this.handleOnchangeSpeedAlert(vehicle.id, event.target.value)} />
+                              <FormInput disabled={!vehicle.alerts.speed.active} size="sm" 
+                                value={vehicle.alerts.speed.speed} 
+                                onChange={(event) => this.handleOnchangeSpeed(vehicle.id, event.target.value)} />
                               <InputGroupAddon type="append">
                                 <InputGroupText>Km / h.</InputGroupText>
                               </InputGroupAddon>

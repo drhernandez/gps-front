@@ -1,48 +1,38 @@
-// import axios from 'axios';
+const axios = require('axios');
+const restClient = axios.create({
+  baseURL: 'http://localhost:3001',
+  timeout: 1000
+});
+const { parseErrorResponse } = require('../../utils/ErrorsUtil')
 
 export default class AlertsService {
+  
   async updateAlerts(alerts) {
     try {
-      let alertsToUpdate = [];
-      Object.entries(alerts).forEach(([key, value]) => {
-        // console.log("element: ", key, " value: ", value);
-        alertsToUpdate.push(
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve({ "status": 200 });
-            }, 500);
-          })
-        );
-      });
-      
-      let results = await Promise.all(alertsToUpdate);
-      if (results.filter(result => !result.status || result.status !== 200).length > 0) {
-        console.error(`Could not update alerts: ${JSON.stringify(alerts)}. Results: ${JSON.stringify(results)}`)
-        return false;
-      }
-      return true;
+        var speedAlert = null;
+        var movementAlert = null;
+
+        Object.entries(alerts).forEach(([type, alert]) => {
+          switch(type) {
+            case "speed": 
+              speedAlert = alert;
+              break;
+            case "movement":
+              movementAlert = alert;
+              break;
+            default:
+              console.error("Invalid alert type ", type);
+          }
+          restClient.put(`/alerts/${type}/${alert.id}`, alert)
+        })
+      return await axios.all([
+        restClient.put(`/alerts/speed/${speedAlert.id}`, speedAlert),
+        restClient.put(`/alerts/movement/${movementAlert.id}`, movementAlert)
+      ])
 
     } catch (error) {
-      console.error(`Could not update alerts: ${alerts}. Error: ${error}`)
+      parseErrorResponse(error);
+      return false;
     }
   }
 }
-
-// const mock = [
-//   {
-//     "id": 10,
-//     "user_id": 10,
-//     "device_id": 1,
-//     "type": "Ford Fiesta",
-//     "plate": "AA 383 TI",
-//     "model": "2018"
-//   },
-//   {
-//     "id": 2,
-//     "user_id": 10,
-//     "device_id": 3,
-//     "type": "Fiat Argo",
-//     "plate": "AB 112 II",
-//     "model": "2018"
-//   }
-// ];

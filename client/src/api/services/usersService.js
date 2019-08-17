@@ -1,22 +1,19 @@
-// import axios from 'axios';
+const axios = require('axios');
+const restClient = axios.create({
+  baseURL: 'http://localhost:3001',
+  timeout: 1000
+});
+const { parseErrorResponse } = require('../../utils/ErrorsUtil')
 
 export default class UsersService {
   async getVehiclesByUserID(userID) {
-    try {
-      // return await axios.get(`https://gps-locations-api.herokuapp.com/users/${userID}/vehicles`);
-      const response = await new Promise(resolve => {
-        setTimeout(() => {
-          resolve({ "status": 200, "data": mock});
-        }, 500);
-      });
-      if (response.status !== 200) {
-        console.log(response);
-        return []
-      }
-      return response.data;
     
+    try {
+      const response = await restClient.get(`/users/${userID}/vehicles`);
+      return response.data;
+
     } catch (error) {
-      console.log(`Error in function getDevicesByUserID. Message: ${error}`);
+      parseErrorResponse(error);
       return [];
     }
   }
