@@ -1,4 +1,3 @@
-const axios = require('axios');
 const express = require('express')
 const router = express.Router()
 
@@ -6,6 +5,13 @@ router.get('/:id/vehicles', function(req, res, next) {
   setTimeout(() => {
     res.status(200).json(mock);
   }, 500);
+  // try {
+  //   const response = await restClient.get(`/vehicles/${vehicleID}/location`);
+  //   res.status(response.status).json(response.data);
+  // } catch (error) {
+  //   const response = parseErrorResponse(error);
+  //   res.status(error.status).json(response);
+  // }
 });
 
 module.exports = router

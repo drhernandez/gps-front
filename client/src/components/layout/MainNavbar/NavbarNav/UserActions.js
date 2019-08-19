@@ -13,7 +13,6 @@ import {
 export default class UserActions extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       visible: false
     };

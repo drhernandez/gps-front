@@ -3,18 +3,15 @@ const restClient = axios.create({
   baseURL: 'http://localhost:3001',
   timeout: 1000
 });
-const { parseErrorResponse } = require('../../utils/ErrorsUtil')
 
 export default class UsersService {
   async getVehiclesByUserID(userID) {
-    
     try {
       const response = await restClient.get(`/users/${userID}/vehicles`);
       return response.data;
-
     } catch (error) {
-      parseErrorResponse(error);
-      return [];
+      console.log(`Error in function getVehiclesByUserID. Message: ${error}`);
+      return null; //redirect ??
     }
   }
 }

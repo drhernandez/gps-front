@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 // Layout Types
-import { DefaultLayout } from "./layouts";
+import { SimpleLayout, DefaultLayout } from "./layouts";
 
 // Route Views
 import Login from "./views/Login"; 
@@ -28,17 +28,17 @@ export default [
   },
   {
     path: "/signin",
-    layout: DefaultLayout,
+    layout: SimpleLayout,
     component: Login
   },
   {
     path: "/signup",
-    layout: DefaultLayout,
+    layout: SimpleLayout,
     component: Register
   },
   {
     path: "/forgot-password",
-    layout: DefaultLayout,
+    layout: SimpleLayout,
     component: ForgotPassword
   },
   {

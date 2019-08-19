@@ -3,6 +3,7 @@ const restClient = axios.create({
   baseURL: 'http://localhost:3001',
   timeout: 1000
 });
+// const { restClient } = require('../../restClient')
 const { parseErrorResponse } = require('../../utils/ErrorsUtil')
 
 export default class AlertsService {
@@ -23,12 +24,13 @@ export default class AlertsService {
             default:
               console.error("Invalid alert type ", type);
           }
-          restClient.put(`/alerts/${type}/${alert.id}`, alert)
         })
-      return await axios.all([
+      const results = await axios.all([
         restClient.put(`/alerts/speed/${speedAlert.id}`, speedAlert),
         restClient.put(`/alerts/movement/${movementAlert.id}`, movementAlert)
-      ])
+      ]);
+      // status 2XX
+      return results.filter((result) => result.status < 200 && result.status >= 300).length === 0;
 
     } catch (error) {
       parseErrorResponse(error);

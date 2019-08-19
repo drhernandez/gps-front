@@ -1,12 +1,18 @@
-const axios = require('axios');
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
 router.get('/:id/location', function(req, res) {
   const id = req.params.id;
   setTimeout(() => {
     res.status(200).json(id === "10" ? mock1 : mock2);
   }, 500);
+  // try {
+  //   const response = await restClient.get(`/vehicles/${vehicleID}/location`);
+  //   res.status(response.status).json(response.data);
+  // } catch (error) {
+  //   const response = parseErrorResponse(error);
+  //   res.status(response.status).json(response);
+  // }
 });
 
 router.get('/:id/trackings', function(req, res) {

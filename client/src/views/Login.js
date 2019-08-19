@@ -14,10 +14,12 @@ import {
   Button,
   Alert,
 } from "shards-react";
+import AuthService from "../api/services/authService"
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import "../styles/login.css";
 var _ = require('lodash');
+const authService = new AuthService();
 
 const errorsDefault = {
   email: {
@@ -65,8 +67,11 @@ class Login extends React.Component {
       console.log("remember me: ", this.state.remember)
 
       //TODO call service
-      const loggedIn = true
-      if (loggedIn) {
+      const email = e.target.email.value;
+      const pass = e.target.password.value;
+      const userInfo = authService.login(email, pass);
+      if (userInfo != null) {
+        // this.props.user = userInfo;
         this.props.history.push("/home");
       } else {
         this.setState({
