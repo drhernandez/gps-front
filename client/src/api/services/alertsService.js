@@ -3,9 +3,6 @@ const restClient = axios.create({
   baseURL: 'http://localhost:3001',
   timeout: 1000
 });
-// const { restClient } = require('../../restClient')
-const { parseErrorResponse } = require('../../utils/ErrorsUtil')
-
 export default class AlertsService {
   
   async updateAlerts(alerts) {
@@ -33,7 +30,7 @@ export default class AlertsService {
       return results.filter((result) => result.status < 200 && result.status >= 300).length === 0;
 
     } catch (error) {
-      parseErrorResponse(error);
+      
       return false;
     }
   }

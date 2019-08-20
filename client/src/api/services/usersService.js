@@ -1,18 +1,17 @@
-const axios = require('axios');
-const restClient = axios.create({
-  baseURL: 'http://localhost:3001',
-  timeout: 1000
-});
+import BaseService from './baseService';
 
 export default class UsersService {
+  constructor() {
+    this.baseService = new BaseService();
+  }
+
   async getVehiclesByUserID(userID) {
-    try {
-      const response = await restClient.get(`/users/${userID}/vehicles`);
-      return response.data;
-    } catch (error) {
-      console.log(`Error in function getVehiclesByUserID. Message: ${error}`);
-      return null; //redirect ??
+    const response = await this.baseService.get(`/users/${userID}/vehicles`);
+    var data = null;
+    if (response.status === 200) {
+      data = response.data;
     }
+    return data;
   }
 }
 
