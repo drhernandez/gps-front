@@ -25,8 +25,11 @@ export default class BaseService {
   }
 }
 
-async function _execute(restClient, method, url, headers, body) {
+async function _execute(restClient, method, url, headers = {}, body) {
   try {
+    const accessToken = localStorage.getItem("app-token");
+    headers.Authorization = `Bearer ${accessToken}`
+    console.log(headers);
     return await restClient.request({
       method: method,
       url: url,

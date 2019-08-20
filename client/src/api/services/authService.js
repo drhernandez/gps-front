@@ -9,7 +9,7 @@ export default class AuthService {
   async login(email, password) {
     try {
       const response = await restClient.post(`/auth/login`, {email, password});
-      localStorage.setItem("gps-token", response.data);
+      localStorage.setItem("app-token", response.data);
       const decoded = jwt.decode(response.data, {json: true});
       // sessionStorage.setItem("gps-user-info", decoded);
       return decoded;
