@@ -8,6 +8,7 @@ import SidebarSearch from "./SidebarSearch";
 import SidebarNavItems from "./SidebarNavItems";
 
 import { Store } from "../../../flux";
+import store from '../../../redux/store';
 
 class MainSidebar extends React.Component {
   constructor(props) {
