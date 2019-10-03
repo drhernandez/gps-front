@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
-import { TOGGLE_SIDEBAR } from '../actions/types'
+import { TOGGLE_SIDEBAR, SET_USER_INFO } from '../actions/types'
 import getSidebarNavItems from "../../data/sidebar-nav-items";
 
 const initialState = {
   menuVisible: false,
-  navItems: getSidebarNavItems()
+  navItems: getSidebarNavItems(),
+  userInfo: null
 }
 
 // function menuVisible(state = initialState, action) {
@@ -30,6 +31,10 @@ function reducers(state = initialState, action) {
       return Object.assign({}, state, {
         menuVisible: !state.menuVisible
       });
+    case SET_USER_INFO:
+      return Object.assign({}, state, {
+        userInfo: action.payload
+      })
     default:
       return state;
   }
