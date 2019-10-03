@@ -1,24 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Navbar, NavbarBrand } from "shards-react";
 
-import { Dispatcher, Constants } from "../../../flux";
+import { toogleSidebarAction } from "../../../redux/actions/actions";
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toogleSidebarAction: () => dispatch(toogleSidebarAction())
+  }
+}
 
 class SidebarMainNavbar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleToggleSidebar = this.handleToggleSidebar.bind(this);
-  }
-
-  handleToggleSidebar() {
-    Dispatcher.dispatch({
-      actionType: Constants.TOGGLE_SIDEBAR
-    });
-  }
-
   render() {
-    const { hideLogoText } = this.props;
+    const { hideLogoText } = this.props.hideLogoText;
     return (
       <div className="main-navbar">
         <Navbar
@@ -48,9 +43,9 @@ class SidebarMainNavbar extends React.Component {
           {/* eslint-disable-next-line */}
           <a
             className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
-            onClick={this.handleToggleSidebar}
+            onClick={this.props.toogleSidebarAction}
           >
-            <i className="material-icons">&#xE5C4;</i>
+            <i id="hoa" className="material-icons">&#xE5C4;</i>
           </a>
         </Navbar>
       </div>
@@ -69,4 +64,4 @@ SidebarMainNavbar.defaultProps = {
   hideLogoText: false
 };
 
-export default SidebarMainNavbar;
+export default connect(null, mapDispatchToProps)(SidebarMainNavbar);

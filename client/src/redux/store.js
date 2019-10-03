@@ -1,11 +1,5 @@
 import { createStore } from 'redux';
-import getSidebarNavItems from "../data/sidebar-nav-items";
-import reducers from './reducers';
-
-const initialState = {
-  menuVisible: false,
-  navItems: getSidebarNavItems()
-}
+import reducers from './reducers/reducers';
 
 const store = createStore(reducers);
 

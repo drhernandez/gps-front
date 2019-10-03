@@ -6,16 +6,6 @@ import store from './redux/store';
 
 import * as serviceWorker from './serviceWorker';
 
-// import { actions } from './redux/actions';
-// console.log(store.getState())
-// let unsuscribe = store.subscribe(() => console.log(store.getState()));
-// store.dispatch(actions.toogleSidebarAction());
-// store.dispatch(actions.toogleSidebarAction());
-// store.dispatch(actions.toogleSidebarAction());
-// store.dispatch(actions.toogleSidebarAction());
-// store.dispatch(actions.toogleSidebarAction());
-// unsuscribe();
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
