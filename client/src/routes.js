@@ -24,71 +24,85 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
+    isPublic: true,
     component: () => <Redirect to="/signin" />
   },
   {
     path: "/signin",
     layout: SimpleLayout,
+    isPublic: true,
     component: Login
   },
   {
     path: "/signup",
     layout: SimpleLayout,
+    isPublic: true,
     component: Register
   },
   {
     path: "/forgot-password",
     layout: SimpleLayout,
+    isPublic: true,
     component: ForgotPassword
   },
   {
     path: "/home",
     layout: DefaultLayout,
+    isPublic: false,
     component: Home
   },
   {
     path: "/heat-map",
     layout: DefaultLayout,
+    isPublic: false,
     component: HeatMap
   },
   {
     path: "/alerts",
     layout: DefaultLayout,
+    isPublic: false,
     component: Alerts
   },
   {
     path: "/blog-overview",
     layout: DefaultLayout,
+    isPublic: false,
     component: BlogOverview
   },
   {
     path: "/user-profile-lite",
     layout: DefaultLayout,
+    isPublic: false,
     component: UserProfileLite
   },
   {
     path: "/add-new-post",
     layout: DefaultLayout,
+    isPublic: false,
     component: AddNewPost
   },
   {
     path: "/errors",
-    layout: DefaultLayout,
+    layout: SimpleLayout,
+    isPublic: true,
     component: Errors
   },
   {
     path: "/components-overview",
     layout: DefaultLayout,
+    isPublic: false,
     component: ComponentsOverview
   },
   {
     path: "/tables",
     layout: DefaultLayout,
+    isPublic: false,
     component: Tables
   },
   {
     path: "/blog-posts",
     layout: DefaultLayout,
+    isPublic: false,
     component: BlogPosts
   }
 ];

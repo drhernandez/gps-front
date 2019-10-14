@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import PrivateRoute from "./components/routing/PrivateRoute";
 import routes from "./routes";
 import withTracker from "./withTracker";
 
@@ -12,18 +12,25 @@ export default () => (
     <div>
       {routes.map((route, index) => {
         return (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={withTracker(props => {
-              return (
-                <route.layout {...props}>
-                  <route.component {...props} />
-                </route.layout>
-              );
-            })}
-          />
+          route.isPublic ? //SI ES UNA RUTA PÚBLICA...
+            <Route // CARGÁ ESTO
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={withTracker(props => {
+                return (
+                  <route.layout {...props}>
+                    <route.component {...props} />
+                  </route.layout>
+                );
+              })}
+            />
+          : // SINO...
+            <PrivateRoute id="private" // CARGÁ ESTO
+              key={index}
+              index={index}
+              route={route}
+            />
         );
       })}
     </div>
