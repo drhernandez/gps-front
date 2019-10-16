@@ -64,6 +64,12 @@ export default [
     component: Alerts
   },
   {
+    path: "/errors",
+    layout: SimpleLayout,
+    isPublic: true,
+    component: Errors
+  },
+  {
     path: "/blog-overview",
     layout: DefaultLayout,
     isPublic: false,
@@ -80,12 +86,6 @@ export default [
     layout: DefaultLayout,
     isPublic: false,
     component: AddNewPost
-  },
-  {
-    path: "/errors",
-    layout: SimpleLayout,
-    isPublic: true,
-    component: Errors
   },
   {
     path: "/components-overview",

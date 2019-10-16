@@ -1,3 +1,4 @@
+import Constants from "../../utils/Constants"
 const axios = require('axios');
 const restClient = axios.create({
   baseURL: 'http://localhost:3001',
@@ -6,17 +7,27 @@ const restClient = axios.create({
 var jwt = require('jsonwebtoken');
 
 export default class AuthService {
-  async login(email, password) {
+  
+  static async login(email, password) {
     try {
       const response = await restClient.post(`/auth/login`, {email, password});
-      localStorage.setItem("app-token", response.data.token);
-      let decoded = jwt.decode(response.data.token, {json: true});
+      localStorage.setItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY, response.data.token);
+      return jwt.decode(response.data.token, {json: true});
       
-      return decoded;
-
     } catch (error) {
       console.log(`Error in function login. Message: ${error}`);
-      return null; //redirect ??
+      throw error;
+    }
+  }
+
+  static async verifyToken(token) {
+    try {
+      await restClient.get(`/auth/validate`);
+      return jwt.decode(token, { json: true });
+
+    } catch (error) {
+      console.log(`Error verifying token. Message: ${error}`);
+      throw error;
     }
   }
 }
