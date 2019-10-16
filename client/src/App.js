@@ -27,12 +27,13 @@ class App extends React.Component {
     const [err, userInfo] = await to(AuthService.verifyToken(token));
     if (!err && userInfo) {
       store.dispatch(setUserInfoAction(userInfo));
-      this.setState({
-        showSppiner: false
-      })
     } else {
       console.log(err);
     }
+
+    this.setState({
+      showSppiner: false
+    });
   }
 
   render() {

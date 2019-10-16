@@ -22,8 +22,6 @@ import { setUserInfoAction } from "../redux/actions/actions";
 import "../styles/login.css";
 var _ = require('lodash');
 
-const authService = new AuthService();
-
 const errorsDefault = {
   email: {
     required: false
@@ -72,9 +70,10 @@ class Login extends React.Component {
       //TODO call service
       const email = e.target.email.value;
       const pass = e.target.password.value;
-      const userInfo = await authService.login(email, pass);
+      const userInfo = await AuthService.login(email, pass);
+      console.log(userInfo);
       if (userInfo != null) {
-        store.dispatch(setUserInfoAction(userInfo));
+        await store.dispatch(setUserInfoAction(userInfo));
         this.props.history.push("/home");
       } else {
         this.setState({

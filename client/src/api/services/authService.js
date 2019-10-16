@@ -30,4 +30,8 @@ export default class AuthService {
       throw error;
     }
   }
+
+  static logout() {
+    localStorage.removeItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
+  }
 }
