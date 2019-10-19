@@ -1,4 +1,5 @@
 import React from "react";
+import to from "await-to-js";
 import { Link, withRouter } from "react-router-dom";
 import {
   Container,
@@ -70,12 +71,13 @@ class Login extends React.Component {
       //TODO call service
       const email = e.target.email.value;
       const pass = e.target.password.value;
-      const userInfo = await AuthService.login(email, pass);
+      const [err, userInfo] = await to(AuthService.login(email, pass));
       console.log(userInfo);
       if (userInfo != null) {
         await store.dispatch(setUserInfoAction(userInfo));
         this.props.history.push("/home");
       } else {
+        console.log(err);
         this.setState({
           showAlert: true
         })
