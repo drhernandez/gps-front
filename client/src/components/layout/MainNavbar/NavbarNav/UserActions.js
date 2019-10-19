@@ -11,6 +11,8 @@ import {
   NavLink
 } from "shards-react";
 
+import AuthService from "../../../../api/services/authService";
+
 
 export default class UserActions extends React.Component {
   constructor(props) {
@@ -34,6 +36,10 @@ export default class UserActions extends React.Component {
     this.setState({
       visible: !this.state.visible
     });
+  }
+
+  logout() {
+    AuthService.logout();
   }
 
   render() {
@@ -61,7 +67,7 @@ export default class UserActions extends React.Component {
             <i className="material-icons">&#xE896;</i> Transactions
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem tag={Link} to="/" className="text-danger">
+          <DropdownItem tag={Link} onClick={() => this.logout()} to="/" className="text-danger">
             <i className="material-icons text-danger">&#xE879;</i> Logout
           </DropdownItem>
         </Collapse>

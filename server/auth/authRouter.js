@@ -16,6 +16,12 @@ router.post('/login', function (req, res) {
   // }
 });
 
+router.get('/validate', function(req, res) {
+  setTimeout(() => {
+    res.status(200).send();
+  }, 500);
+})
+
 module.exports = router
 
 const mock = {
