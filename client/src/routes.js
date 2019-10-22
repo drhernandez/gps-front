@@ -1,23 +1,16 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-
+import {Redirect} from "react-router-dom";
 // Layout Types
-import { SimpleLayout, DefaultLayout } from "./layouts";
-
+import {DefaultLayout, SimpleLayout} from "./layouts";
 // Route Views
-import Login from "./views/Login"; 
+import Login from "./views/Login";
 import ForgotPassword from "./views/ForgotPassword";
 import Register from "./views/Register";
 import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
-import BlogOverview from "./views/BlogOverview";
-import UserProfileLite from "./views/UserProfileLite";
-import AddNewPost from "./views/AddNewPost";
 import Errors from "./views/Errors";
-import ComponentsOverview from "./views/ComponentsOverview";
-import Tables from "./views/Tables";
-import BlogPosts from "./views/BlogPosts";
+import UserProfileLite from "./views/UserProfileLite"
 
 export default [
   {
@@ -70,39 +63,9 @@ export default [
     component: Errors
   },
   {
-    path: "/blog-overview",
-    layout: DefaultLayout,
-    isPublic: false,
-    component: BlogOverview
-  },
-  {
-    path: "/user-profile-lite",
+    path: "/user-profile",
     layout: DefaultLayout,
     isPublic: false,
     component: UserProfileLite
-  },
-  {
-    path: "/add-new-post",
-    layout: DefaultLayout,
-    isPublic: false,
-    component: AddNewPost
-  },
-  {
-    path: "/components-overview",
-    layout: DefaultLayout,
-    isPublic: false,
-    component: ComponentsOverview
-  },
-  {
-    path: "/tables",
-    layout: DefaultLayout,
-    isPublic: false,
-    component: Tables
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    isPublic: false,
-    component: BlogPosts
   }
 ];

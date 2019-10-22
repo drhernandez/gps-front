@@ -14,22 +14,3 @@ export default class UsersService {
     return data;
   }
 }
-
-const mock = [
-  {
-    "id": 10,
-    "user_id": 10,
-    "device_id": 1,
-    "type": "Ford Fiesta",
-    "plate": "AA 383 TI",
-    "model": "2018"
-  },
-  {
-    "id": 2,
-    "user_id": 10,
-    "device_id": 3,
-    "type": "Fiat Argo",
-    "plate": "AB 112 II",
-    "model": "2018"
-  }
-];

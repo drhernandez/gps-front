@@ -1,11 +1,10 @@
 import React from "react";
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Col } from "shards-react";
+import {Col} from "shards-react";
 
 import SidebarMainNavbar from "./SidebarMainNavbar";
-import SidebarSearch from "./SidebarSearch";
 import SidebarNavItems from "./SidebarNavItems";
 
 const mapStateToProps = state => {
@@ -13,7 +12,7 @@ const mapStateToProps = state => {
 };
 
 class MainSidebar extends React.Component {
-  
+
   render() {
     const classes = classNames(
       "main-sidebar",
@@ -30,7 +29,6 @@ class MainSidebar extends React.Component {
         md={{ size: 3 }}
       >
         <SidebarMainNavbar hideLogoText={this.props.hideLogoText} />
-        <SidebarSearch />
         <SidebarNavItems />
       </Col>
     );
