@@ -1,5 +1,4 @@
-import { combineReducers } from 'redux'
-import { TOGGLE_SIDEBAR, SET_USER_INFO } from '../actions/types'
+import {SET_USER_INFO, TOGGLE_SIDEBAR} from '../actions/types'
 import getSidebarNavItems from "../../data/sidebar-nav-items";
 
 const initialState = {
@@ -10,7 +9,7 @@ const initialState = {
 
 // function menuVisible(state = initialState, action) {
 //   switch(action.type) {
-//     case TOGGLE_SIDEBAR: 
+//     case TOGGLE_SIDEBAR:
 //     // return Object.assign(...state, {
 //     //   menuVisible: !state.menuVisible
 //     // })
