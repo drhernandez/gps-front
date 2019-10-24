@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-export default class BaseService {
+class BaseClient {
   constructor() {
     this.restClient = axios.create({
-      baseURL: 'http://localhost:3001',
+      baseURL: 'https://gps-locations-api.herokuapp.com',
       timeout: 2000
     });
   }
@@ -25,11 +25,8 @@ export default class BaseService {
   }
 }
 
-async function _execute(restClient, method, url, headers, body) {
+async function _execute(restClient, method, url, headers = {}, body) {
   try {
-    const accessToken = localStorage.getItem("app-token");
-    if (!headers) headers = {}
-    headers.Authorization = `Bearer ${accessToken}`
     return await restClient.request({
       method: method,
       url: url,
@@ -37,7 +34,11 @@ async function _execute(restClient, method, url, headers, body) {
       data: body
     });
   } catch (error) {
-    throw _parseErrorResponse(error);
+    const err = _parseErrorResponse(error);
+    return {
+      status: err.status,
+      data: err
+    }
   }
 }
 
@@ -52,7 +53,7 @@ function _parseErrorResponse(error) {
       "data": error.response.data
     };
     console.error(`[MESSAGE: Invalid response executing request] [REQUEST: ${JSON.stringify(request)}] [RESPONSE: ${JSON.stringify(response)}]`);
-    return new Error(response.status = 500, response.data.errorCode, response.data.message);
+    return new Error(response.status = 500, response.data.error, response.data.message);
   }
   else if (error.request) {
     const request = {
@@ -76,3 +77,4 @@ class Error {
   }
 }
 
+module.exports = BaseClient

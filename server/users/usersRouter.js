@@ -1,5 +1,13 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const BaseClient = require('../baseClient');
+const restClient = new BaseClient();
+
+router.post('/', async function(req, res, next) {
+  const body = req.body;
+  const response = await restClient.post(`/users`, null, body);
+  res.status(response.status).json(response.data);
+});
 
 router.get('/:id/vehicles', function(req, res, next) {
   setTimeout(() => {

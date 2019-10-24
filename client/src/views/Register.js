@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import to from "await-to-js";
 import {
   Container,
   Row,
@@ -13,6 +14,7 @@ import {
   Button,
   Alert
 } from "shards-react";
+import { UsersService } from "../api/services"
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import "../styles/register.css";
@@ -61,9 +63,10 @@ class Register extends React.Component {
     }
     this.createAccount.bind(this);
     this.invalidateError.bind(this);
+    this.usersService = new UsersService();
   };
 
-  createAccount(e) {
+  async createAccount(e) {
     e.preventDefault()
     e.persist();
     const errors = _.clone(errorsDefault);
@@ -78,25 +81,27 @@ class Register extends React.Component {
     errors.confirmPassword.required = !validations.validateRequired(e.target.confirmPassword.value);
     errors.confirmPassword.valid = !validations.validateEquals(e.target.password.value, e.target.confirmPassword.value);
     errors.address.required = !validations.validateRequired(e.target.address.value);
-    errors.zipcode.required = !validations.validateRequired(e.target.zipcode.value);    
+    errors.zipcode.required = !validations.validateRequired(e.target.zipcode.value);
 
     if (Object.values(errors).find(fieldValidations => Object.values(fieldValidations).find(value => value))) {  // Si alguno de los errores está en true...
       this.setState({
         errors: errors
       })
     } else {
-      console.log(e.target.name.value);
-      console.log(e.target.lastname.value);
-      console.log(e.target.email.value);
-      console.log(e.target.tel.value);
-      console.log(e.target.password.value);
-      console.log(e.target.confirmPassword.value);
-      console.log(e.target.address.value);
-      console.log(e.target.zipcode.value);
+
+      const userData = {
+        name: e.target.name.value,
+        last_name: e.target.lastname.value,
+        // dni: 36354805,
+        email: e.target.email.value,
+        phone: e.target.tel.value,
+        password: e.target.password.value,
+        address: e.target.address.value
+      };
 
       //call service
-      const created = true;
-      if (created) {
+      const [err, user] = await to(this.usersService.createUser(userData));
+      if (user) {
         this.setState({
           snackbar: {
             visible: true,
