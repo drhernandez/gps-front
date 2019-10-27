@@ -63,21 +63,15 @@ class Login extends React.Component {
       this.setState({
         errors: errors
       })
-    } else {
-      console.log(e.target.email.value);
-      console.log(e.target.password.value);
-      console.log("remember me: ", this.state.remember)
-
-      //TODO call service
+    } 
+    else {
       const email = e.target.email.value;
       const pass = e.target.password.value;
       const [err, userInfo] = await to(AuthService.login(email, pass));
-      console.log(userInfo);
-      if (userInfo != null) {
+      if (!err && userInfo != null) {
         await store.dispatch(setUserInfoAction(userInfo));
         this.props.history.push("/home");
       } else {
-        console.log(err);
         this.setState({
           showAlert: true
         })

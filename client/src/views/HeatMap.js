@@ -12,9 +12,9 @@ import {
 } from "shards-react";
 import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/maps/Gmap";
+import to from "await-to-js";
 //services
-import UsersService from "./../api/services/usersService";
-import VehiclesService from "./../api/services/vehiclesService";
+import { UsersService, VehiclesService } from "../api/services"
 
 
 export default class HeatMap extends React.Component {
@@ -30,19 +30,27 @@ export default class HeatMap extends React.Component {
   };
 
   async loadVehicles() {
-    const usersService = new UsersService();
-    const vehicles = await usersService.getVehiclesByUserID(10);
-    this.setState({
-      vehicles: vehicles
-    });
+    const [err, vehicles] = await to(UsersService.getVehiclesByUserID(10));
+    if (!err && vehicles) {
+      this.setState({
+        vehicles: vehicles
+      });
+    }
+    else {
+      console.log(err);
+    }
   }
 
   async getTrackings(vehicleID) {
-    const vehiclesServices = new VehiclesService();
-    const trackings = await vehiclesServices.getTrackings(vehicleID);
-    this.setState({
-      trackings: trackings
-    });
+    const [err, trackings] = await to(VehiclesService.getTrackings(vehicleID));
+    if (!err && trackings) {
+      this.setState({
+        trackings: trackings
+      });
+    }
+    else {
+      console.log(err);
+    }
   }
 
   handleDeviceOnChange(event) {

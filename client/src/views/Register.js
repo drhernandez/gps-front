@@ -63,7 +63,6 @@ class Register extends React.Component {
     }
     this.createAccount.bind(this);
     this.invalidateError.bind(this);
-    this.usersService = new UsersService();
   };
 
   async createAccount(e) {
@@ -99,9 +98,8 @@ class Register extends React.Component {
         address: e.target.address.value
       };
 
-      //call service
-      const [err, user] = await to(this.usersService.createUser(userData));
-      if (user) {
+      const [err, user] = await to(UsersService.createUser(userData));
+      if (!err && user) {
         this.setState({
           snackbar: {
             visible: true,

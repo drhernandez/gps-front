@@ -4,7 +4,7 @@ export default class BaseService {
   constructor() {
     this.restClient = axios.create({
       baseURL: 'http://localhost:3001',
-      timeout: 2000
+      timeout: 4000
     });
   }
 
@@ -52,7 +52,7 @@ function _parseErrorResponse(error) {
       "data": error.response.data
     };
     console.error(`[MESSAGE: Invalid response executing request] [REQUEST: ${JSON.stringify(request)}] [RESPONSE: ${JSON.stringify(response)}]`);
-    return new Error(response.status = 500, response.data.errorCode, response.data.message);
+    return new Error(response.status || 500, response.data.errorCode, response.data.message);
   }
   else if (error.request) {
     const request = {
