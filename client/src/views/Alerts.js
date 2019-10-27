@@ -18,11 +18,10 @@ import {
 } from "shards-react"
 import PageTitle from "./../components/common/PageTitle";
 import Spinner from 'react-bootstrap/Spinner'
-//services
-import UsersService from "./../api/services/usersService";
-import VehiclesService from "./../api/services/vehiclesService";
-import AlertsService from "./../api/services/alertsService";
 import Constants from "../utils/Constants";
+//services
+import { UsersService, VehiclesService, AlertsService } from "../api/services"
+import { to } from "await-to-js";
 
 export default class Alerts extends React.Component {
   constructor(props) {
@@ -47,11 +46,15 @@ export default class Alerts extends React.Component {
   }
 
   async loadVehicles() {
-    const usersService = new UsersService();
-    const vehiclesServices = new VehiclesService();
-    let vehicles = await usersService.getVehiclesByUserID(10);
+    let [err, vehicles] = await to(UsersService.getVehiclesByUserID(10));
+    if (err) {
+      console.log(err);
+    }
     for (let i = 0; i < vehicles.length; i++) {
-      vehicles[i].alerts = await vehiclesServices.getVehicleAlerts(vehicles[i].id)
+      [err, vehicles[i].alerts] = await to(VehiclesService.getVehicleAlerts(vehicles[i].id));
+      if (err) {
+        console.log(err);
+      }
     }
     this.setState({
       vehicles: vehicles,

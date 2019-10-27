@@ -1,6 +1,5 @@
 /*global google*/
 import React from "react";
-// import PropTypes from "prop-types";
 import {
   Container,
   Row,
@@ -14,10 +13,9 @@ import {
 import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/maps/Gmap";
 import { Marker } from "./../components/maps/Marker";
+import to from "await-to-js";
 //services
-import UsersService from "./../api/services/usersService";
-import VehiclesService from "./../api/services/vehiclesService";
-
+import { UsersService, VehiclesService } from "../api/services"
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -32,17 +30,20 @@ export default class Home extends React.Component {
   };
 
   async loadVehicles() {
-    const usersService = new UsersService();
-    const vehicles = await usersService.getVehiclesByUserID(10);
-    this.setState({ 
-      vehicles: vehicles 
-    });
+    const [err, vehicles] = await to(UsersService.getVehiclesByUserID(10));
+    if (!err && vehicles) {
+      this.setState({
+        vehicles: vehicles
+      });
+    }
+    else {
+      console.log(err);
+    }
   }
 
   async getCurrentLocation(vehicleID) {
-    const vehiclesServices = new VehiclesService();
-    const location = await vehiclesServices.getCurrentLocation(vehicleID);
-    if (location !== null || location !== undefined) {
+    const [err, location] = await to(VehiclesService.getCurrentLocation(vehicleID));
+    if (!err && location) {
       const marker = new Marker(location.id, location.label, undefined, google.maps.Animation.DROP, location.lat, location.lng );
       this.setState({
         trackings: [location],
@@ -50,6 +51,9 @@ export default class Home extends React.Component {
         center: marker.position,
         zoom: 15
       })
+    }
+    else {
+      console.log(err);
     }
   }
 

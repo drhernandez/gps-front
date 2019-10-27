@@ -1,57 +1,58 @@
-const axios = require('axios');
-const restClient = axios.create({
-  baseURL: 'http://localhost:3001',
-  timeout: 1000
-});
+import BaseService from './baseService';
+import to from "await-to-js";
+const restClient = new BaseService();
 
-export default class UsersService {
-  async getCurrentLocation(vehicleID) {
-    try {
-      const response = await restClient.get(`/vehicles/${vehicleID}/location`);
-      return response.data;
-    } catch (error) {
-      console.log(`Error in function getCurrentLocation. Message: ${error}`);
-      return null; //redirect ??
+export default class VehiclesService {
+  
+  static async getCurrentLocation(vehicleID) {
+    const [err, response] = await to(restClient.get(`/vehicles/${vehicleID}/location`));
+    if (err) {
+      console.log(`[message: Error getting current location for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
+
+    return response.data;
   }
 
-  async getTrackings(vehicleID) {
-    try {
-      const response = await restClient.get(`/vehicles/${vehicleID}/trackings`);
-      return response.data;
-    } catch (error) {
-      console.log(`Error in function getTrackings. Message: ${error}`);
-      return null; //redirect ??
+  static async getTrackings(vehicleID) {
+    const [err, response] = await to(restClient.get(`/vehicles/${vehicleID}/trackings`));
+    if (err) {
+      console.log(`[message: Error getting trackings for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
+
+    return response.data;
   }
 
-  async getVehicleSpeedAlert(vehicleID) {
-    try {
-      const response = await restClient.get(`/vehicles/${vehicleID}/alerts/speed`);
-      return response.data;
-    } catch (error) {
-      console.log(`Error in function getVehicleSpeedAlert. Message: ${error}`);
-      return null; //redirect ??
+  static async getVehicleSpeedAlert(vehicleID) {
+    const [err, response] = await to(restClient.get(`/vehicles/${vehicleID}/alerts/speed`));
+    if (err) {
+      console.log(`[message: Error getting speed alert for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
+
+    return response.data;
   }
 
-  async getVehicleMovementAlert(vehicleID) {
-    try {
-      const response = await restClient.get(`/vehicles/${vehicleID}/alerts/movement`);
-      return response.data;
-    } catch (error) {
-      console.log(`Error in function getVehicleMovementAlert. Message: ${error}`);
-      return null; //redirect ??
+  static async getVehicleMovementAlert(vehicleID) {
+    const [err, response] = await to(restClient.get(`/vehicles/${vehicleID}/alerts/movement`));
+    if (err) {
+      console.log(`[message: Error getting movement alert for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
+
+    return response.data;
   }
 
-  async getVehicleAlerts(vehicleID) {
-    let [speed, movement] = await Promise.all([this.getVehicleSpeedAlert(vehicleID), this.getVehicleMovementAlert(vehicleID)]);
-    if (speed != null && movement != null) {
-      return { speed, movement }
-    } else {
-      console.log(`Error in function getVehicleAlerts.`);
-      return null; //redirect ??
+  static async getVehicleAlerts(vehicleID) {
+    const [err, [speed, movement]] = await to(Promise.all(
+      [this.getVehicleSpeedAlert(vehicleID), this.getVehicleMovementAlert(vehicleID)])
+    );
+    if (err) {
+      console.log(`[message: Error getting alerts for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
+
+    return { speed, movement }
   }
 };

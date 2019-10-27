@@ -1,34 +1,31 @@
 import Constants from "../../utils/Constants"
-const axios = require('axios');
-const restClient = axios.create({
-  baseURL: 'http://localhost:3001',
-  timeout: 1000
-});
-var jwt = require('jsonwebtoken');
+import BaseService from './baseService';
+import jwt from "jsonwebtoken";
+import to from "await-to-js";
+const restClient = new BaseService();
 
 export default class AuthService {
   
   static async login(email, password) {
-    try {
-      const response = await restClient.post(`/auth/login`, {email, password});
-      localStorage.setItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY, response.data.token);
-      return jwt.decode(response.data.token, {json: true});
-      
-    } catch (error) {
-      console.log(`Error in function login. Message: ${error}`);
-      throw error;
+
+    const [err, response] = await to(restClient.post(`/auth/login`, null, { email, password }));
+    if (err) {
+      console.log(`[message: Error trying to login] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
+
+    localStorage.setItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY, response.data.token);
+    return jwt.decode(response.data.token, { json: true });
   }
 
   static async verifyToken(token) {
-    try {
-      await restClient.get(`/auth/validate`);
-      return jwt.decode(token, { json: true });
-
-    } catch (error) {
-      console.log(`Error verifying token. Message: ${error}`);
-      throw error;
+    const [err] = await to(restClient.get(`/auth/validate`));
+    if (err) {
+      console.log(`[message: Error validating token] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
+
+    return jwt.decode(token, { json: true });
   }
 
   static logout() {
