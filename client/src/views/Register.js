@@ -27,6 +27,9 @@ const errorsDefault = {
   lastname: {
     required: false
   },
+  dni: {
+    required: false
+  },
   email: {
     required: false,
     valid: false
@@ -71,6 +74,7 @@ class Register extends React.Component {
     const errors = _.clone(errorsDefault);
     errors.name.required = !validations.validateRequired(e.target.name.value);
     errors.lastname.required = !validations.validateRequired(e.target.lastname.value);
+    errors.dni.required = !validations.validateRequired(e.target.dni.value);
     errors.email.required = !validations.validateRequired(e.target.email.value);
     errors.email.valid = !validations.validateEmail(e.target.email.value);
     errors.tel.required = !validations.validateRequired(e.target.tel.value);
@@ -91,7 +95,7 @@ class Register extends React.Component {
       const userData = {
         name: e.target.name.value,
         last_name: e.target.lastname.value,
-        // dni: 36354805,
+        dni: e.target.dni.value,
         email: e.target.email.value,
         phone: e.target.tel.value,
         password: e.target.password.value,
@@ -170,8 +174,34 @@ class Register extends React.Component {
                       </Col>
                     </Row>
                     <Row form>
+                      {/* DNI */}
+                      <Col md="6" className="form-group">
+                        <label htmlFor="dni">DNI</label>
+                        <FormInput
+                          id="dni"
+                          placeholder="156456237"
+                          invalid={this.state.errors.dni.required}
+                          onChange={() => this.invalidateError("dni")}
+                        />
+                        <FormFeedback>Campo requerido</FormFeedback>
+                      </Col>
+                      {/* Teléfono */}
+                      <Col md="6" className="form-group">
+                        <label htmlFor="tel">Teléfono</label>
+                        <FormInput
+                          type="tel"
+                          id="tel"
+                          placeholder="Teléfono"
+                          invalid={this.state.errors.tel.required || this.state.errors.tel.valid}
+                          onChange={() => this.invalidateError("tel")}
+                        />
+                        {this.state.errors.tel.required && <FormFeedback>Campo requerido</FormFeedback>}
+                        {this.state.errors.tel.valid && <FormFeedback>Solo se permiten números</FormFeedback>}
+                      </Col>
+                    </Row>
+                    <Row form>
                       {/* Email */}
-                      <Col md="7" className="form-group">
+                      <Col className="form-group">
                         <label htmlFor="email">Email</label>
                         <FormInput
                           type="email"
@@ -183,19 +213,6 @@ class Register extends React.Component {
                         />
                         {this.state.errors.email.required && <FormFeedback>Campo requerido</FormFeedback>}
                         {this.state.errors.email.valid && <FormFeedback>La dirección de correo no es válida. Una dirección válida se vería así: micorreo@dominio.com</FormFeedback>}
-                      </Col>
-                      {/* Teléfono */}
-                      <Col md="5" className="form-group">
-                        <label htmlFor="tel">Teléfono</label>
-                        <FormInput
-                          type="tel"
-                          id="tel"
-                          placeholder="Teléfono"
-                          invalid={this.state.errors.tel.required || this.state.errors.tel.valid}
-                          onChange={() => this.invalidateError("tel")}
-                        />
-                        {this.state.errors.tel.required && <FormFeedback>Campo requerido</FormFeedback>}
-                        {this.state.errors.tel.valid && <FormFeedback>Solo se permiten números</FormFeedback>}
                       </Col>
                     </Row>
                     <Row form>
