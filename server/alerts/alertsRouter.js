@@ -11,8 +11,8 @@ router.put('/speed/:id', async function (req, res) {
   }
   const speedAlertId = req.params.id;
   const body = req.body;
-  
-  const [err, response] = await to(restClient.put(`/speeds/${speedAlertId}`, headers, body));
+
+  const [err, response] = await to(restClient.put(`/alerts/speeds/${speedAlertId}`, headers, body));
   if (err) {
     console.log(`[message: Error trying to update speed alert with id: ${speedAlertId}] [error: ${err.message}]`);
     res.status(500).json(err.message);
@@ -28,8 +28,8 @@ router.put('/movement/:id', async function (req, res) {
   }
   const movementAlertId = req.params.id;
   const body = req.body;
-
-  const [err, response] = await to(restClient.put(`/movements/${movementAlertId}`, headers, body));
+  
+  const [err, response] = await to(restClient.put(`/alerts/movements/${movementAlertId}`, headers, body));
   if (err) {
     console.log(`[message: Error trying to update movement alert with id: ${movementAlertId}] [error: ${err.message}]`);
     res.status(500).json(err.message);

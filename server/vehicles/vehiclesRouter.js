@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const to = require("await-to-js").default;
+const BaseClient = require('../baseClient');
+const restClient = new BaseClient();
 
 router.get('/:id/location', async function(req, res) {
   
