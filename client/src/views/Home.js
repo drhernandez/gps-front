@@ -14,8 +14,8 @@ import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/maps/Gmap";
 import { Marker } from "./../components/maps/Marker";
 import to from "await-to-js";
-//services
 import { UsersService, VehiclesService } from "../api/services"
+import store from "../redux/store";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -30,7 +30,8 @@ export default class Home extends React.Component {
   };
 
   async loadVehicles() {
-    const [err, vehicles] = await to(UsersService.getVehiclesByUserID(10));
+    const userId = store.getState().userInfo.userId;
+    const [err, vehicles] = await to(UsersService.getVehiclesByUserID(userId));
     if (!err && vehicles) {
       this.setState({
         vehicles: vehicles

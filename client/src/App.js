@@ -24,11 +24,13 @@ class App extends React.Component {
 
   async componentDidMount() {
     const token = localStorage.getItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
-    const [err, userInfo] = await to(AuthService.verifyToken(token));
-    if (!err && userInfo) {
-      store.dispatch(setUserInfoAction(userInfo));
-    } else {
-      console.log(err);
+    if (token) {
+      const [err, userInfo] = await to(AuthService.verifyToken(token));
+      if (!err && userInfo) {
+        store.dispatch(setUserInfoAction(userInfo));
+      } else {
+        console.log(err);
+      }
     }
 
     this.setState({

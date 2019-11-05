@@ -19,9 +19,12 @@ router.post('/', async function(req, res, next) {
 
 router.get('/:id/vehicles', async function(req, res, next) {
 
+  const headers = {
+    "Authorization": req.header("authorization")
+  }
   const userId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/users/${userId}/vehicles`));
+  const [err, response] = await to(restClient.get(`/users/${userId}/vehicles`, headers));
   if (err) {
     console.log(`[message: Error trying to get vehicles for user ${userId}] [error: ${err.message}]`);
     res.status(500).json(err.message);

@@ -15,7 +15,7 @@ const MainNavbar = ({ layout, stickyTop }) => {
 
   return (
     <div className={classes}>
-      <Container className="p-0">
+      <Container className="p-0" style={{maxWidth: '100%'}}>
         <Navbar type="light" className="d-flex flex-row-reverse  p-0">
           <NavbarNav />
           <NavbarToggle />

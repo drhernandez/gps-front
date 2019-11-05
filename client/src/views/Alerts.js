@@ -22,6 +22,7 @@ import Constants from "../utils/Constants";
 //services
 import { UsersService, VehiclesService, AlertsService } from "../api/services"
 import { to } from "await-to-js";
+import store from "../redux/store";
 
 export default class Alerts extends React.Component {
   constructor(props) {
@@ -46,7 +47,8 @@ export default class Alerts extends React.Component {
   }
 
   async loadVehicles() {
-    let [err, vehicles] = await to(UsersService.getVehiclesByUserID(10));
+    const userId = store.getState().userInfo.userId;
+    let [err, vehicles] = await to(UsersService.getVehiclesByUserID(userId));
     if (err) {
       console.log(err);
     }
@@ -63,12 +65,11 @@ export default class Alerts extends React.Component {
   }
 
   async updateAlerts(alerts) {
-    const alertsService = new AlertsService();
-    const updated = await alertsService.updateAlerts(alerts);
+    const [err] = await to(AlertsService.updateAlerts(alerts));
     this.setState({
       snackbar: {
         visible: true,
-        type: updated ? Constants.Themes.SUCCESS : Constants.Themes.ERROR
+        type: !err ? Constants.Themes.SUCCESS : Constants.Themes.ERROR
       }
     });
     setTimeout(() => {
@@ -142,14 +143,14 @@ export default class Alerts extends React.Component {
                             Alarma de velocidad
                           </strong>
                           <Row>
-                            <Col lg="12" xl="4" className="px-3 py-1">
+                            <Col lg="12" xl="5" className="px-3 py-1">
                               <FormCheckbox toggle small
                                             checked={vehicle.alerts.speed.active}
                                             onChange={() => this.toogleAlert(vehicle.alerts.speed)}>
                                 {vehicle.alerts.speed.active ? 'Activada' : 'Desactivada'}
                               </FormCheckbox>
                             </Col>
-                            <Col lg="12" xl="8" className="px-3">
+                            <Col lg="12" xl="7" className="px-3">
                               <InputGroup className="mb-3">
                                 <InputGroupAddon type="prepend">
                                   <InputGroupText>Velocidad max</InputGroupText>

@@ -15,7 +15,7 @@ import Gmap from "./../components/maps/Gmap";
 import to from "await-to-js";
 //services
 import { UsersService, VehiclesService } from "../api/services"
-
+import store from "../redux/store";
 
 export default class HeatMap extends React.Component {
   constructor(props) {
@@ -30,7 +30,8 @@ export default class HeatMap extends React.Component {
   };
 
   async loadVehicles() {
-    const [err, vehicles] = await to(UsersService.getVehiclesByUserID(10));
+    const userId = store.getState().userInfo.userId;
+    const [err, vehicles] = await to(UsersService.getVehiclesByUserID(userId));
     if (!err && vehicles) {
       this.setState({
         vehicles: vehicles
@@ -40,7 +41,7 @@ export default class HeatMap extends React.Component {
       console.log(err);
     }
   }
-
+  
   async getTrackings(vehicleID) {
     const [err, trackings] = await to(VehiclesService.getTrackings(vehicleID));
     if (!err && trackings) {

@@ -16,7 +16,10 @@ router.post('/login', async function (req, res) {
 });
 
 router.get('/validate', async function(req, res) {
-  const [err, response] = await to(restClient.get(`/auth/validate`));
+  const headers = {
+    "Authorization": req.header("authorization")
+  }
+  const [err, response] = await to(restClient.get(`/auth/validate`, headers));
   if (err) {
     console.log(`[message: Error trying to validate token] [error: ${err.message}]`);
     res.status(500).json(err.message);
