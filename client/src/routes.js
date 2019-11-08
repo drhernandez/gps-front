@@ -5,6 +5,7 @@ import {DefaultLayout, SimpleLayout} from "./layouts";
 // Route Views
 import Login from "./views/Login";
 import ForgotPassword from "./views/ForgotPassword";
+import ResetPassword from "./views/ResetPassword";
 import Register from "./views/Register";
 import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
@@ -39,6 +40,18 @@ export default [
     component: ForgotPassword
   },
   {
+    path: "/reset-password/:recovery_id",
+    layout: SimpleLayout,
+    isPublic: true,
+    component: ResetPassword
+  },
+  {
+    path: "/errors",
+    layout: SimpleLayout,
+    isPublic: true,
+    component: Errors
+  },
+  {
     path: "/home",
     layout: DefaultLayout,
     isPublic: false,
@@ -55,12 +68,6 @@ export default [
     layout: DefaultLayout,
     isPublic: false,
     component: Alerts
-  },
-  {
-    path: "/errors",
-    layout: SimpleLayout,
-    isPublic: true,
-    component: Errors
   },
   {
     path: "/user-profile",
