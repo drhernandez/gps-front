@@ -5,6 +5,7 @@ const BaseClient = require('../baseClient');
 const restClient = new BaseClient();
 
 router.post('/login', async function (req, res) {
+  
   const body = req.body;
   const [err, response] = await to(restClient.post(`/auth/login`, null, body));
   if (err) {
@@ -16,6 +17,7 @@ router.post('/login', async function (req, res) {
 });
 
 router.get('/validate', async function(req, res) {
+  
   const headers = {
     "Authorization": req.header("authorization")
   }
@@ -28,4 +30,4 @@ router.get('/validate', async function(req, res) {
   }
 })
 
-module.exports = router
+module.exports = router;
