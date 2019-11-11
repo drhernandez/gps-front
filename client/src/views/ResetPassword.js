@@ -40,10 +40,14 @@ class ResetPassword extends React.Component {
       errors: errorsDefault,
       showSppiner: true,
       showAlert: false,
+      passwordUpdated: false,
+      alertSuccessText: "Has recuperado tu contraseña correctamente! Te redireccionaremos a la página de ingreso.",
+      alertErrorText: "Ocurrió un error. Intentalo de nuevo!",
       isExecutingRequest: false
     }
 
     this.validateRecoveryId.bind(this);
+    this.hasFieldWithError.bind(this);
     this.changePassword.bind(this);
     this.invalidateError.bind(this);
   };
@@ -61,39 +65,48 @@ class ResetPassword extends React.Component {
     })
   }
 
+  hasFieldWithError(errors) {
+    return Object.values(errors).find(
+      fieldValidations => Object.values(fieldValidations).find(value => value)
+    )
+  }
+
   async changePassword(e) {
-    this.setState({
-      isExecutingRequest: true
-    })
     e.preventDefault()
     e.persist();
+    this.setState({
+      isExecutingRequest: true
+    });
     const errors = _.clone(errorsDefault);
     errors.password.required = !validations.validateRequired(e.target.password.value);
     errors.password.valid = !validations.validatePassword(e.target.password.value, validations.passwordStrenghts.PASSWORD_STRENGHT_2);
     errors.confirmPassword.required = !validations.validateRequired(e.target.confirmPassword.value);
     errors.confirmPassword.valid = !validations.validateEquals(e.target.password.value, e.target.confirmPassword.value);
 
-    if (Object.values(errors).find(fieldValidations => Object.values(fieldValidations).find(value => value))) {  // Si alguno de los errores está en true...
+    if (this.hasFieldWithError(errors)) {
       this.setState({
-        errors: errors
+        errors: errors,
+        isExecutingRequest: false
       })
     }
     else {
       const recoveryId = this.props.match.params.recovery_id;
       const password = e.target.password.value;
       const [err] = await to(RecoveryService.resetPassword(recoveryId, password));
-      if (!err) {
-        this.props.history.push("/signin");
-      } else {
+
+      this.setState({
+        showAlert: true,
+        passwordUpdated: !err,
+        isExecutingRequest: false
+      })
+      setTimeout(() => {
         this.setState({
-          showAlert: true
-        })
-        setTimeout(() => {
-          this.setState({
-            showAlert: false
-          })
-        }, 4000);
-      }
+          showAlert: false
+        });
+        if (!err) {
+          this.props.history.push("/signin");
+        }
+      }, 4000);
     }
   }
 
@@ -150,14 +163,15 @@ class ResetPassword extends React.Component {
                     </FormGroup>
                     <FormGroup>
                       {
-                        this.state.isExecutingRequest ? 
+                        this.state.isExecutingRequest && !this.hasFieldWithError(this.state.errors) ? 
                           <Spinner animation="border" variant="primary" className="d-table mx-auto" /> :
                           <Button type="submit" pill className="d-table mx-auto">Cambiar contraseña</Button>  
                       }
                     </FormGroup>
                     <FormGroup>
-                      <Alert className="mb-3" open={this.state.showAlert} theme={constants.Themes.ERROR}>
-                        Ocurrió un error. Intentá de nuevo
+                    <Alert className="mb-3" open={this.state.showAlert}
+                      theme={this.state.passwordUpdated ? constants.Themes.SUCCESS : constants.Themes.ERROR}>
+                      {this.state.passwordUpdated ? this.state.alertSuccessText : this.state.alertErrorText}
                     </Alert>
                     </FormGroup>
                   </Form>
@@ -169,6 +183,12 @@ class ResetPassword extends React.Component {
               </div>
             </Col>
           </Row>
+        }
+
+        {!this.state.showSppiner && !this.state.isRecoveryIdValid &&
+          <Alert theme="danger">
+            Lo sentimos, este link es inválido o ya ha sido utilizado.
+          </Alert>
         }
       </Container>
     );
