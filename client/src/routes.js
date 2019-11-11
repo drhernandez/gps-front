@@ -19,8 +19,7 @@ export default [
     exact: true,
     layout: DefaultLayout,
     isPublic: true,
-    // component: () => <Redirect to="/signin" />
-    component: () => <Redirect to="/reset-password/:recovery_id" />
+    component: () => <Redirect to="/signin" />
   },
   {
     path: "/signin",
