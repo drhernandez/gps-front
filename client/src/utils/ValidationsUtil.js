@@ -3,7 +3,8 @@ import { isNullOrUndefined } from "util";
 const MIN_LENGHT = "(?=.{8,})";
 const HAVE_UPPERCASE = "(?=.*[A-Z])";
 const HAVE_NUMERIC = "(?=.*[0-9])";
-const HAVE_SPECIAL_CHARACTERS = "(?=.[!@#\$%\^&])";
+// const HAVE_SPECIAL_CHARACTERS = "(?=.[!@#\$%\^&])";
+const HAVE_SPECIAL_CHARACTERS = "(?=.[!@#%&])";
 
 const PASSWORD_STRENGHT_1 = [MIN_LENGHT];
 const PASSWORD_STRENGHT_2 = PASSWORD_STRENGHT_1.concat(HAVE_NUMERIC, HAVE_UPPERCASE);
@@ -19,7 +20,8 @@ function validateNumber(value) {
 
 function validateEmail(value) {
   // return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
-  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(value);
+  // return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(value);
+  return /^\w+([-]?\w+)*@\w+([-]?\w+)+$/.test(value);
 }
 
 function validateEquals(value1, value2) {
