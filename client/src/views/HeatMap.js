@@ -11,7 +11,7 @@ import {
   Form,
 } from "shards-react";
 import PageTitle from "./../components/common/PageTitle";
-import Gmap from "./../components/maps/Gmap";
+import Gmap from "./../components/common/maps/Gmap";
 import to from "await-to-js";
 //services
 import { UsersService, VehiclesService } from "../api/services"

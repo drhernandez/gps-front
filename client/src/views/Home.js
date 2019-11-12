@@ -11,8 +11,8 @@ import {
   Form,
 } from "shards-react";
 import PageTitle from "./../components/common/PageTitle";
-import Gmap from "./../components/maps/Gmap";
-import { Marker } from "./../components/maps/Marker";
+import Gmap from "./../components/common/maps/Gmap";
+import { Marker } from "./../components/common/maps/Marker";
 import to from "await-to-js";
 import { UsersService, VehiclesService } from "../api/services"
 import store from "../redux/store";
