@@ -106,7 +106,7 @@ class ResetPassword extends React.Component {
         if (!err) {
           this.props.history.push("/signin");
         }
-      }, 4000);
+      }, 6000);
     }
   }
 

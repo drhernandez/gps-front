@@ -124,11 +124,6 @@ class Login extends React.Component {
                     <FormFeedback>Campo requerido</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <FormCheckbox checked={this.state.remember} onChange={() => this.toogleCheckbox()}>
-                      Recordarme
-                    </FormCheckbox>
-                  </FormGroup>
-                  <FormGroup>
                     <Button type="submit" pill className="d-table mx-auto">Iniciar Sesión</Button>
                   </FormGroup>
                   <FormGroup>

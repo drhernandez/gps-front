@@ -31,7 +31,7 @@
     "start": "react-scripts start",
     "build:prod": "cross-env REACT_APP_BASENAME=s.g.l. REACT_APP_GAID=UA-115105611-1 npm run build",
     "build": "cross-env REACT_APP_BASENAME=s.g.l. react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +44,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "jest": "^24.9.0",
+    "react-test-renderer": "^16.12.0",
     "redux-devtools": "^3.5.0"
   }
 }

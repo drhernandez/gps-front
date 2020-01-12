@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import to from "await-to-js";
 import Constants from "./utils/Constants";
 import routes from "./routes";
-import withTracker from "./withTracker";
 import withAuth from "./withAuth";
 import AuthService from "./api/services/authService";
 import store from "./redux/store";
@@ -57,13 +56,13 @@ class App extends React.Component {
                   exact={route.exact}
                   component={
                     withAuth(
-                      withTracker(props => {
+                      props => {
                         return (
                           <route.layout {...props}>
                             <route.component {...props} />
                           </route.layout>
                         );
-                      }), route.isPublic
+                      }, route.isPublic
                     )
                   }
                 />

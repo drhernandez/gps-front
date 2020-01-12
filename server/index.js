@@ -12,6 +12,15 @@ const app = express()
 app.use(cookieParser());
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));   // to support URL-encoded bodies
+app.use(function (req, res, next) {
+  res.set({
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+    'Access-Control-Allow-Headers': '*',
+    'Set-Cookie': 'HttpOnly;Secure;SameSite=Strict'
+  });
+  next();
+});
 
 app.use("/alerts", alertsRouter);
 app.use("/users", usersRouter);
