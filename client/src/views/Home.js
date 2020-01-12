@@ -63,7 +63,7 @@ export default class Home extends React.Component {
     this.getCurrentLocation(event.target.value);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadVehicles();
   }
 

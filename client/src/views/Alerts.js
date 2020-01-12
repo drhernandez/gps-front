@@ -42,7 +42,7 @@ export default class Alerts extends React.Component {
     this.handleOnchangeSpeed = this.handleOnchangeSpeed.bind(this);
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     this.loadVehicles();
   }
 

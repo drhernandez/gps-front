@@ -59,7 +59,7 @@ export default class HeatMap extends React.Component {
     this.getTrackings(event.target.value);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadVehicles();
   }
 
