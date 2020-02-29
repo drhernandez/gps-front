@@ -12,67 +12,93 @@ import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
 import Errors from "./views/Errors";
 import UserProfileLite from "./views/UserProfileLite"
+import store from "./redux/store";
+import { removeUserInfoAction } from "./redux/actions/actions"
+import { CLIENT, ADMIN } from "./utils/Roles";
 
 export default [
-  {
-    path: "/",
-    exact: true,
-    layout: DefaultLayout,
-    isPublic: true,
-    component: () => <Redirect to="/signin" />
-  },
   {
     path: "/signin",
     layout: SimpleLayout,
     isPublic: true,
-    component: Login
+    component: Login,
+    roles: []
   },
   {
     path: "/signup",
     layout: SimpleLayout,
     isPublic: true,
-    component: Register
+    component: Register,
+    roles: []
   },
   {
     path: "/forgot-password",
     layout: SimpleLayout,
     isPublic: true,
-    component: ForgotPassword
+    component: ForgotPassword,
+    roles: []
   },
   {
     path: "/reset-password/:recovery_id",
     layout: SimpleLayout,
     isPublic: true,
-    component: ResetPassword
+    component: ResetPassword,
+    roles: []
   },
   {
     path: "/errors",
     layout: SimpleLayout,
     isPublic: true,
-    component: Errors
+    component: Errors,
+    roles: []
   },
   {
     path: "/home",
     layout: DefaultLayout,
     isPublic: false,
-    component: Home
+    component: Home,
+    roles: [CLIENT]
   },
   {
     path: "/heat-map",
     layout: DefaultLayout,
     isPublic: false,
-    component: HeatMap
+    component: HeatMap,
+    roles: [CLIENT]
   },
   {
     path: "/alerts",
     layout: DefaultLayout,
     isPublic: false,
-    component: Alerts
+    component: Alerts,
+    roles: [CLIENT]
   },
   {
     path: "/user-profile",
     layout: DefaultLayout,
     isPublic: false,
-    component: UserProfileLite
+    component: UserProfileLite,
+    roles: [CLIENT, ADMIN]
+  },
+  {
+    path: "/",
+    exact: true,
+    layout: DefaultLayout,
+    isPublic: true,
+    component: (props) => {
+      return props.userInfo.role.name === ADMIN ? <Redirect to="/user-profile" /> : <Redirect to="/home" />
+    },
+    roles: []
+  },
+  {
+    path: "/logout",
+    exact: true,
+    layout: DefaultLayout,
+    isPublic: true,
+    component: (props) => {
+      store.dispatch(removeUserInfoAction());
+      return <Redirect to="/signin" />
+    },
+    roles: []
   }
 ];

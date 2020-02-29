@@ -38,15 +38,15 @@ export default class UserActions extends React.Component {
     });
   }
 
-  logout() {
-    AuthService.logout();
+  async logout() {
+    await AuthService.logout();
   }
 
   render() {
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="d-flex align-items-center h-100 text-nowrap px-3">
-          <span className="d-none d-inline-block">{this.state.userInfo && this.state.userInfo.userName + " " + this.state.userInfo.userLastName}</span>
+          <span className="d-none d-inline-block">{this.state.userInfo && this.state.userInfo.name + " " + this.state.userInfo.lastName}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="user-profile">
@@ -56,7 +56,7 @@ export default class UserActions extends React.Component {
             <i className="material-icons">&#xE8B8;</i> Edit Profile
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem tag={Link} onClick={() => this.logout()} to="/" className="text-danger">
+          <DropdownItem tag={Link} onClick={() => this.logout()} to="/logout" className="text-danger">
             <i className="material-icons text-danger">&#xE879;</i> Logout
           </DropdownItem>
         </Collapse>

@@ -9,7 +9,6 @@ import {
   CardBody,
   FormInput,
   FormGroup,
-  FormCheckbox,
   FormFeedback,
   Form,
   Button,
@@ -67,10 +66,10 @@ class Login extends React.Component {
     else {
       const email = e.target.email.value;
       const pass = e.target.password.value;
-      const [err, userInfo] = await to(AuthService.login(email, pass));
-      if (!err && userInfo != null) {
-        await store.dispatch(setUserInfoAction(userInfo));
-        this.props.history.push("/home");
+      const [err, tokenInfo] = await to(AuthService.login(email, pass));
+      if (!err && tokenInfo != null) {
+        await store.dispatch(setUserInfoAction(tokenInfo.user));
+        this.props.history.push("/");
       } else {
         this.setState({
           showAlert: true

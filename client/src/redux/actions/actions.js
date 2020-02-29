@@ -1,4 +1,4 @@
-import { TOGGLE_SIDEBAR, SET_USER_INFO } from './types';
+import { TOGGLE_SIDEBAR, SET_USER_INFO, REMOVE_USER_INFO } from './types';
 
 function toogleSidebarAction() {
   return {
@@ -13,7 +13,14 @@ function setUserInfoAction(userInfo) {
   }
 }
 
+function removeUserInfoAction() {
+  return {
+    type: REMOVE_USER_INFO
+  }
+}
+
 export {
   toogleSidebarAction,
-  setUserInfoAction
+  setUserInfoAction,
+  removeUserInfoAction
 };

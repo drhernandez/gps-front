@@ -3,7 +3,7 @@ const axios = require('axios');
 class BaseClient {
   constructor() {
     this.restClient = axios.create({
-      baseURL: 'https://gps-locations-api.herokuapp.com',
+      baseURL: 'https://gps-auth.herokuapp.com',
       timeout: 3000
     });
   }
@@ -25,8 +25,10 @@ class BaseClient {
   }
 }
 
-async function _execute(restClient, method, url, headers = {}, body) {
+async function _execute(restClient, method, url, headers, body) {
   try {
+    if (headers === null || headers === undefined) headers = {}
+    headers['content-type'] = "application/json";
     return await restClient.request({
       method: method,
       url: url,

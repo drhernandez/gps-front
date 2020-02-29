@@ -24,9 +24,9 @@ class App extends React.Component {
   async componentDidMount() {
     const token = localStorage.getItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
     if (token) {
-      const [err, userInfo] = await to(AuthService.verifyToken(token));
-      if (!err && userInfo) {
-        store.dispatch(setUserInfoAction(userInfo));
+      const [err, tokenInfo] = await to(AuthService.verifyToken(token));
+      if (!err && tokenInfo) {
+        await store.dispatch(setUserInfoAction(tokenInfo.user));
       } else {
         console.log(err);
       }
@@ -62,7 +62,7 @@ class App extends React.Component {
                             <route.component {...props} />
                           </route.layout>
                         );
-                      }, route.isPublic
+                      }, route
                     )
                   }
                 />
