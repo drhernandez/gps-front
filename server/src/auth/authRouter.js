@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const to = require("await-to-js").default;
-const BaseClient = require('../baseClient');
-const restClient = new BaseClient();
+const restClient = require("../clients").AuthClient;
 
 router.post('/login', async function (req, res) {
   
@@ -18,10 +17,7 @@ router.post('/login', async function (req, res) {
 
 router.get('/validate', async function(req, res) {
   
-  const headers = {
-    "x-access-token": req.header("x-access-token")
-  }
-  const [err, response] = await to(restClient.post(`/authentication/validate`, headers));
+  const [err, response] = await to(restClient.post(`/authentication/validate`, req.headers));
   if (err) {
     console.log(`[message: Error trying to validate token] [error: ${err.message}]`);
     res.status(500).json(err.message);

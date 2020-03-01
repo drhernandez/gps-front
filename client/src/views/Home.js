@@ -30,7 +30,7 @@ export default class Home extends React.Component {
   };
 
   async loadVehicles() {
-    const userId = store.getState().userInfo.userId;
+    const userId = store.getState().userInfo.id;
     const [err, vehicles] = await to(UsersService.getVehiclesByUserID(userId));
     if (!err && vehicles) {
       this.setState({

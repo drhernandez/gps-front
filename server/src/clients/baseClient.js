@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 class BaseClient {
-  constructor() {
+  constructor(baseURL) {
     this.restClient = axios.create({
-      baseURL: 'https://gps-auth.herokuapp.com',
+      baseURL: baseURL,
       timeout: 3000
     });
   }

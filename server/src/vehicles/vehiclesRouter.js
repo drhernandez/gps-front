@@ -1,17 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const to = require("await-to-js").default;
-const BaseClient = require('../baseClient');
-const restClient = new BaseClient();
+const restClient = require("../clients").ApiClient;
+
+router.get('/:userId/vehicles', async function (req, res, next) {
+
+  const userId = req.params.userId;
+
+  const [err, response] = await to(restClient.get(`/users/${userId}/vehicles`, req.headers));
+  if (err) {
+    console.log(`[message: Error trying to get vehicles for user ${userId}] [error: ${err.message}]`);
+    res.status(500).json(err.message);
+  } else {
+    res.status(response.status).json(response.data);
+  }
+});
 
 router.get('/:id/location', async function(req, res) {
   
-  const headers = {
-    "Authorization": req.header("authorization")
-  }
   const vehicleId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/location`, headers));
+  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/location`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get location for vehicle ${vehicleId}] [error: ${err.message}]`);
     res.status(500).json(err.message);
@@ -22,12 +31,9 @@ router.get('/:id/location', async function(req, res) {
 
 router.get('/:id/trackings', async function(req, res) {
   
-  const headers = {
-    "Authorization": req.header("authorization")
-  }
   const vehicleId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/trackings`, headers));
+  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/trackings`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get trackings for vehicle ${vehicleId}] [error: ${err.message}]`);
     res.status(500).json(err.message);
@@ -38,12 +44,9 @@ router.get('/:id/trackings', async function(req, res) {
 
 router.get('/:id/alerts/speed', async function(req, res) {
 
-  const headers = {
-    "Authorization": req.header("authorization")
-  }
   const vehicleId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/alerts/speed`, headers));
+  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/alerts/speed`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get speed alert for vehicle ${vehicleId}] [error: ${err.message}]`);
     res.status(500).json(err.message);
@@ -54,12 +57,9 @@ router.get('/:id/alerts/speed', async function(req, res) {
 
 router.get('/:id/alerts/movement', async function (req, res) {
 
-  const headers = {
-    "Authorization": req.header("authorization")
-  }
   const vehicleId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/alerts/movement`, headers));
+  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/alerts/movement`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get movement alert for vehicle ${vehicleId}] [error: ${err.message}]`);
     res.status(500).json(err.message);
