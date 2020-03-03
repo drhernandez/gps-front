@@ -1,4 +1,4 @@
 const BaseClient = require("./baseClient");
-const restClient = new BaseClient('https://gps-auth.herokuapp.com');
+const restClient = new BaseClient('http://gps-auth.herokuapp.com');
 
 module.exports = restClient;

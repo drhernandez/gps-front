@@ -1,26 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const to = require("await-to-js").default;
-const restClient = require("../clients").ApiClient;
-
-router.get('/:userId/vehicles', async function (req, res, next) {
-
-  const userId = req.params.userId;
-
-  const [err, response] = await to(restClient.get(`/users/${userId}/vehicles`, req.headers));
-  if (err) {
-    console.log(`[message: Error trying to get vehicles for user ${userId}] [error: ${err.message}]`);
-    res.status(500).json(err.message);
-  } else {
-    res.status(response.status).json(response.data);
-  }
-});
+const apiClient = require("../clients").ApiClient;
 
 router.get('/:id/location', async function(req, res) {
   
   const vehicleId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/location`, req.headers));
+  const [err, response] = await to(apiClient.get(`/vehicles/${vehicleId}/location`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get location for vehicle ${vehicleId}] [error: ${err.message}]`);
     res.status(500).json(err.message);
@@ -33,7 +20,7 @@ router.get('/:id/trackings', async function(req, res) {
   
   const vehicleId = req.params.id;
 
-  const [err, response] = await to(restClient.get(`/vehicles/${vehicleId}/trackings`, req.headers));
+  const [err, response] = await to(apiClient.get(`/vehicles/${vehicleId}/trackings`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get trackings for vehicle ${vehicleId}] [error: ${err.message}]`);
     res.status(500).json(err.message);

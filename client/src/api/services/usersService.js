@@ -13,14 +13,4 @@ export default class UsersService {
     
     return response.data;
   }
-
-  static async getVehiclesByUserID(userID) {
-    const [err, response] = await to(restClient.get(`/users/${userID}/vehicles`));
-    if (err) {
-      console.log(`[message: Error getting vehicles info for user ${userID}] [error: ${JSON.stringify(err)}]`);
-      throw err;
-    }
-
-    return response.data;
-  }
 }

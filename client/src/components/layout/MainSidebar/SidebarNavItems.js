@@ -11,8 +11,12 @@ const mapStateToProps = state => {
 
 const getNavItems = (props) => {
   const state = store.getState();
-  const userRole = state.userInfo.role.name;
-  return props.navItems.filter(navItem => navItem.roles.includes(userRole));
+  if (state.userInfo != null) {
+    const userRole = state.userInfo.role.name;
+    return props.navItems.filter(navItem => navItem.roles.includes(userRole));
+  } else {
+    return [];
+  }
 }
 
 class SidebarNavItems extends React.Component {

@@ -13,9 +13,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));   // to support URL-encoded bodies
 app.use(function (req, res, next) {
-  console.log(req.headers);
   res.set({
-    'Access-Control-Allow-Origin': 'http://localhost:3000',
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': '*',
     'Access-Control-Allow-Headers': '*',
     'Set-Cookie': 'HttpOnly;Secure;SameSite=Strict'
