@@ -21,7 +21,8 @@ router.get('/:userId/vehicles', async function (req, res, next) {
 
   const userId = req.params.userId;
 
-  const [err, response] = await to(apiClient.get(`/users/${userId}/vehicles`, req.headers));
+  // const [err, response] = await to(apiClient.get(`/users/${userId}/vehicles`, req.headers));
+  const [err, response] = await to(apiClient.get(`/vehicles`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get vehicles for user ${userId}] [error: ${err.message}]`);
     res.status(500).json(err.message);

@@ -13,7 +13,7 @@ export default class AuthService {
       console.log(`[message: Error trying to login] [error: ${JSON.stringify(err)}]`)
       throw err;
     }
-
+    
     localStorage.setItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY, response.data.token);
     return jwt.decode(response.data.token, { json: true });
   }

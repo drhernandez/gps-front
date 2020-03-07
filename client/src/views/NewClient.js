@@ -10,6 +10,7 @@ import {
   FormInput,
   FormFeedback,
   FormGroup,
+  FormSelect,
   Form,
   Button,
   Alert
@@ -33,6 +34,9 @@ const errorsDefault = {
   email: {
     required: false,
     valid: false
+  },
+  role: {
+    required: false
   },
   tel: {
     required: false,
@@ -69,6 +73,7 @@ class NewClient extends React.Component {
     errors.dni.required = !validations.validateRequired(e.target.dni.value);
     errors.email.required = !validations.validateRequired(e.target.email.value);
     errors.email.valid = !validations.validateEmail(e.target.email.value);
+    errors.role.required = !validations.validateRequired(e.target.role.value);
     errors.tel.required = !validations.validateRequired(e.target.tel.value);
     errors.tel.valid = !validations.validateNumber(e.target.tel.value);
     errors.address.required = !validations.validateRequired(e.target.address.value);
@@ -86,7 +91,8 @@ class NewClient extends React.Component {
         dni: e.target.dni.value,
         email: e.target.email.value,
         phone: e.target.tel.value,
-        address: e.target.address.value
+        address: e.target.address.value,
+        role: Number.parseInt(e.target.role.value)
       };
 
       const [err, client] = await to(ClientsService.createClient(clientData));
@@ -190,7 +196,7 @@ class NewClient extends React.Component {
                     </Row>
                     <Row form>
                       {/* Email */}
-                      <Col className="form-group">
+                      <Col md="8" className="form-group">
                         <label htmlFor="email">Email</label>
                         <FormInput
                           type="email"
@@ -202,6 +208,19 @@ class NewClient extends React.Component {
                         />
                         {this.state.errors.email.required && <FormFeedback>Campo requerido</FormFeedback>}
                         {this.state.errors.email.valid && <FormFeedback>La dirección de correo no es válida. Una dirección válida se vería así: micorreo@dominio.com</FormFeedback>}
+                      </Col>
+                      <Col className="form-group">
+                        <label htmlFor="role">Rol</label>
+                        <FormSelect 
+                          id="role"
+                          placeholder="Rol"
+                          invalid={this.state.errors.role.required}
+                          onChange={() => this.invalidateError("role")}
+                          >
+                          <option defaultValue value="1">CLIENTE</option>
+                          <option value="2">ADMIN</option>
+                        </FormSelect>
+                        {this.state.errors.role.required && <FormFeedback>Campo requerido</FormFeedback>}
                       </Col>
                     </Row>
                     <Row form>

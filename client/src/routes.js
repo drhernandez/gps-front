@@ -6,7 +6,6 @@ import {DefaultLayout, SimpleLayout} from "./layouts";
 import Login from "./views/Login";
 import ForgotPassword from "./views/ForgotPassword";
 import ResetPassword from "./views/ResetPassword";
-import Register from "./views/Register";
 import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
@@ -46,13 +45,6 @@ export default [
       store.dispatch(removeUserInfoAction());
       return <Redirect to="/signin" />
     },
-    roles: []
-  },
-  {
-    path: "/signup",
-    layout: SimpleLayout,
-    isPublic: true,
-    component: Register,
     roles: []
   },
   {
