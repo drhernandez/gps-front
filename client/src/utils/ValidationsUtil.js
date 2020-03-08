@@ -19,9 +19,9 @@ function validateNumber(value) {
 }
 
 function validateEmail(value) {
-  // return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
   // return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(value);
-  return /^\w+([-]?\w+)*@\w+([-]?\w+)+$/.test(value);
+  // return /^\w+([-]?\w+)*@\w+([-]?\w+)+$/.test(value);
 }
 
 function validateEquals(value1, value2) {

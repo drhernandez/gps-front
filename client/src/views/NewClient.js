@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import PageTitle from "./../components/common/PageTitle";
 import to from "await-to-js";
 import {
   Container,
@@ -10,11 +10,12 @@ import {
   FormInput,
   FormFeedback,
   FormGroup,
+  FormSelect,
   Form,
-  Button,
   Alert
 } from "shards-react";
-import { UsersService } from "../api/services"
+import Button from "../components/common/Button";
+import { UsersService, RolesService } from "../api/services";
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import "../styles/register.css";
@@ -34,17 +35,12 @@ const errorsDefault = {
     required: false,
     valid: false
   },
+  role: {
+    required: false
+  },
   tel: {
     required: false,
     valid: false,
-  },
-  password: {
-    required: false,
-    valid: false
-  },
-  confirmPassword: {
-    required: false,
-    valid: false
   },
   address: {
     required: false
@@ -54,7 +50,7 @@ const errorsDefault = {
   }
 }
 
-class Register extends React.Component {
+class NewClient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,13 +58,22 @@ class Register extends React.Component {
       snackbar: {
         visible: false,
         type: constants.Themes.SUCCESS
-      }
+      },
+      showSppiner: false,
+      roles: []
     }
-    this.createAccount.bind(this);
+    this.createNewClient.bind(this);
     this.invalidateError.bind(this);
   };
 
-  async createAccount(e) {
+  async componentDidMount() {
+    const roles = await RolesService.getRoles();
+    this.setState({
+      roles: roles
+    });
+  }
+
+  async createNewClient(e) {
     e.preventDefault()
     e.persist();
     const errors = _.clone(errorsDefault);
@@ -77,12 +82,9 @@ class Register extends React.Component {
     errors.dni.required = !validations.validateRequired(e.target.dni.value);
     errors.email.required = !validations.validateRequired(e.target.email.value);
     errors.email.valid = !validations.validateEmail(e.target.email.value);
+    errors.role.required = !validations.validateRequired(e.target.role.value);
     errors.tel.required = !validations.validateRequired(e.target.tel.value);
     errors.tel.valid = !validations.validateNumber(e.target.tel.value);
-    errors.password.required = !validations.validateRequired(e.target.password.value);
-    errors.password.valid = !validations.validatePassword(e.target.password.value, validations.passwordStrenghts.PASSWORD_STRENGHT_2);
-    errors.confirmPassword.required = !validations.validateRequired(e.target.confirmPassword.value);
-    errors.confirmPassword.valid = !validations.validateEquals(e.target.password.value, e.target.confirmPassword.value);
     errors.address.required = !validations.validateRequired(e.target.address.value);
     errors.zipcode.required = !validations.validateRequired(e.target.zipcode.value);
 
@@ -92,42 +94,35 @@ class Register extends React.Component {
       })
     } else {
 
-      const userData = {
+      this.setState({
+        showSppiner: true
+      })
+
+      const user = {
         name: e.target.name.value,
         last_name: e.target.lastname.value,
         dni: e.target.dni.value,
         email: e.target.email.value,
         phone: e.target.tel.value,
-        password: e.target.password.value,
-        address: e.target.address.value
+        address: e.target.address.value,
+        role: e.target.role.value
       };
 
-      const [err, user] = await to(UsersService.createUser(userData));
-      if (!err && user) {
+      const [err, client] = await to(UsersService.createUser(user));
+      this.setState({
+        snackbar: {
+          visible: true,
+          type: !err && client ? constants.Themes.SUCCESS : constants.Themes.ERROR
+        },
+        showSppiner: false
+      })
+      setTimeout(() => {
         this.setState({
           snackbar: {
-            visible: true,
-            type: constants.Themes.SUCCESS
-          }
-        })
-        setTimeout(() => {
-          this.props.history.push("/signin");
-        }, 4000);
-      } else {
-        this.setState({
-          snackbar: {
-            visible: true,
-            type: constants.Themes.ERROR
+            visible: false
           }
         });
-        setTimeout(() => {
-          this.setState({
-            snackbar: {
-              visible: false
-            }
-          });
-        }, 4000);
-      }
+      }, 4000);
     }
   }
 
@@ -141,14 +136,28 @@ class Register extends React.Component {
 
   render() {
     return (
-      <Container fluid className="main-content-container px-4 h-100">
-        <Row noGutters className="h-100">
+      <Container fluid className="main-content-container px-4">
+        {/* Page Header */}
+        <Row noGutters className="page-header py-4">
+          <PageTitle title="Registrar" subtitle="Clientes" className="text-sm-left mb-3 col-sm-12" />
+        </Row>
+
+        {
+          this.state.snackbar.visible && 
+          <Row noGutters className="register__alert_row w-100">
+            <Alert className="my-auto w-100" open={this.state.snackbar.visible} theme={this.state.snackbar.type}>
+              {this.state.snackbar.type === constants.Themes.SUCCESS && "El cliente se registró correctamente. Ya puedes cargarle nuevos vehículos."}
+              {this.state.snackbar.type === constants.Themes.ERROR && "Algo salió mal al intentar registrar el cliente. Inténtelo de nuevo."}
+            </Alert>
+          </Row>
+        }
+
+        <Row noGutters className="h-100 py-4">
           <Col className="mx-auto register">
             <Card small>
               <CardBody className="px-4">
-                <h5 className="register__titulo text-center mt-5 mb-4">Crea una cuenta nueva</h5>
-                <Form onSubmit={(e) => this.createAccount(e)} noValidate>
-                  <FormGroup>
+                <Form onSubmit={(e) => this.createNewClient(e)} noValidate>
+                  <FormGroup className="py-4 mb-2">
                     <Row form>
                       {/* Nombre */}
                       <Col md="6" className="form-group">
@@ -179,7 +188,7 @@ class Register extends React.Component {
                         <label htmlFor="dni">DNI</label>
                         <FormInput
                           id="dni"
-                          placeholder="156456237"
+                          placeholder="DNI"
                           invalid={this.state.errors.dni.required}
                           onChange={() => this.invalidateError("dni")}
                         />
@@ -201,7 +210,7 @@ class Register extends React.Component {
                     </Row>
                     <Row form>
                       {/* Email */}
-                      <Col className="form-group">
+                      <Col md="8" className="form-group">
                         <label htmlFor="email">Email</label>
                         <FormInput
                           type="email"
@@ -214,36 +223,21 @@ class Register extends React.Component {
                         {this.state.errors.email.required && <FormFeedback>Campo requerido</FormFeedback>}
                         {this.state.errors.email.valid && <FormFeedback>La dirección de correo no es válida. Una dirección válida se vería así: micorreo@dominio.com</FormFeedback>}
                       </Col>
-                    </Row>
-                    <Row form>
-                      {/* Contraseña */}
-                      <Col md="6" className="form-group">
-                        <label htmlFor="password">Contraseña</label>
-                        <FormInput
-                          type="password"
-                          id="password"
-                          placeholder="Contraseña"
-                          autoComplete="current-password"
-                          invalid={this.state.errors.password.required || this.state.errors.password.valid || this.state.errors.confirmPassword.valid}
-                          onChange={() => this.invalidateError("password")}
-                        />
-                        {this.state.errors.password.required && <FormFeedback>Campo requerido</FormFeedback>}
-                        {this.state.errors.password.valid && <FormFeedback>La contraseña debe contener un mínimo
-                          de 8 caracteres, una mayúscula y un número
-                      </FormFeedback>}
-                      </Col>
-                      {/* Repetir contraseña */}
-                      <Col md="6" className="form-group">
-                        <label htmlFor="confirmPassword">Repetir contraseña</label>
-                        <FormInput
-                          type="password"
-                          id="confirmPassword"
-                          placeholder="Repetir contraseña"
-                          invalid={this.state.errors.confirmPassword.required || this.state.errors.confirmPassword.valid}
-                          onChange={() => this.invalidateError("confirmPassword")}
-                        />
-                        {this.state.errors.confirmPassword.required && <FormFeedback>Campo requerido</FormFeedback>}
-                        {this.state.errors.confirmPassword.valid && <FormFeedback>Las contraseñas no coinciden</FormFeedback>}
+                      <Col className="form-group">
+                        <label htmlFor="role">Rol</label>
+                        <FormSelect 
+                          id="role"
+                          placeholder="Rol"
+                          invalid={this.state.errors.role.required}
+                          onChange={() => this.invalidateError("role")}
+                          >
+                          {
+                            this.state.roles.map((role, index) => {
+                              return <option key={role.id} value={role.name}>{role.name}</option>
+                            })
+                          }
+                        </FormSelect>
+                        {this.state.errors.role.required && <FormFeedback>Campo requerido</FormFeedback>}
                       </Col>
                     </Row>
                     <Row form>
@@ -271,22 +265,12 @@ class Register extends React.Component {
                       </Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup>
-                    <Button type="submit" theme="accent" className="d-table ml-auto">Registrarse</Button>
-                  </FormGroup>
-                  <FormGroup>
-                    <Alert className="mb-3" open={this.state.snackbar.visible} theme={this.state.snackbar.type}>
-                      {this.state.snackbar.type === constants.Themes.SUCCESS && "Tu cuenta se creó correctamente. Serás redireccionado al login."}
-                      {this.state.snackbar.type === constants.Themes.ERROR && "Algo salió mal al intentar crear la cuenta. Inténtelo de nuevo."}
-                    </Alert>
+                  <FormGroup className="mb-0">
+                    <Button type="submit" theme="accent" className="d-table ml-auto" size="100px" label="Registrar nuevo cliente" showSppiner={this.state.showSppiner}></Button>
                   </FormGroup>
                 </Form>
               </CardBody>
             </Card>
-            <div className="px-2 pt-3 register__justify_links">
-              <Link to="/signin">Volver al login</Link>
-              <Link to="/forgot-password">Olvidaste tu contraseña?</Link>
-            </div>
           </Col>
         </Row>
       </Container>
@@ -294,4 +278,4 @@ class Register extends React.Component {
   }
 }
 
-export default withRouter(Register);
+export default NewClient;

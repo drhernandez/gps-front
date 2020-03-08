@@ -135,7 +135,6 @@ class Login extends React.Component {
             </Card>
             <div className="px-2 pt-3 login__justify_links">
               <Link to="/forgot-password">Olvidaste tu contraseña?</Link>
-              <Link to="/signup">Crea una cuenta nueva</Link>
             </div>
           </Col>
         </Row>
