@@ -9,14 +9,16 @@ import {
   CardTitle,
   Form,
   FormInput,
-  FormFeedback
+  FormFeedback,
+  Alert
 } from "shards-react";
+import Constants from "../utils/Constants";
 import Button from "../components/common/Button"
 import AddVehicle from "../components/common/AddVehicle";
 import PageTitle from "../components/common/PageTitle";
 import NavbarSearch from "../components/common/search/NavbarSearch"
 import validations from "../utils/ValidationsUtil";
-import { VehiclesService } from "../api/services";
+import { UsersService, VehiclesService } from "../api/services";
 import "../styles/clientsAdmin.css"
 import { to } from "await-to-js";
 var _ = require('lodash');
@@ -27,10 +29,15 @@ class ClientsAdmin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchBarDisabled: false,
       errors: null,
       sppiners: null,
       showAddForm: false,
-      userData: null
+      userData: null,
+      alert: {
+        visible: false,
+        type: Constants.Themes.ERROR
+      }
     }
     this.showAddVehicleForm.bind(this);
     this.search.bind(this);
@@ -48,44 +55,53 @@ class ClientsAdmin extends React.Component {
     })
   }
 
-  search(event) {
-    event.preventDefault();
-    event.persist();
-    
-    const userData = {
-      name: "Diego Román",
-      lastname: "Hernández Massera",
-      dni: 36354805,
-      email: "drhernandez92@gmail.com",
-      vehicles: [
-        {
-          id: 15,
-          brand: "FORD",
-          brandline: "FIESTA KD",
-          plate: "AA 383 TI"
-        },
-        {
-          id: 25,
-          brand: "FORD",
-          brandline: "FIESTA KD",
-          plate: "AA 383 TI",
-          devicePhysicalId: "1234"
-        }]
-    }
-  
-    const sppiners = [];
-    userData.vehicles.forEach((vehicle, index) => {
-      errorsDefault.push({ required: false });
-      sppiners.push({
-        save: false,
-        delete: false
-      })
-    });
+  async search(e) {
+    e.preventDefault();
+    e.persist();
+
+    const email = e.target["search-input"].value;
     this.setState({
-      userData: userData,
-      errors: errorsDefault,
-      sppiners: sppiners
-    });
+      searchBarDisabled: true,
+      userData: null,
+      errors: null,
+      sppiners: null
+    })
+    const [err, response] = await to(UsersService.getUserByEmail(email));
+    if (err != null) {
+      console.log(err);
+      this.setState({
+        searchBarDisabled: false,
+        alert: {
+          visible: true,
+          type: err.status === 404 ? Constants.Themes.WARNING : Constants.Themes.ERROR
+        },
+        showSppiner: false
+      })
+      setTimeout(() => {
+        this.setState({
+          alert: {
+            visible: false
+          }
+        });
+      }, 4000);
+    } 
+    else {
+      const userData = response;
+      const sppiners = [];
+      userData.vehicles.forEach((vehicle, index) => {
+        errorsDefault.push({ required: false });
+        sppiners.push({
+          save: false,
+          delete: false
+        })
+      });
+      this.setState({
+        searchBarDisabled: false,
+        userData: userData,
+        errors: errorsDefault,
+        sppiners: sppiners
+      });
+    }
   }
 
   addVehicle(vehicle) {
@@ -177,10 +193,21 @@ class ClientsAdmin extends React.Component {
           <PageTitle title="Administrar" subtitle="Clientes" className="text-sm-left mb-3 col-sm-12" />
         </Row>
 
+        {
+          this.state.alert.visible &&
+          // <Row noGutters className="register__alert_row w-100">
+          <Row noGutters className="w-100">
+            <Alert className="my-auto w-100" open={this.state.alert.visible} theme={this.state.alert.type}>
+              {this.state.alert.type === Constants.Themes.WARNING && "Usuario no encontrado."}
+              {this.state.alert.type === Constants.Themes.ERROR && "Algo salió mal al intentar obtener el usuario. Inténtelo de nuevo."}
+            </Alert>
+          </Row>
+        }
+
         <Row noGutters className="py-4">
           <Card small className="mx-auto w-75 mb-4">
             <CardHeader className="mt-3">
-              <NavbarSearch placeholder="Buscar clientes por dni..." searchFunction={(e) => this.search(e)}/>
+              <NavbarSearch disabled={this.state.searchBarDisabled} placeholder="Buscar clientes por email..." searchFunction={(e) => this.search(e)}/>
             </CardHeader>
             { this.state.userData &&
               <CardBody>
@@ -200,7 +227,7 @@ class ClientsAdmin extends React.Component {
                         <label htmlFor="lastname">Apellido</label>
                       </Row>
                       <Row>
-                        <p className="row-data">{this.state.userData.lastname}</p>
+                        <p className="row-data">{this.state.userData.last_name}</p>
                       </Row>
                     </Col>
                     <Col md='2'>

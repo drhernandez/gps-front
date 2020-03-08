@@ -17,6 +17,8 @@ export default (props) => (
         </InputGroupText>
       </InputGroupAddon>
       <FormInput
+        id="search-input"
+        disabled={props.disabled}
         className="navbar-search search_box"
         placeholder={props.placeholder}
       />
