@@ -12,10 +12,10 @@ import {
   FormGroup,
   FormSelect,
   Form,
-  Button,
   Alert
 } from "shards-react";
-import { ClientsService } from "../api/services"
+import Button from "../components/common/Button";
+import { UsersService, RolesService } from "../api/services";
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import "../styles/register.css";
@@ -58,11 +58,20 @@ class NewClient extends React.Component {
       snackbar: {
         visible: false,
         type: constants.Themes.SUCCESS
-      }
+      },
+      showSppiner: false,
+      roles: []
     }
     this.createNewClient.bind(this);
     this.invalidateError.bind(this);
   };
+
+  async componentDidMount() {
+    const roles = await RolesService.getRoles();
+    this.setState({
+      roles: roles
+    });
+  }
 
   async createNewClient(e) {
     e.preventDefault()
@@ -85,22 +94,27 @@ class NewClient extends React.Component {
       })
     } else {
 
-      const clientData = {
+      this.setState({
+        showSppiner: true
+      })
+
+      const user = {
         name: e.target.name.value,
         last_name: e.target.lastname.value,
         dni: e.target.dni.value,
         email: e.target.email.value,
         phone: e.target.tel.value,
         address: e.target.address.value,
-        role: Number.parseInt(e.target.role.value)
+        role: e.target.role.value
       };
 
-      const [err, client] = await to(ClientsService.createClient(clientData));
+      const [err, client] = await to(UsersService.createUser(user));
       this.setState({
         snackbar: {
           visible: true,
           type: !err && client ? constants.Themes.SUCCESS : constants.Themes.ERROR
-        }
+        },
+        showSppiner: false
       })
       setTimeout(() => {
         this.setState({
@@ -217,8 +231,11 @@ class NewClient extends React.Component {
                           invalid={this.state.errors.role.required}
                           onChange={() => this.invalidateError("role")}
                           >
-                          <option defaultValue value="1">CLIENTE</option>
-                          <option value="2">ADMIN</option>
+                          {
+                            this.state.roles.map((role, index) => {
+                              return <option key={role.id} value={role.name}>{role.name}</option>
+                            })
+                          }
                         </FormSelect>
                         {this.state.errors.role.required && <FormFeedback>Campo requerido</FormFeedback>}
                       </Col>
@@ -249,7 +266,7 @@ class NewClient extends React.Component {
                     </Row>
                   </FormGroup>
                   <FormGroup className="mb-0">
-                    <Button type="submit" theme="accent" className="d-table ml-auto">Registrar nuevo cliente</Button>
+                    <Button type="submit" theme="accent" className="d-table ml-auto" size="100px" label="Registrar nuevo cliente" showSppiner={this.state.showSppiner}></Button>
                   </FormGroup>
                 </Form>
               </CardBody>

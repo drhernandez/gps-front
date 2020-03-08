@@ -3,7 +3,7 @@ import AuthService from "./authService";
 import AlertsService from "./alertsService";
 import VehiclesService from "./vehiclesService";
 import RecoveryService from "./recoveryService";
-import ClientsService from "./clientsService";
+import RolesService from "./rolesService";
 
 export {
   UsersService,
@@ -11,5 +11,5 @@ export {
   AlertsService,
   VehiclesService,
   RecoveryService,
-  ClientsService
+  RolesService
 }

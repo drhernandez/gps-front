@@ -1,4 +1,4 @@
-import { CLIENT, ADMIN } from "../utils/Roles";
+import { CLIENTE, ADMIN } from "./Roles";
 
 export default function() {
   return [
@@ -7,19 +7,19 @@ export default function() {
       to: "/home",
       htmlBefore: '<i class="material-icons">my_location</i>',
       htmlAfter: "",
-      roles: [CLIENT]
+      roles: [CLIENTE]
     },
     {
       title: "Mapa de calor",
       htmlBefore: '<i class="material-icons">map</i>',
       to: "/heat-map",
-      roles: [CLIENT]
+      roles: [CLIENTE]
     },
     {
       title: "Alertas",
       htmlBefore: '<i class="material-icons">notifications_active</i>',
       to: "/alerts",
-      roles: [CLIENT]
+      roles: [CLIENTE]
     },
     {
       title: "Alta de cliente",

@@ -15,7 +15,7 @@ import NewClient from "./views/NewClient";
 import ClientsAdmin from "./views/ClientsAdmin";
 import store from "./redux/store";
 import { removeUserInfoAction } from "./redux/actions/actions";
-import { CLIENT, ADMIN } from "./utils/Roles";
+import { CLIENTE, ADMIN } from "./data/Roles";
 
 export default [
   {
@@ -73,28 +73,28 @@ export default [
     layout: DefaultLayout,
     isPublic: false,
     component: Home,
-    roles: [CLIENT]
+    roles: [CLIENTE]
   },
   {
     path: "/heat-map",
     layout: DefaultLayout,
     isPublic: false,
     component: HeatMap,
-    roles: [CLIENT]
+    roles: [CLIENTE]
   },
   {
     path: "/alerts",
     layout: DefaultLayout,
     isPublic: false,
     component: Alerts,
-    roles: [CLIENT]
+    roles: [CLIENTE]
   },
   {
     path: "/user-profile",
     layout: DefaultLayout,
     isPublic: false,
     component: UserProfileLite,
-    roles: [CLIENT, ADMIN]
+    roles: [CLIENTE, ADMIN]
   },
   {
     path: "/new-client",

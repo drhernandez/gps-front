@@ -7,6 +7,7 @@ const usersRouter = require('./src/users/usersRouter')
 const vehiclesRouter = require('./src/vehicles/vehiclesRouter')
 const authRouter = require('./src/auth/authRouter')
 const recoverPasswordRouter = require('./src/recoverPassword/recoverPasswordRouter');
+const rolesRouter = require('./src/roles/rolesRouter');
 
 
 const app = express()
@@ -33,6 +34,7 @@ app.use("/users", usersRouter);
 app.use("/vehicles", vehiclesRouter);
 app.use("/auth", authRouter);
 app.use("/recovery", recoverPasswordRouter);
+app.use("/roles", rolesRouter);
 
 console.log('Server listening on port 3001');
 app.listen(3001)
