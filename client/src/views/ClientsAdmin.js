@@ -33,7 +33,7 @@ class ClientsAdmin extends React.Component {
       errors: null,
       sppiners: null,
       showAddForm: false,
-      userData: null,
+      user: null,
       alert: {
         visible: false,
         type: Constants.Themes.ERROR
@@ -62,11 +62,12 @@ class ClientsAdmin extends React.Component {
     const email = e.target["search-input"].value;
     this.setState({
       searchBarDisabled: true,
-      userData: null,
+      user: null,
       errors: null,
       sppiners: null
     })
-    const [err, response] = await to(UsersService.getUserByEmail(email));
+
+    const [err, user] = await to(UsersService.getUserByEmail(email));
     if (err != null) {
       console.log(err);
       this.setState({
@@ -86,9 +87,15 @@ class ClientsAdmin extends React.Component {
       }, 4000);
     } 
     else {
-      const userData = response;
+      let [err, vehicles] = await to(VehiclesService.getVehiclesByUserID(user.id));
+      if (err != null) {
+        console.log(err);
+        vehicles = []
+      }
+
+      user.vehicles = vehicles;
       const sppiners = [];
-      userData.vehicles.forEach((vehicle, index) => {
+      user.vehicles.forEach((vehicle, index) => {
         errorsDefault.push({ required: false });
         sppiners.push({
           save: false,
@@ -97,7 +104,7 @@ class ClientsAdmin extends React.Component {
       });
       this.setState({
         searchBarDisabled: false,
-        userData: userData,
+        user: user,
         errors: errorsDefault,
         sppiners: sppiners
       });
@@ -105,16 +112,16 @@ class ClientsAdmin extends React.Component {
   }
 
   addVehicle(vehicle) {
-    const userData = this.state.userData;
+    const user = this.state.user;
     const sppiners = this.state.sppiners;
-    userData.vehicles.push(vehicle);
+    user.vehicles.push(vehicle);
     sppiners.push({
       save: false,
       delete: false
     });
     errorsDefault.push({ required: false });
     this.setState({
-      userData: userData,
+      user: user,
       errors: errorsDefault,
       sppiners: sppiners,
       showAddForm: false
@@ -122,17 +129,17 @@ class ClientsAdmin extends React.Component {
   }
 
   async deleteVehicle(index) {
-    const vehicleId = this.state.userData.vehicles[index].id;
+    const vehicleId = this.state.user.vehicles[index].id;
     this.toogleSppiner(index, "delete");
     const [err] = await to(VehiclesService.deleteVehicle(vehicleId));
     if (!err) {
-      const userData = this.state.userData;
+      const user = this.state.user;
       const sppiners = this.state.sppiners;
-      userData.vehicles.splice(index, 1);
+      user.vehicles.splice(index, 1);
       sppiners.splice(index, 1);
       errorsDefault.splice(index, 1);
       this.setState({
-        userData,
+        user,
         errorsDefault,
         sppiners: sppiners
       })
@@ -159,7 +166,7 @@ class ClientsAdmin extends React.Component {
       })
     } else {
       this.toogleSppiner(index, "save");
-      const vehicleId = this.state.userData.vehicles[index].id;
+      const vehicleId = this.state.user.vehicles[index].id;
       const devicePhysicalId = event.target[`devicePhysicalId-${index}`].value;
       const [err, result] = await to(VehiclesService.setPhysicalIdToVehicle(vehicleId, devicePhysicalId));
       
@@ -168,10 +175,10 @@ class ClientsAdmin extends React.Component {
         console.log(err);
       } 
       else {
-        const userData = this.state.userData;
-        userData.vehicles[index] = result;
+        const user = this.state.user;
+        user.vehicles[index] = result;
         this.setState({
-          userData
+          user
         })
       }
     }
@@ -209,7 +216,7 @@ class ClientsAdmin extends React.Component {
             <CardHeader className="mt-3">
               <NavbarSearch disabled={this.state.searchBarDisabled} placeholder="Buscar clientes por email..." searchFunction={(e) => this.search(e)}/>
             </CardHeader>
-            { this.state.userData &&
+            { this.state.user &&
               <CardBody>
                 <CardTitle>Datos personales</CardTitle>
                 <Container>
@@ -219,7 +226,7 @@ class ClientsAdmin extends React.Component {
                         <label htmlFor="name">Nombre</label>
                       </Row>
                       <Row>
-                        <p className="row-data">{this.state.userData.name}</p>
+                        <p className="row-data">{this.state.user.name}</p>
                       </Row>
                     </Col>
                     <Col md='3'>
@@ -227,7 +234,7 @@ class ClientsAdmin extends React.Component {
                         <label htmlFor="lastname">Apellido</label>
                       </Row>
                       <Row>
-                        <p className="row-data">{this.state.userData.last_name}</p>
+                        <p className="row-data">{this.state.user.last_name}</p>
                       </Row>
                     </Col>
                     <Col md='2'>
@@ -235,7 +242,7 @@ class ClientsAdmin extends React.Component {
                         <label htmlFor="dni">DNI</label>
                       </Row>
                       <Row>
-                        <p className="row-data">{this.state.userData.dni}</p>
+                        <p className="row-data">{this.state.user.dni}</p>
                       </Row>
                     </Col>
                     <Col md='4'>
@@ -243,7 +250,7 @@ class ClientsAdmin extends React.Component {
                         <label htmlFor="email">Correo</label>
                       </Row>
                       <Row>
-                        <p className="row-data">{this.state.userData.email}</p>
+                        <p className="row-data">{this.state.user.email}</p>
                       </Row>
                     </Col>
                   </Row>
@@ -251,7 +258,7 @@ class ClientsAdmin extends React.Component {
                 <CardTitle>Vehículos <i className="material-icons px-1 icon-blue" onClick={(e) => this.showAddVehicleForm(e)}>add_circle_outline</i></CardTitle>
                 <Container>
                   {
-                    this.state.userData.vehicles.length > 0 &&
+                    this.state.user.vehicles.length > 0 &&
                     <table className="table custom-table mb-0">
                       <thead className="bg-light">
                         <tr>
@@ -265,7 +272,7 @@ class ClientsAdmin extends React.Component {
                       </thead>
                       <tbody>
                         {
-                          this.state.userData.vehicles.map((vehicle, index) => {
+                          this.state.user.vehicles.map((vehicle, index) => {
                             return (
                               <tr key={index + 1}>
                                 <td>{index + 1}</td>
@@ -315,7 +322,7 @@ class ClientsAdmin extends React.Component {
                     </table>
                   }
                   {
-                    this.state.userData.vehicles.length === 0 && !this.state.showAddForm &&
+                    this.state.user.vehicles.length === 0 && !this.state.showAddForm &&
                     <Row>
                       <p className="row-data-dissable">El usuario aún no posee vehículos cargados. Para agregar nuevos vehículos puedes usar el botón al costado del título o hacer <span onClick={(e) => this.showAddVehicleForm(e)} className="click-here">click aquí</span></p>
                     </Row>

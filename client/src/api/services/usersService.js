@@ -22,24 +22,6 @@ export default class UsersService {
       throw err;
     }
 
-    const user = response.data;
-
-    //get users vehicles
-    user.vehicles = [
-      {
-        id: 15,
-        brand: "FORD",
-        brandline: "FIESTA KD",
-        plate: "AA 383 TI"
-      },
-      {
-        id: 25,
-        brand: "FORD",
-        brandline: "FIESTA KD",
-        plate: "AA 383 TI",
-        devicePhysicalId: "1234"
-      }]
-
-    return user;
+    return response.data;
   }
 }
