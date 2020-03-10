@@ -87,7 +87,7 @@ class ClientsAdmin extends React.Component {
       }, 4000);
     } 
     else {
-      let [err, vehicles] = await to(VehiclesService.getVehiclesByUserID(user.id));
+      let [err, vehicles] = await to(VehiclesService.searchVehicles(user.id));
       if (err != null) {
         console.log(err);
         vehicles = []

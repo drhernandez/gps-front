@@ -3,7 +3,34 @@ const router = express.Router();
 const to = require("await-to-js").default;
 const apiClient = require("../clients").ApiClient;
 
-router.get('/:id/location', async function(req, res) {
+router.get('/search', async (req, res, next) => {
+  
+  // const [err, response] = await to(apiClient.get(`/vehicles/search?${req.query}`));
+  // if (err) {
+  //   console.log(`[message: Error trying to search vehicles with query ${req.query}] [error: ${err.message}]`);
+  //   res.status(500).json(err.message);
+  // } else {
+  //   const json = response.data.paging.total > 0 ? response.data.data : []
+  //   res.status(response.status).json(json);
+  // }
+
+  res.status(200).json([
+    {
+      id: 15,
+      brand: "FORD",
+      brandline: "FIESTA KD",
+      plate: "AA 383 TI"
+    },
+    {
+      id: 25,
+      brand: "FORD",
+      brandline: "FIESTA KD",
+      plate: "AA 383 TI",
+      devicePhysicalId: "1234"
+    }]);
+})
+
+router.get('/:id/location', async (req, res, next) => {
   
   const vehicleId = req.params.id;
 
@@ -16,7 +43,7 @@ router.get('/:id/location', async function(req, res) {
   }
 });
 
-router.get('/:id/trackings', async function(req, res) {
+router.get('/:id/trackings', async (req, res, next) => {
   
   const vehicleId = req.params.id;
 
@@ -29,7 +56,7 @@ router.get('/:id/trackings', async function(req, res) {
   }
 });
 
-router.get('/:id/alerts/speed', async function(req, res) {
+router.get('/:id/alerts/speed', async (req, res, next) => {
 
   const vehicleId = req.params.id;
 
@@ -42,7 +69,7 @@ router.get('/:id/alerts/speed', async function(req, res) {
   }
 });
 
-router.get('/:id/alerts/movement', async function (req, res) {
+router.get('/:id/alerts/movement', async (req, res, next) => {
 
   const vehicleId = req.params.id;
 
@@ -55,7 +82,7 @@ router.get('/:id/alerts/movement', async function (req, res) {
   }
 });
 
-router.post('/', async function (req, res) {
+router.post('/', async (req, res, next) => {
 
   setTimeout(() => {
     res.status(201).json({
@@ -82,7 +109,7 @@ router.post('/', async function (req, res) {
   // }
 });
 
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', async (req, res, next) => {
 
   setTimeout(() => {
     res.status(204).send();
@@ -99,7 +126,7 @@ router.delete('/:id', async function (req, res) {
   // }
 })
 
-router.get('/brands', async function (req, res) {
+router.get('/brands', async (req, res, next) => {
 
   const [err, response] = await to(apiClient.get(`/brands`));
   if (err) {
@@ -110,7 +137,7 @@ router.get('/brands', async function (req, res) {
   }
 });
 
-router.get('/brands/:id/brand-lines', async function (req, res) {
+router.get('/brands/:id/brand-lines', async (req, res, next) => {
 
   const brandId = req.params.id;
 

@@ -4,28 +4,14 @@ const restClient = new BaseService();
 
 export default class VehiclesService {
 
-  static async getVehiclesByUserID(userID) {
-    // const [err, response] = await to(restClient.get(`/users/${userID}/vehicles`));
-    // if (err) {
-    //   console.log(`[message: Error getting vehicles info for user ${userID}] [error: ${JSON.stringify(err)}]`);
-    //   throw err;
-    // }
-    // 
-    // return response.data;
-    return [
-      {
-        id: 15,
-        brand: "FORD",
-        brandline: "FIESTA KD",
-        plate: "AA 383 TI"
-      },
-      {
-        id: 25,
-        brand: "FORD",
-        brandline: "FIESTA KD",
-        plate: "AA 383 TI",
-        devicePhysicalId: "1234"
-      }];
+  static async searchVehicles(userID) {
+    
+    const [err, response] = await to(restClient.get(`/vehicles/search?user_id=${userID}`));
+    if (err) {
+      console.log(`[message: Error getting vehicles info for user ${userID}] [error: ${JSON.stringify(err)}]`);
+      throw err;
+    }
+    return response.data;
   }
   
   static async getCurrentLocation(vehicleID) {
