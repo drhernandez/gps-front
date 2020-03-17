@@ -1,5 +1,5 @@
-const AuthClient = require("./authClient");
 const ApiClient = require("./apiClient");
+const AuthClient = require("./authClient");
 
 module.exports = {
   AuthClient,

@@ -11,6 +11,7 @@ export default class VehiclesService {
       console.log(`[message: Error getting vehicles info for user ${userID}] [error: ${JSON.stringify(err)}]`);
       throw err;
     }
+    
     return response.data;
   }
   
