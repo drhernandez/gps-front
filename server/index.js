@@ -11,11 +11,11 @@ const rolesRouter = require('./src/roles/rolesRouter');
 
 
 const app = express()
-var corsOptions = {
-  origin: 'http://dev.gps-front.herokuapp.com:3000'
-  // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
+// var corsOptions = {
+//   origin: 'http://dev.gps-front.herokuapp.com:3000'
+//   // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
+// app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));   // to support URL-encoded bodies
