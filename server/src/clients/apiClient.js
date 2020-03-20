@@ -68,4 +68,4 @@ async function _execute(method, url, headers, body) {
   }
 }
 
-module.exports = new ApiClientFecht('http://gps-locations-api.herokuapp.com');
+module.exports = new ApiClientFecht(process.env.CORE_API_BASE_URL);

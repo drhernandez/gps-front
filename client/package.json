@@ -44,6 +44,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "jest": "^24.9.0",
     "react-test-renderer": "^16.12.0",
     "redux-devtools": "^3.5.0"

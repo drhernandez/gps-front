@@ -3,7 +3,7 @@ const axios = require('axios');
 export default class BaseService {
   constructor() {
     this.restClient = axios.create({
-      baseURL: 'http://dev.gps-front.herokuapp.com:3001',
+      baseURL: process.env.REACT_APP_SERVER_BASE_URL,
       timeout: 4000
     });
   }
