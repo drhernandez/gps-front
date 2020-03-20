@@ -4,6 +4,7 @@
   "description": "Sistema de geolocalización satelital",
   "main": "index.js",
   "scripts": {
+    "build": "(cd server && npm install) & (cd client && npm install)",
     "start": "(node server/index.js) & (cd client && npm start)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
