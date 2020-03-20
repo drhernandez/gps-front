@@ -1,5 +1,0 @@
-NODE_ENV=development
-NODE_SCOPE=dev
-
-AUTH_API_BASE_URL=http://gps-auth.herokuapp.com
-CORE_API_BASE_URL=http://gps-locations-api.herokuapp.com
