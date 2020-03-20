@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use("/alerts", alertsRouter);
 app.use("/users", usersRouter);
 app.use("/vehicles", vehiclesRouter);
-app.use("/authentication", authRouter);
+app.use("/auth", authRouter);
 app.use("/recovery", recoverPasswordRouter);
 app.use("/roles", rolesRouter);
 
