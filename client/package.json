@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "homepage": "./",
+  "proxy": "http://localhost:3001/",
   "scripts": {
     "start": "react-scripts start",
     "build": "cross-env react-scripts build",
@@ -20,6 +21,7 @@
     "dateformat": "^3.0.3",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "http-proxy-middleware": "^1.0.3",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "lodash.find": "^4.6.0",

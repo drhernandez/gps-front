@@ -27,12 +27,16 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.get("/ping", (req, res, next) => "pong");
-app.use("/alerts", alertsRouter);
-app.use("/users", usersRouter);
-app.use("/vehicles", vehiclesRouter);
-app.use("/auth", authRouter);
-app.use("/recovery", recoverPasswordRouter);
-app.use("/roles", rolesRouter);
+app.use("", (req, res, next) => {
+  console.log("ENTRANDO >>>>>>>>>>", req.originalUrl);
+  next();
+})
+app.use("/api/alerts", alertsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/vehicles", vehiclesRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/recovery", recoverPasswordRouter);
+app.use("/api/roles", rolesRouter);
 
 console.log('Server listening on port 3001');
 app.listen(3001)

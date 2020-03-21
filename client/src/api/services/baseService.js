@@ -3,7 +3,7 @@ const axios = require('axios');
 export default class BaseService {
   constructor() {
     this.restClient = axios.create({
-      baseURL: process.env.REACT_APP_SERVER_BASE_URL,
+      baseURL: "/api",
       timeout: 4000
     });
   }
