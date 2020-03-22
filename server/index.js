@@ -28,7 +28,13 @@ if (process.env.NODE_ENV === 'development') {
 
 app.get("/ping", (req, res, next) => "pong");
 app.use("", (req, res, next) => {
-  console.log("ENTRANDO >>>>>>>>>>", req.originalUrl);
+  console.log("########### START REQUEST ###########");
+  console.log("HOSTNAME >>>>>>>>>>", req.hostname);
+  console.log("METHOD >>>>>>>>>>", req.method);
+  console.log("URL >>>>>>>>>>", req.url);
+  console.log("ORIGINAL URL >>>>>>>>>>", req.originalUrl);
+  console.log("HEADERS >>>>>>>>>>", req.headers);
+  console.log("########### END REQUEST ###########");
   next();
 })
 app.use("/api/alerts", alertsRouter);
