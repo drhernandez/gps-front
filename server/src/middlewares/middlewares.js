@@ -1,7 +1,10 @@
 const cleanHeaders = (req, res, next) => {
-  req.headers = {
-    'x-access-token': req.headers['x-access-token']
-  };
+  const headers = {};
+  if (req.headers['x-access-token']) {
+    headers['x-access-token'] = req.headers['x-access-token'];
+  }
+
+  req.headers = headers;
   next();
 }
 
