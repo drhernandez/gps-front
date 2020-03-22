@@ -5,6 +5,7 @@ const apiClient = require("../clients").ApiClient;
 
 router.get('/search', async (req, res, next) => {
   
+  console.log("HEADERS >>>>>>>>>> ",req.headers)
   const params = Object.entries(req.query).map((entry) => `${entry[0]}=${entry[1]}`).join('&');
 
   const [err, response] = await to(apiClient.get(`/vehicles/search?${params}`, req.headers));
