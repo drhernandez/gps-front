@@ -5,15 +5,20 @@ const authClient = require("../clients").AuthClient;
 
 router.post('/login', async function (req, res) {
   
-  const body = req.body;
+  // const body = req.body;
   
-  const [err, response] = await to(authClient.post(`/authentication/login`, null, body));
-  if (err) {
-    console.log(`[message: Error trying to login] [error: ${err.message}]`);
-    res.status(500).json(err.message);
-  } else {
-    res.status(response.status).json(response.data);
-  }
+  // const [err, response] = await to(authClient.post(`/authentication/login`, null, body));
+  // if (err) {
+  //   console.log(`[message: Error trying to login] [error: ${err.message}]`);
+  //   res.status(500).json(err.message);
+  // } else {
+  //   res.status(response.status).json(response.data);
+  // }
+  res.status(200).json({
+    id:1,
+    name:"Diego",
+    lastName: "Hernandez"
+  })
 });
 
 router.get('/validate', async function(req, res) {
