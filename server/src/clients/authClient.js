@@ -3,7 +3,7 @@
 
 // module.exports = restClient;
 
-export class AuthClient {
+class AuthClient {
 
   async get(url, headers) {
     return {status: 200, data: {}};
