@@ -1,14 +1,10 @@
 const axios = require('axios');
-const https = require('https');
 
 class BaseClient {
   constructor(baseURL) {
     this.restClient = axios.create({
       baseURL: baseURL,
-      timeout: 3000,
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false
-      })
+      timeout: 3000
     });
   }
 
