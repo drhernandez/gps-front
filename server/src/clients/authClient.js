@@ -21,3 +21,7 @@ export class AuthClient {
     return {status: 200, data: {}};
   }
 } 
+
+const restClient = new AuthClient();
+
+module.exports = restClient;
