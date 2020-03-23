@@ -6,6 +6,7 @@ const authClient = require("../clients").AuthClient;
 router.post('/login', async function (req, res) {
   
   const body = req.body;
+  
   const [err, response] = await to(authClient.post(`/authentication/login`, null, body));
   if (err) {
     console.log(`[message: Error trying to login] [error: ${err.message}]`);

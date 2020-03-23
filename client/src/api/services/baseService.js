@@ -3,7 +3,7 @@ const axios = require('axios');
 export default class BaseService {
   constructor() {
     this.restClient = axios.create({
-      baseURL: 'http://dev.gps-front.herokuapp.com:3001',
+      baseURL: "/api",
       timeout: 4000
     });
   }
@@ -43,7 +43,7 @@ async function _execute(restClient, method, url, headers, body) {
 function _parseErrorResponse(error) {
   if (error.response) {
     const request = {
-      "url": error.config.url,
+      "url": error.config.baseURL + error.config.url,
       "method": error.config.method
     };
     const response = {
@@ -55,7 +55,7 @@ function _parseErrorResponse(error) {
   }
   else if (error.request) {
     const request = {
-      "url": error.config.url,
+      "url": error.config.baseURL + error.config.url,
       "method": error.config.method
     };
     console.error(`[MESSAGE: Error executing request] [REQUEST: ${JSON.stringify(request)}] [ERROR: ${error.message}]`);

@@ -19,6 +19,7 @@ export default class AuthService {
   }
 
   static async verifyToken(token) {
+    
     const [err] = await to(restClient.get(`/auth/validate`));
     if (err) {
       console.log(`[message: Error validating token] [error: ${JSON.stringify(err)}]`)

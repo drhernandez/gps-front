@@ -1,0 +1,15 @@
+{
+  "name": "gps-front",
+  "version": "1.0.0",
+  "description": "Sistema de geolocalización satelital",
+  "main": "index.js",
+  "scripts": {
+    "build": "(cd server && npm install) & (cd client && npm install && npm run build-prod)",
+    "start": "node server/index.js & node client/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
+}
