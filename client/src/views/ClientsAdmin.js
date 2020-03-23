@@ -41,7 +41,7 @@ class ClientsAdmin extends React.Component {
     }
     this.showAddVehicleForm.bind(this);
     this.search.bind(this);
-    this.saveDevicePhysicalId.bind(this);
+    this.setDevicePhysicalId.bind(this);
     this.addVehicle.bind(this);
     this.deleteVehicle.bind(this);
     this.invalidateError.bind(this);
@@ -87,27 +87,42 @@ class ClientsAdmin extends React.Component {
       }, 4000);
     } 
     else {
-      let [err, vehicles] = await to(VehiclesService.searchVehicles(user.id));
+      let [err, results] = await to(VehiclesService.searchVehicles(user.id));
       if (err != null) {
         console.log(err);
-        vehicles = []
-      }
-
-      user.vehicles = vehicles;
-      const sppiners = [];
-      user.vehicles.forEach((vehicle, index) => {
-        errorsDefault.push({ required: false });
-        sppiners.push({
-          save: false,
-          delete: false
+        this.setState({
+          searchBarDisabled: false,
+          alert: {
+            visible: true,
+            type: Constants.Themes.ERROR
+          },
+          showSppiner: false
         })
-      });
-      this.setState({
-        searchBarDisabled: false,
-        user: user,
-        errors: errorsDefault,
-        sppiners: sppiners
-      });
+        setTimeout(() => {
+          this.setState({
+            alert: {
+              visible: false
+            }
+          });
+        }, 4000);
+      }
+      else {
+        user.vehicles = results.data;
+        const sppiners = [];
+        user.vehicles.forEach((vehicle, index) => {
+          errorsDefault.push({ required: false });
+          sppiners.push({
+            save: false,
+            delete: false
+          })
+        });
+        this.setState({
+          searchBarDisabled: false,
+          user: user,
+          errors: errorsDefault,
+          sppiners: sppiners
+        });
+      }
     }
   }
 
@@ -154,7 +169,7 @@ class ClientsAdmin extends React.Component {
     });
   }
 
-  async saveDevicePhysicalId(event, index) {
+  async setDevicePhysicalId(event, index) {
     event.preventDefault();
     event.persist();
     const errors = _.clone(errorsDefault);
@@ -168,7 +183,7 @@ class ClientsAdmin extends React.Component {
       this.toogleSppiner(index, "save");
       const vehicleId = this.state.user.vehicles[index].id;
       const devicePhysicalId = event.target[`devicePhysicalId-${index}`].value;
-      const [err, result] = await to(VehiclesService.setPhysicalIdToVehicle(vehicleId, devicePhysicalId));
+      const [err, result] = await to(VehiclesService.activate(vehicleId, devicePhysicalId));
       
       if (err) {
         // ver que onda
@@ -206,7 +221,7 @@ class ClientsAdmin extends React.Component {
           <Row noGutters className="w-100">
             <Alert className="my-auto w-100" open={this.state.alert.visible} theme={this.state.alert.type}>
               {this.state.alert.type === Constants.Themes.WARNING && "Usuario no encontrado."}
-              {this.state.alert.type === Constants.Themes.ERROR && "Algo salió mal al intentar obtener el usuario. Inténtelo de nuevo."}
+              {this.state.alert.type === Constants.Themes.ERROR && "Algo salió mal al intentar obtener los datos del usuario. Inténtelo de nuevo."}
             </Alert>
           </Row>
         }
@@ -281,7 +296,7 @@ class ClientsAdmin extends React.Component {
                                 <td>{vehicle.plate}</td>
                                 <td style={{maxWidth: "150px"}}>{
                                   vehicle.devicePhysicalId ? vehicle.devicePhysicalId :
-                                    <Form id={"form-" + index} onSubmit={(e) => this.saveDevicePhysicalId(e, index)} noValidate>
+                                    <Form id={"form-" + index} onSubmit={(e) => this.setDevicePhysicalId(e, index)} noValidate>
                                       <FormInput size="sm"
                                         id={`devicePhysicalId-${index}`}
                                         invalid={this.state.errors[index].required}
@@ -330,7 +345,7 @@ class ClientsAdmin extends React.Component {
                   {
                     this.state.showAddForm &&
                     <Row>
-                      <AddVehicle addVehicle={(vehicle) => this.addVehicle(vehicle)} />
+                      <AddVehicle userId={this.state.user.id} addVehicle={(vehicle) => this.addVehicle(vehicle)} />
                     </Row>
                   }
                 </Container>

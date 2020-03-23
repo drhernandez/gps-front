@@ -15,7 +15,6 @@ import { VehiclesService } from "../../api/services";
 import { to } from "await-to-js";
 import validations from "../../utils/ValidationsUtil";
 import constants from "../../utils/Constants";
-import store from "../../redux/store";
 import _ from "lodash"
 
 const errorsDefault = {
@@ -38,7 +37,7 @@ export default class AddVehicle extends React.Component {
       errors: errorsDefault,
       showSppiner: false,
       showAlert: false,
-      userId: null,
+      userId: props.userId,
       brands: [],
       brandLines: [],
       brand: null,
@@ -55,10 +54,8 @@ export default class AddVehicle extends React.Component {
   }
 
   async componentDidMount() {
-    const userId = store.getState().userInfo.userId;
     const brands = await this.getBrands();
     this.setState({
-      userId: userId,
       brands: brands
     })
   }
@@ -91,11 +88,13 @@ export default class AddVehicle extends React.Component {
         showSppiner: true
       })
       const vehicle = {
-        userId: this.state.userId,
+        user_id: this.state.userId,
         brand: this.state.brand,
-        brandline: this.state.brandLine,
+        brand_line: this.state.brandLine,
         plate: e.target.plate.value
       }
+
+      console.log(vehicle)
 
       const [err, result] = await to(VehiclesService.createVehicle(vehicle));
       if (err) {
@@ -117,7 +116,7 @@ export default class AddVehicle extends React.Component {
     e.preventDefault();
     this.invalidateError("brand");
     const brandId = e.target.value;
-    const brand = this.state.brands.find(brand => brand.id === brandId);
+    const brand = this.state.brands.find(brand => brand.id == brandId);
     const brandlines = await this.getModelsByBrand(brand.id);
     this.setState({
       brand: brand.name,
@@ -129,7 +128,7 @@ export default class AddVehicle extends React.Component {
     e.preventDefault();
     this.invalidateError("brandline");
     const brandLineId = e.target.value;
-    const brandLine = this.state.brandLines.find(brandLine => brandLine.id === brandLineId);
+    const brandLine = this.state.brandLines.find(brandLine => brandLine.id == brandLineId);
     this.setState({
       brandLine: brandLine.name
     });

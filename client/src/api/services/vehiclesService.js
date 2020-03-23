@@ -5,13 +5,22 @@ const restClient = new BaseService();
 export default class VehiclesService {
 
   static async searchVehicles(userID) {
-    
     const [err, response] = await to(restClient.get(`/vehicles/search?user_id=${userID}`));
     if (err) {
       console.log(`[message: Error getting vehicles info for user ${userID}] [error: ${JSON.stringify(err)}]`);
       throw err;
     }
     
+    return response.data;
+  }
+
+  static async createVehicle(vehicle) {
+    const [err, response] = await to(restClient.post(`/vehicles`, null, vehicle));
+    if (err) {
+      console.log(`[message: Error creating new vehicle] [error: ${JSON.stringify(err)}]`);
+      throw err;
+    }
+
     return response.data;
   }
   
@@ -67,27 +76,15 @@ export default class VehiclesService {
     return { speed, movement }
   }
 
-  static async setPhysicalIdToVehicle(vehicleId, physicalId) {
+  static async activate(vehicleId, physicalId) {
 
-    return {
-      id: 15,
-      brand: "FORD",
-      brandline: "FIESTA KD",
-      plate: "AA 383 TI",
-      devicePhysicalId: physicalId
-    };
+    const [err, response] = await to(restClient.put(`/vehicles/${vehicleId}/activate`, null, { physical_id: physicalId }));
+    if (err) {
+      console.log(`[message: Error activating vehicle ${vehicleId}] [error: ${JSON.stringify(err)}]`);
+      throw err;
+    }
 
-    // const body = {
-    //   physical_id = physicalId,
-    //   status = "ACTIVE"
-    // }
-    // const [err, response] = await to(restClient.put(`/vehicles/${vehicleId}`, null, body));
-    // if (err) {
-    //   console.log(`[message: Error setting physical id for vehicle ${vehicleId}] [error: ${JSON.stringify(err)}]`);
-    //   throw err;
-    // }
-
-    // return response.data;
+    return response.data;
   }
 
   static async deleteVehicle(vehicleId) {
