@@ -292,7 +292,7 @@ class ClientsAdmin extends React.Component {
                               <tr key={index + 1}>
                                 <td>{index + 1}</td>
                                 <td>{vehicle.brand}</td>
-                                <td>{vehicle.brandline}</td>
+                                <td>{vehicle.brand_line}</td>
                                 <td>{vehicle.plate}</td>
                                 <td style={{maxWidth: "150px"}}>{
                                   vehicle.devicePhysicalId ? vehicle.devicePhysicalId :

@@ -71,22 +71,15 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id/activate', (req, res, next) => {
+router.put('/:id/activate', async (req, res, next) => {
 
-  // const [err, response] = await to(apiClient.put(`/vehicles/${req.params.id}/activate`, req.headers, req.body));
-  // if (err) {
-  //   console.log(`[message: Error trying to activate vehicle ${req.params.id}] [error: ${err.message}]`);
-  //   res.status(500).json(err.message);
-  // } else {
-  //   res.status(response.status).json(response.data);
-  // }
-  return {
-    id: 15,
-    brand: "FORD",
-    brandline: "FIESTA KD",
-    plate: "AA 383 TI",
-    devicePhysicalId: physicalId
-  };
+  const [err, response] = await to(apiClient.put(`/vehicles/${req.params.id}/activate`, req.headers, req.body));
+  if (err) {
+    console.log(`[message: Error trying to activate vehicle ${req.params.id}] [error: ${err.message}]`);
+    res.status(500).json(err.message);
+  } else {
+    res.status(response.status).json(response.data);
+  }
 })
 
 router.delete('/:id', async (req, res, next) => {

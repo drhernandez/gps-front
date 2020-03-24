@@ -11,10 +11,10 @@ import {
   FormGroup,
   FormFeedback,
   Form,
-  Button,
   Alert,
 } from "shards-react";
-import AuthService from "../api/services/authService"
+import Button from "../components/common/Button";
+import AuthService from "../api/services/authService";
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import store from "../redux/store";
@@ -37,7 +37,8 @@ class Login extends React.Component {
     this.state = {
       errors: errorsDefault,
       remember: false,
-      showAlert: false
+      showAlert: false,
+      showSppiner: false
     }
 
     this.toogleCheckbox.bind(this);
@@ -64,6 +65,9 @@ class Login extends React.Component {
       })
     } 
     else {
+      this.setState({
+        showSppiner: true
+      });
       const email = e.target.email.value;
       const pass = e.target.password.value;
       const [err, tokenInfo] = await to(AuthService.login(email, pass));
@@ -72,7 +76,8 @@ class Login extends React.Component {
         this.props.history.push("/");
       } else {
         this.setState({
-          showAlert: true
+          showAlert: true,
+          showSppiner: false
         })
         setTimeout(() => {
           this.setState({
@@ -123,7 +128,8 @@ class Login extends React.Component {
                     <FormFeedback>Campo requerido</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <Button type="submit" pill className="d-table mx-auto">Iniciar Sesión</Button>
+                    {/* <Button type="submit" pill className="d-table mx-auto">Iniciar Sesión</Button> */}
+                    <Button type="submit" theme="accent" className="d-table mx-auto" label="Iniciar Sesión" showSppiner={this.state.showSppiner}></Button>
                   </FormGroup>
                   <FormGroup>
                     <Alert className="mb-3" open={this.state.showAlert} theme={constants.Themes.ERROR}>

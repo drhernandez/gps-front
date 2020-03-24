@@ -94,8 +94,6 @@ export default class AddVehicle extends React.Component {
         plate: e.target.plate.value
       }
 
-      console.log(vehicle)
-
       const [err, result] = await to(VehiclesService.createVehicle(vehicle));
       if (err) {
         this.setState({
