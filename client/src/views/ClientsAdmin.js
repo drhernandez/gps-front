@@ -25,6 +25,25 @@ var _ = require('lodash');
 
 const errorsDefault = []
 
+const errorMessages = {
+  generic: {
+    type: Constants.Themes.ERROR,
+    message: "Algo salió mal al intentar obtener los datos del usuario. Inténtelo de nuevo."
+  },
+  userNotFound: {
+    type: Constants.Themes.WARNING,
+    message: "Usuario no encontrado."
+  },
+  invalidPhysicalId: {
+    type: Constants.Themes.ERROR,
+    message: "El Nro de placa ingresado es incorrecto o ya está en uso."
+  },
+  errorDeleteVehicle: {
+    type: Constants.Themes.ERROR,
+    message: "Algo salió mal al intentar borrar el vehículo. Inténtelo de nuevo."
+  }
+}
+
 class ClientsAdmin extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +55,7 @@ class ClientsAdmin extends React.Component {
       user: null,
       alert: {
         visible: false,
-        type: Constants.Themes.ERROR
+        ...errorMessages.generic
       }
     }
     this.showAddVehicleForm.bind(this);
@@ -74,7 +93,7 @@ class ClientsAdmin extends React.Component {
         searchBarDisabled: false,
         alert: {
           visible: true,
-          type: err.status === 404 ? Constants.Themes.WARNING : Constants.Themes.ERROR
+          ...errorMessages.userNotFound
         },
         showSppiner: false
       })
@@ -94,7 +113,7 @@ class ClientsAdmin extends React.Component {
           searchBarDisabled: false,
           alert: {
             visible: true,
-            type: Constants.Themes.ERROR
+            ...errorMessages.generic
           },
           showSppiner: false
         })
@@ -147,7 +166,25 @@ class ClientsAdmin extends React.Component {
     const vehicleId = this.state.user.vehicles[index].id;
     this.toogleSppiner(index, "delete");
     const [err] = await to(VehiclesService.deleteVehicle(vehicleId));
-    if (!err) {
+    if (err) {
+      console.log(err);
+      this.toogleSppiner(index, "delete");
+      this.setState({
+        searchBarDisabled: false,
+        alert: {
+          visible: true,
+          ...errorMessages.errorDeleteVehicle
+        },
+        showSppiner: false
+      })
+      setTimeout(() => {
+        this.setState({
+          alert: {
+            visible: false
+          }
+        });
+      }, 4000);
+    } else {
       const user = this.state.user;
       const sppiners = this.state.sppiners;
       user.vehicles.splice(index, 1);
@@ -188,13 +225,28 @@ class ClientsAdmin extends React.Component {
       if (err) {
         // ver que onda
         console.log(err);
+        this.setState({
+          alert: {
+            visible: true,
+            ...errorMessages.invalidPhysicalId
+          },
+        });
+        this.toogleSppiner(index, "save");
+        setTimeout(() => {
+          this.setState({
+            alert: {
+              visible: false
+            }
+          });
+        }, 4000);
       } 
       else {
         const user = this.state.user;
         user.vehicles[index] = result;
         this.setState({
           user
-        })
+        });
+        this.toogleSppiner(index, "save");
       }
     }
   }
@@ -220,8 +272,7 @@ class ClientsAdmin extends React.Component {
           // <Row noGutters className="register__alert_row w-100">
           <Row noGutters className="w-100">
             <Alert className="my-auto w-100" open={this.state.alert.visible} theme={this.state.alert.type}>
-              {this.state.alert.type === Constants.Themes.WARNING && "Usuario no encontrado."}
-              {this.state.alert.type === Constants.Themes.ERROR && "Algo salió mal al intentar obtener los datos del usuario. Inténtelo de nuevo."}
+              {this.state.alert.message}
             </Alert>
           </Row>
         }
@@ -292,10 +343,10 @@ class ClientsAdmin extends React.Component {
                               <tr key={index + 1}>
                                 <td>{index + 1}</td>
                                 <td>{vehicle.brand}</td>
-                                <td>{vehicle.brandline}</td>
+                                <td>{vehicle.brand_line}</td>
                                 <td>{vehicle.plate}</td>
                                 <td style={{maxWidth: "150px"}}>{
-                                  vehicle.devicePhysicalId ? vehicle.devicePhysicalId :
+                                  vehicle.device ? vehicle.device.physical_id :
                                     <Form id={"form-" + index} onSubmit={(e) => this.setDevicePhysicalId(e, index)} noValidate>
                                       <FormInput size="sm"
                                         id={`devicePhysicalId-${index}`}
