@@ -1,6 +1,7 @@
 import React from "react";
 import to from "await-to-js";
 import { Link, withRouter } from "react-router-dom";
+import logger from "../logger";
 import {
   Container,
   Row,
@@ -33,6 +34,8 @@ const errorsDefault = {
 
 class Login extends React.Component {
   constructor(props) {
+    logger.info("en loggin")
+    logger.error("en loggin")
     super(props);
     this.state = {
       errors: errorsDefault,
@@ -75,6 +78,7 @@ class Login extends React.Component {
         await store.dispatch(setUserInfoAction(tokenInfo.user));
         this.props.history.push("/");
       } else {
+        logger.error(`[message: Error trying to login for user ${email}] [error: ${err}]`);
         this.setState({
           showAlert: true,
           showSppiner: false

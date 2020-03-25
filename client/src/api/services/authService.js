@@ -20,13 +20,14 @@ export default class AuthService {
 
   static async verifyToken(token) {
     
-    const [err] = await to(restClient.get(`/auth/validate`));
-    if (err) {
-      console.log(`[message: Error validating token] [error: ${JSON.stringify(err)}]`)
-      throw err;
-    }
+    // const [err] = await to(restClient.get(`/auth/validate`));
+    // if (err) {
+    //   console.log(`[message: Error validating token] [error: ${JSON.stringify(err)}]`)
+    //   throw err;
+    // }
 
-    return jwt.decode(token, { json: true });
+    // return jwt.decode(token, { json: true });
+    throw new Error("probando log error");
   }
 
   static logout() {

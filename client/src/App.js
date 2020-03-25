@@ -7,6 +7,7 @@ import withAuth from "./withAuth";
 import AuthService from "./api/services/authService";
 import store from "./redux/store";
 import { setUserInfoAction } from "./redux/actions/actions";
+import logger from "./logger";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Spinner from 'react-bootstrap/Spinner'
@@ -28,7 +29,7 @@ class App extends React.Component {
       if (!err && tokenInfo) {
         await store.dispatch(setUserInfoAction(tokenInfo.user));
       } else {
-        console.log(err);
+        logger.error(err);
       }
     }
 

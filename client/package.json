@@ -25,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "lodash.find": "^4.6.0",
+    "logdna": "^3.5.0",
     "path": "^0.12.7",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.0-beta.14",
