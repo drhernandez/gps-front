@@ -1,38 +1,15 @@
 {
   "name": "gps-front",
   "version": "1.0.0",
-  "description": "FrontEnd for gps-api",
+  "description": "Sistema de geolocalización satelital",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --mode development --content-base src --inline --hot",
+    "build": "(cd server && npm install) & (cd client && npm install && npm run build-prod)",
+    "start": "node server/index.js & node client/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/drhernandez/gps-front.git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/drhernandez/gps-front/issues"
-  },
-  "homepage": "https://github.com/drhernandez/gps-front#readme",
-  "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.8.8",
-    "react-router-dom": "^5.0.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.1.0",
-    "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.2",
-    "css-loader": "^1.0.0",
-    "style-loader": "^0.23.0",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.1",
-    "webpack-dev-server": "^3.1.8"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
