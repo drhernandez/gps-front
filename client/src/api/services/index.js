@@ -4,6 +4,7 @@ import AlertsService from "./alertsService";
 import VehiclesService from "./vehiclesService";
 import RecoveryService from "./recoveryService";
 import RolesService from "./rolesService";
+import DevicesService from "./devicesService";
 
 export {
   UsersService,
@@ -11,5 +12,6 @@ export {
   AlertsService,
   VehiclesService,
   RecoveryService,
-  RolesService
+  RolesService,
+  DevicesService
 }

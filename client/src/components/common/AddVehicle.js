@@ -91,7 +91,7 @@ export default class AddVehicle extends React.Component {
         user_id: this.state.userId,
         brand: this.state.brand,
         brand_line: this.state.brandLine,
-        plate: e.target.plate.value
+        plate: e.target.plate.value.toUpperCase()
       }
 
       const [err, result] = await to(VehiclesService.createVehicle(vehicle));
@@ -105,7 +105,7 @@ export default class AddVehicle extends React.Component {
         this.setState({
           showSppiner: false
         })
-        this.props.addVehicle(vehicle);
+        this.props.addVehicle(result);
       }
     }
   }
