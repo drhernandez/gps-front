@@ -1,5 +1,6 @@
 import BaseService from './baseService';
 import to from "await-to-js";
+import { DevicesService } from "./index";
 const restClient = new BaseService();
 
 export default class VehiclesService {
@@ -9,6 +10,23 @@ export default class VehiclesService {
     if (err) {
       console.log(`[message: Error getting vehicles info for user ${userID}] [error: ${JSON.stringify(err)}]`);
       throw err;
+    }
+
+    if (response.data.paging.total) {
+
+      let devices = await Promise.all(
+        response.data.data
+          .filter(vehicle => vehicle.status === 'ACTIVE')
+          .map(vehicle => DevicesService.getDeviceById(vehicle.device_id))
+      );
+
+      response.data.data
+        .filter(vehicle => vehicle.status === 'ACTIVE')
+        .forEach(vehicle => {
+          vehicle.device = devices.find(device => device.id == vehicle.device_id);
+          delete vehicle.device_id
+        });
+
     }
     
     return response.data;
@@ -83,6 +101,15 @@ export default class VehiclesService {
       console.log(`[message: Error activating vehicle ${vehicleId}] [error: ${JSON.stringify(err)}]`);
       throw err;
     }
+
+    const [err2, device] = await to(DevicesService.getDeviceById(response.data.device_id));
+    if (err) {
+      console.log(`[message: Error trying to get device ${response.data.device_id} after activating vehicle ${vehicleId}] [error: ${JSON.stringify(err2)}]`);
+      throw err2;
+    }
+
+    delete response.data.device_id;
+    response.data.device = device;
 
     return response.data;
   }

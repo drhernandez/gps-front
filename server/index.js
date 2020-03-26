@@ -10,6 +10,7 @@ const vehiclesRouter = require('./src/vehicles/vehiclesRouter')
 const authRouter = require('./src/auth/authRouter')
 const recoverPasswordRouter = require('./src/recoverPassword/recoverPasswordRouter');
 const rolesRouter = require('./src/roles/rolesRouter');
+const devicesRouter = require('./src/devices/devicesRouter');
 const cleanHeaders = require('./src/middlewares/middlewares').cleanHeaders;
 
 const app = express()
@@ -34,6 +35,7 @@ app.use("/api/vehicles", cleanHeaders, vehiclesRouter);
 app.use("/api/auth", cleanHeaders, authRouter);
 app.use("/api/recovery", cleanHeaders, recoverPasswordRouter);
 app.use("/api/roles", cleanHeaders, rolesRouter);
+app.use("/api/devices", cleanHeaders, devicesRouter);
 
 console.log('Server listening on port 3001');
 app.listen(3001)
