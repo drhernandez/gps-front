@@ -1,6 +1,9 @@
 import Logger from 'logdna';
 
 const logdnaKey = process.env.REACT_APP_LOGDNA_KEY;
+const logdnaKey2 = process.env.LOGDNA_KEY;
+console.log(logdnaKey);
+console.log(logdnaKey2);
 const options = {
   app: 'gps-front-client',
   env: process.env.NODE_ENV,
