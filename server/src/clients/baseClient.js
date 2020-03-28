@@ -4,7 +4,7 @@ class BaseClient {
   constructor(baseURL) {
     this.restClient = axios.create({
       baseURL: baseURL,
-      timeout: 3000
+      timeout: 5000
     });
   }
 

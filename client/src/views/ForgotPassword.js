@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import to from 'await-to-js'
 import {
   Container,
   Row,
@@ -10,9 +11,10 @@ import {
   FormGroup,
   FormFeedback,
   Form,
-  Button,
   Alert
 } from "shards-react";
+import Button from "../components/common/Button";
+import { RecoveryService } from "../api/services";
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import "../styles/login.css";
@@ -34,14 +36,15 @@ class ForgotPassword extends React.Component {
       snackbar: {
         visible: false,
         type: constants.Themes.SUCCESS
-      }
+      },
+      showSppiner: false
     }
 
     this.restorePassword.bind(this);
     this.invalidateError.bind(this);
   };
 
-  restorePassword(e) {
+  async restorePassword(e) {
     e.preventDefault()
     e.persist();
     const errors = _.clone(errorsDefault);
@@ -53,14 +56,17 @@ class ForgotPassword extends React.Component {
         errors: errors
       })
     } else {
-      //call service
-      const sent = true
-      if (sent) {
+      this.setState({
+        showSppiner: true
+      })
+      const [err] = await to(RecoveryService.generateToken(e.target.email.value));
+      if (!err) {
         this.setState({
           snackbar: {
             visible: true,
             type: constants.Themes.SUCCESS
-          }
+          },
+          showSppiner: false
         })
         setTimeout(() => {
           this.props.history.push("/signin");
@@ -70,7 +76,8 @@ class ForgotPassword extends React.Component {
           snackbar: {
             visible: true,
             type: constants.Themes.ERROR
-          }
+          },
+          showSppiner: false
         })
         setTimeout(() => {
           this.setState({
@@ -117,7 +124,7 @@ class ForgotPassword extends React.Component {
                       <small>Recibirás un email con las instrucciones para recuperar tu contraseña.</small>
                     </div>
                   </FormGroup>
-                  <Button type="submit" pill className="d-table mx-auto mb-4">Recuperar contraseña</Button>
+                  <Button type="submit" pill theme="accent" className="d-table mx-auto mb-4" label="Recuperar contraseña" showSppiner={this.state.showSppiner}></Button>
                   <FormGroup>
                     <Alert className="mb-3" open={this.state.snackbar.visible} theme={this.state.snackbar.type}>
                       {this.state.snackbar.type === constants.Themes.SUCCESS && "Ya te enviamos las instrucciones para recuperar tu contraseña, revisa tu casilla de correo. Te redireccionaremos al login"}
