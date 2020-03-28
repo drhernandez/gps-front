@@ -128,7 +128,6 @@ class Login extends React.Component {
                     <FormFeedback>Campo requerido</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    {/* <Button type="submit" pill className="d-table mx-auto">Iniciar Sesión</Button> */}
                     <Button type="submit" theme="accent" className="d-table mx-auto" label="Iniciar Sesión" showSppiner={this.state.showSppiner}></Button>
                   </FormGroup>
                   <FormGroup>
