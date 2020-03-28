@@ -4,7 +4,7 @@ export default class BaseService {
   constructor() {
     this.restClient = axios.create({
       baseURL: "/api",
-      timeout: 4000
+      timeout: 5500
     });
   }
 

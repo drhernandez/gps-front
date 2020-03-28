@@ -8,7 +8,7 @@ const alertsRouter = require('./src/alerts/alertsRouter')
 const usersRouter = require('./src/users/usersRouter')
 const vehiclesRouter = require('./src/vehicles/vehiclesRouter')
 const authRouter = require('./src/auth/authRouter')
-const recoverPasswordRouter = require('./src/recoverPassword/recoverPasswordRouter');
+const recoveryRouter = require('./src/recovery/recoveryRouter');
 const rolesRouter = require('./src/roles/rolesRouter');
 const devicesRouter = require('./src/devices/devicesRouter');
 const cleanHeaders = require('./src/middlewares/middlewares').cleanHeaders;
@@ -33,7 +33,7 @@ app.use("/api/alerts", cleanHeaders, alertsRouter);
 app.use("/api/users", cleanHeaders, usersRouter);
 app.use("/api/vehicles", cleanHeaders, vehiclesRouter);
 app.use("/api/auth", cleanHeaders, authRouter);
-app.use("/api/recovery", cleanHeaders, recoverPasswordRouter);
+app.use("/api/recovery", cleanHeaders, recoveryRouter);
 app.use("/api/roles", cleanHeaders, rolesRouter);
 app.use("/api/devices", cleanHeaders, devicesRouter);
 

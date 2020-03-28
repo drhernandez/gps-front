@@ -1,8 +1,16 @@
+const allowedHeaders = [
+  'x-access-token',
+  'x-recovery-token'
+]
+
 const cleanHeaders = (req, res, next) => {
   const headers = {};
-  if (req.headers['x-access-token']) {
-    headers['x-access-token'] = req.headers['x-access-token'];
-  }
+
+  allowedHeaders.forEach((header) => {
+    if (req.headers[header]) {
+      headers[header] = req.headers[header];
+    }
+  })
 
   req.headers = headers;
   next();
