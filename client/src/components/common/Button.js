@@ -10,6 +10,7 @@ export default class Button extends React.Component {
         <ShardsButton 
           type={this.props.type || "button"} 
           theme={this.props.theme || "accent"} 
+          block={this.props.block} 
           className={this.props.className}
           form={this.props.form}
           outline={this.props.outline}
