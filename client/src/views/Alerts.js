@@ -43,25 +43,24 @@ export default class Alerts extends React.Component {
   }
 
   async componentDidMount() {
-    this.loadVehicles();
+    await this.loadVehicles();
   }
 
   async loadVehicles() {
-    const userId = store.getState().userInfo.userId;
-    let [err, vehicles] = await to(UsersService.getVehiclesByUserID(userId));
-    if (err) {
-      console.log(err);
-    }
-    for (let i = 0; i < vehicles.length; i++) {
-      [err, vehicles[i].alerts] = await to(VehiclesService.getVehicleAlerts(vehicles[i].id));
-      if (err) {
-        console.log(err);
+    const userId = store.getState().userInfo.id;
+    const [err, response] = await to(VehiclesService.searchVehicles(userId));
+    if (!err && response.paging.total) {
+      for(var i = 0; i < response.data.length; i++) {
+        const [err2, alerts] = await to(VehiclesService.getVehicleAlerts(response.data[i].id));
+        if (!err2) {
+          response.data[i].alerts = alerts
+        }
       }
+      this.setState({
+        vehicles: response.data,
+        showSppiner: false
+      });
     }
-    this.setState({
-      vehicles: vehicles,
-      showSppiner: false
-    });
   }
 
   async updateAlerts(alerts) {
@@ -123,7 +122,7 @@ export default class Alerts extends React.Component {
               <Col key={vehicle.id} xl="5" lg="6">
                 <Card small className="mb-4">
                   <CardHeader className="border-bottom">
-                    <h6 className="m-0">{`${vehicle.type} - ${vehicle.plate}`}</h6>
+                    <h6 className="m-0">{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</h6>
                   </CardHeader>
                   <Form>
                     <ListGroup flush>
@@ -132,38 +131,43 @@ export default class Alerts extends React.Component {
                           <strong className="text-muted d-block mb-2">
                             Alarma de movimiento
                           </strong>
-                          <FormCheckbox toggle small
-                                        checked={vehicle.alerts.movement.active}
-                                        onChange={() => this.toogleAlert(vehicle.alerts.movement)}>
-                            {vehicle.alerts.movement.active ? 'Activada' : 'Desactivada'}
-                          </FormCheckbox>
+                          {
+                            vehicle.alerts.movement && 
+                            <FormCheckbox toggle small
+                              checked={vehicle.alerts.movement.active}
+                              onChange={() => this.toogleAlert(vehicle.alerts.movement)}>
+                              {vehicle.alerts.movement.active ? 'Activada' : 'Desactivada'}
+                            </FormCheckbox>
+                          }
                         </div>
                         <div className="py-2">
                           <strong className="text-muted d-block mb-2">
                             Alarma de velocidad
                           </strong>
-                          <Row>
-                            <Col lg="12" xl="5" className="px-3 py-1">
-                              <FormCheckbox toggle small
-                                            checked={vehicle.alerts.speed.active}
-                                            onChange={() => this.toogleAlert(vehicle.alerts.speed)}>
-                                {vehicle.alerts.speed.active ? 'Activada' : 'Desactivada'}
-                              </FormCheckbox>
-                            </Col>
-                            <Col lg="12" xl="7" className="px-3">
-                              <InputGroup className="mb-3">
-                                <InputGroupAddon type="prepend">
-                                  <InputGroupText>Velocidad max</InputGroupText>
-                                </InputGroupAddon>
-                                <FormInput disabled={!vehicle.alerts.speed.active} size="sm"
-                                           value={vehicle.alerts.speed.speed}
-                                           onChange={(event) => this.handleOnchangeSpeed(vehicle.id, event.target.value)} />
-                                <InputGroupAddon type="append">
-                                  <InputGroupText>Km / h.</InputGroupText>
-                                </InputGroupAddon>
-                              </InputGroup>
-                            </Col>
-                          </Row>
+                          {vehicle.alerts.speed &&
+                            <Row>
+                              <Col lg="12" xl="5" className="px-3 py-1">
+                                <FormCheckbox toggle small
+                                  checked={vehicle.alerts.speed.active}
+                                  onChange={() => this.toogleAlert(vehicle.alerts.speed)}>
+                                  {vehicle.alerts.speed.active ? 'Activada' : 'Desactivada'}
+                                </FormCheckbox>
+                              </Col>
+                              <Col lg="12" xl="7" className="px-3">
+                                <InputGroup className="mb-3">
+                                  <InputGroupAddon type="prepend">
+                                    <InputGroupText>Velocidad max</InputGroupText>
+                                  </InputGroupAddon>
+                                  <FormInput disabled={!vehicle.alerts.speed.active} size="sm"
+                                    value={vehicle.alerts.speed.speed}
+                                    onChange={(event) => this.handleOnchangeSpeed(vehicle.id, event.target.value)} />
+                                  <InputGroupAddon type="append">
+                                    <InputGroupText>Km / h.</InputGroupText>
+                                  </InputGroupAddon>
+                                </InputGroup>
+                              </Col>
+                            </Row>
+                          }
                         </div>
                       </ListGroupItem>
                       <ListGroupItem>

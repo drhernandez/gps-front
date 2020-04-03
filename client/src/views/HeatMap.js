@@ -60,11 +60,7 @@ export default class HeatMap extends React.Component {
   }
   
   async getTrackings(vehicleID) {
-    console.log(vehicleID)
     const [err, trackings] = await to(VehiclesService.getTrackings(vehicleID));
-    console.log("err >> ", err);
-    console.log("trackings >> ", trackings);
-
     if (!err && trackings.length) {
       this.setState({
         trackings: trackings,
