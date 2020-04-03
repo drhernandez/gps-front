@@ -18,14 +18,13 @@ router.post('/login', async function (req, res) {
 
 router.get('/validate', async function(req, res) {
   
-  // const [err, response] = await to(authClient.post(`/authentication/validate`, req.headers));
-  // if (err) {
-  //   console.log(`[message: Error trying to validate token] [error: ${err.message}]`);
-  //   res.status(500).json(err.message);
-  // } else {
-  //   res.status(response.status).json(response.data);
-  // }
-  res.status(200).send();
+  const [err, response] = await to(authClient.post(`/authentication/validate`, req.headers));
+  if (err) {
+    console.log(`[message: Error trying to validate token] [error: ${err.message}]`);
+    res.status(500).json(err.message);
+  } else {
+    res.status(response.status).json(response.data);
+  }
 })
 
 module.exports = router;
