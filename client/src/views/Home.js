@@ -23,10 +23,6 @@ const alerts = {
   generic: {
     type: constants.Themes.ERROR,
     message: "Hubo un error al intentar cargar la ubicación. Inténtelo de nuevo"
-  },
-  locationNotFound: {
-    type: constants.Themes.WARNING,
-    message: "No se han registrado datos para este vehículo"
   }
 }
 
@@ -48,6 +44,10 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     this.loadVehicles();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.dataPolling);
   }
 
   async loadVehicles() {
@@ -75,23 +75,19 @@ export default class Home extends React.Component {
         }
       })
     }
-    else {
-      this.setState({
-        trackings: [],
-        markers: [],
-        center: null,
-        zoom: null,
-        alert: {
-          visible: true,
-          body: err.status === 404 ? alerts.locationNotFound : alerts.generic
-        }
-      })
-    }
   }
 
   handleDeviceOnChange(event) {
     event.persist();
     this.getCurrentLocation(event.target.value);
+    this.dataPolling = setInterval(
+      () => {
+        try {
+          console.log("polling");
+          this.getCurrentLocation(event.target.value);
+        } catch (error) {
+        }
+      }, 4000);
   }
 
   invalidateAlert() {

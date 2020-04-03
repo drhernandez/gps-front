@@ -17,7 +17,7 @@ router.get('/search', async (req, res, next) => {
 })
 
 router.get('/:id/location', async (req, res, next) => {
-  
+
   const [err, response] = await to(apiClient.get(`/vehicles/${req.params.id}/location`, req.headers));
   if (err) {
     console.log(`[message: Error trying to get location for vehicle ${req.params.id}] [error: ${err.message}]`);
