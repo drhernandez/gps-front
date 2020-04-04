@@ -83,7 +83,6 @@ export default class Home extends React.Component {
     this.dataPolling = setInterval(
       () => {
         try {
-          console.log("polling");
           this.getCurrentLocation(event.target.value);
         } catch (error) {
         }

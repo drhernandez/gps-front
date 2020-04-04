@@ -269,7 +269,6 @@ class ClientsAdmin extends React.Component {
 
         {
           this.state.alert.visible &&
-          // <Row noGutters className="register__alert_row w-100">
           <Row noGutters className="w-100">
             <Alert className="my-auto w-100" open={this.state.alert.visible} theme={this.state.alert.type}>
               {this.state.alert.message}

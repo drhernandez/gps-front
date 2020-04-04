@@ -34,6 +34,13 @@ export default function() {
       htmlBefore: '<i class="material-icons">build</i>',
       htmlAfter: "",
       roles: [ADMIN]
+    },
+    {
+      title: "Tracking de clientes",
+      to: "/tracking",
+      htmlBefore: '<i class="material-icons">my_location</i>',
+      htmlAfter: "",
+      roles: [ADMIN]
     }
   ];
 }
