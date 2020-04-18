@@ -4,6 +4,7 @@ var logger;
 
 if (process.env.NODE_ENV === 'production') {
   var options = {
+    hostname: "https://gps-front.herokuapp.com/"
     app: "gps-front",
     env: process.env.NODE_ENV
   };
