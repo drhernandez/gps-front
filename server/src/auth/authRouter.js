@@ -3,6 +3,7 @@ const router = express.Router();
 const to = require("await-to-js").default;
 const authClient = require("../clients").AuthClient;
 const logger = require("../../logger");
+logger.info('[message: ESTA ES UNA PRUEBA DE LOGDNA]');
 
 router.post('/login', async function (req, res) {
   
