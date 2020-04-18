@@ -12,6 +12,7 @@ const recoveryRouter = require('./src/recovery/recoveryRouter');
 const rolesRouter = require('./src/roles/rolesRouter');
 const devicesRouter = require('./src/devices/devicesRouter');
 const cleanHeaders = require('./src/middlewares/middlewares').cleanHeaders;
+const logger = require('./logger');
 
 const app = express()
 
@@ -37,5 +38,5 @@ app.use("/api/recovery", cleanHeaders, recoveryRouter);
 app.use("/api/roles", cleanHeaders, rolesRouter);
 app.use("/api/devices", cleanHeaders, devicesRouter);
 
-console.log('Server listening on port 3001');
+logger.info('Backend server listening on port 3001');
 app.listen(3001)

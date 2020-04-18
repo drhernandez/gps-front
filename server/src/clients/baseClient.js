@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../../logger');
 
 class BaseClient {
   constructor(baseURL) {
@@ -54,7 +55,7 @@ function _parseErrorResponse(error) {
       "status": error.response.status,
       "data": error.response.data
     };
-    console.error(`[MESSAGE: Invalid response executing request] [REQUEST: ${JSON.stringify(request)}] [RESPONSE: ${JSON.stringify(response)}]`);
+    logger.error(`[MESSAGE: Invalid response executing request] [REQUEST: ${JSON.stringify(request)}] [RESPONSE: ${JSON.stringify(response)}]`);
     return new Error(response.status || 500, response.data.error, response.data.message);
   }
   else if (error.request) {
@@ -62,11 +63,11 @@ function _parseErrorResponse(error) {
       "url": error.config.url,
       "method": error.config.method
     };
-    console.error(`[MESSAGE: Error executing request] [REQUEST: ${JSON.stringify(request)}] [ERROR: ${error.message}]`);
+    logger.error(`[MESSAGE: Error executing request] [REQUEST: ${JSON.stringify(request)}] [ERROR: ${error.message}]`);
     return new Error(500, "internal_error", error.message);
   }
   else {
-    console.error(`[MESSAGE: Unexpected error] [ERROR: ${error.message}]`);
+    logger.error(`[MESSAGE: Unexpected error] [ERROR: ${error.message}]`);
     return new Error(500, "internal_error", error.message);
   }
 }
