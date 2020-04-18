@@ -9,13 +9,25 @@ import {
   CardBody,
   FormSelect,
   Form,
+  Alert
 } from "shards-react";
+import constants from "../utils/Constants";
 import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/common/maps/Gmap";
 import to from "await-to-js";
-//services
 import { VehiclesService } from "../api/services"
 import store from "../redux/store";
+
+const alerts = {
+  generic: {
+    type: constants.Themes.ERROR,
+    message: "Hubo un error al intentar cargar los datos. Inténtelo de nuevo"
+  },
+  trackingsNotFound: {
+    type: constants.Themes.WARNING,
+    message: "No se han registrado datos para este vehículo"
+  }
+}
 
 export default class HeatMap extends React.Component {
   constructor(props) {
@@ -25,32 +37,50 @@ export default class HeatMap extends React.Component {
       trackings: [],
       markers: [],
       center: null,
-      zoom: null
+      zoom: null,
+      alert: {
+        visible: false,
+        body: {}
+      }
     }
   };
 
+  componentDidMount() {
+    this.loadVehicles();
+  }
+
   async loadVehicles() {
-    const userId = store.getState().userInfo.userId;
-    const [err, vehicles] = await to(VehiclesService.getVehiclesByUserID(userId));
-    if (!err && vehicles) {
+    const userId = store.getState().userInfo.id;
+    const [err, response] = await to(VehiclesService.searchVehicles(userId));
+    if (!err && response.paging.total) {
       this.setState({
-        vehicles: vehicles
+        vehicles: response.data
       });
-    }
-    else {
-      console.log(err);
     }
   }
   
   async getTrackings(vehicleID) {
     const [err, trackings] = await to(VehiclesService.getTrackings(vehicleID));
-    if (!err && trackings) {
+    if (!err && trackings.length) {
       this.setState({
-        trackings: trackings
+        trackings: trackings,
+        alert: {
+          visible: false,
+          body: {}
+        }
       });
     }
     else {
-      console.log(err);
+      this.setState({
+        trackings: [],
+        markers: [],
+        center: null,
+        zoom: null,
+        alert: {
+          visible: true,
+          body: !err && !trackings.length ? alerts.trackingsNotFound : alerts.generic
+        }
+      })
     }
   }
 
@@ -59,16 +89,19 @@ export default class HeatMap extends React.Component {
     this.getTrackings(event.target.value);
   }
 
-  componentDidMount() {
-    this.loadVehicles();
-  }
-
   render() {
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle title="Lugares más visitados" subtitle="Mapa" className="text-sm-left mb-3 col-sm-12" />
+          <Col>
+            <PageTitle title="Ubicación actual" subtitle="Mapa" className="text-sm-left mb-3 col-sm-12" />
+          </Col>
+          <Col>
+            <Alert open={this.state.alert.visible} className="m-0" theme={this.state.alert.body.type}>
+              {this.state.alert.body.message}
+            </Alert>
+          </Col>
         </Row>
 
         <Row>
@@ -79,7 +112,7 @@ export default class HeatMap extends React.Component {
                   <FormSelect id="feInputState" defaultValue="default" onChange={(event) => this.handleDeviceOnChange(event)}>
                     <option value="default" disabled>Elija un vehículo...</option>
                     {this.state.vehicles.map((vehicle, idx) => (
-                      <option key={vehicle.device_id} value={vehicle.id}>{`${vehicle.type} - ${vehicle.plate}`}</option>
+                      <option key={vehicle.id} value={vehicle.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
                     ))}
                   </FormSelect>
                 </Form>

@@ -1,0 +1,16 @@
+.alerts_error {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex; }
+  .error__content {
+    padding: 0 0.9375rem;
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+    align-items: center;
+    text-align: center; }
+    .error__content i {
+      font-size: 3.75rem!important;
+      color: #ce0404; }
+    .error__content p {
+      margin: 0px!important; }

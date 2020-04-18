@@ -9,13 +9,22 @@ import {
   CardBody,
   FormSelect,
   Form,
+  Alert
 } from "shards-react";
+import constants from "../utils/Constants";
 import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/common/maps/Gmap";
 import { Marker } from "./../components/common/maps/Marker";
 import to from "await-to-js";
 import { VehiclesService } from "../api/services"
 import store from "../redux/store";
+
+const alerts = {
+  generic: {
+    type: constants.Themes.ERROR,
+    message: "Hubo un error al intentar cargar la ubicación. Inténtelo de nuevo"
+  }
+}
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -25,20 +34,29 @@ export default class Home extends React.Component {
       trackings: [],
       markers: [],
       center: null,
-      zoom: null
+      zoom: null,
+      alert: {
+        visible: false,
+        body: {}
+      }
     }
   };
 
+  componentDidMount() {
+    this.loadVehicles();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.dataPolling);
+  }
+
   async loadVehicles() {
     const userId = store.getState().userInfo.id;
-    const [err, vehicles] = await to(VehiclesService.getVehiclesByUserID(userId));
-    if (!err && vehicles) {
+    const [err, response] = await to(VehiclesService.searchVehicles(userId));
+    if (!err && response.paging.total) {
       this.setState({
-        vehicles: vehicles
+        vehicles: response.data
       });
-    }
-    else {
-      console.log(err);
     }
   }
 
@@ -50,29 +68,51 @@ export default class Home extends React.Component {
         trackings: [location],
         markers: [marker],
         center: marker.position,
-        zoom: 15
+        zoom: 15,
+        alert: {
+          visible: false,
+          body: {}
+        }
       })
-    }
-    else {
-      console.log(err);
     }
   }
 
   handleDeviceOnChange(event) {
     event.persist();
     this.getCurrentLocation(event.target.value);
+    this.dataPolling = setInterval(
+      () => {
+        try {
+          this.getCurrentLocation(event.target.value);
+        } catch (error) {
+        }
+      }, 4000);
   }
 
-  componentDidMount() {
-    this.loadVehicles();
+  invalidateAlert() {
+    this.setState({
+      alert: {
+        visible: false,
+        body: {}
+      }
+    })
   }
+
+
 
   render() {
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle title="Ubicación actual" subtitle="Mapa" className="text-sm-left mb-3 col-sm-12" />
+          <Col>
+            <PageTitle title="Ubicación actual" subtitle="Mapa" className="text-sm-left mb-3 col-sm-12" />
+          </Col>
+          <Col>
+            <Alert open={this.state.alert.visible} className="m-0" theme={this.state.alert.body.type}>
+              {this.state.alert.body.message}
+          </Alert>
+          </Col>
         </Row>
 
         <Row>
@@ -83,7 +123,7 @@ export default class Home extends React.Component {
                   <FormSelect id="feInputState" defaultValue="default" onChange={(event) => this.handleDeviceOnChange(event)}>
                     <option value="default" disabled>Elija un vehículo...</option>
                     {this.state.vehicles.map((vehicle, idx) => (
-                      <option key={vehicle.device_id} value={vehicle.id}>{`${vehicle.type} - ${vehicle.plate}`}</option>
+                      <option key={vehicle.id} value={vehicle.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
                     ))}
                   </FormSelect>
                 </Form>

@@ -13,6 +13,7 @@ import Errors from "./views/Errors";
 import UserProfileLite from "./views/UserProfileLite";
 import NewClient from "./views/NewClient";
 import ClientsAdmin from "./views/ClientsAdmin";
+import ClientTracking from "./views/ClientTracking";
 import store from "./redux/store";
 import { removeUserInfoAction } from "./redux/actions/actions";
 import { CLIENTE, ADMIN } from "./data/Roles";
@@ -110,6 +111,14 @@ export default [
     layout: DefaultLayout,
     isPublic: false,
     component: ClientsAdmin,
+    roles: [ADMIN]
+  },
+  {
+    path: "/tracking",
+    exact: true,
+    layout: DefaultLayout,
+    isPublic: false,
+    component: ClientTracking,
     roles: [ADMIN]
   }
 ];
