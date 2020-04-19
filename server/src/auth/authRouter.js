@@ -9,7 +9,7 @@ router.post('/login', async function (req, res) {
   
   const [err, response] = await to(authClient.post(`/authentication/login`, null, body));
   if (err) {
-    console.log(`[message: Error trying to login] [error: ${err.message}]`);
+    console.error(`[message: Error trying to login] [error: ${err.message}]`);
     res.status(500).json(err.message);
   } else {
     res.status(response.status).json(response.data);
@@ -20,7 +20,7 @@ router.get('/validate', async function(req, res) {
   
   const [err, response] = await to(authClient.post(`/authentication/validate`, req.headers));
   if (err) {
-    console.log(`[message: Error trying to validate token] [error: ${err.message}]`);
+    console.error(`[message: Error trying to validate token] [error: ${err.message}]`);
     res.status(500).json(err.message);
   } else {
     res.status(response.status).json(response.data);

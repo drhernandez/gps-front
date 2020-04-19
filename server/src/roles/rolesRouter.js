@@ -7,7 +7,7 @@ router.get('', async function (req, res, next) {
 
   const [err, response] = await to(authClient.get(`/roles`));
   if (err) {
-    console.log(`[message: Error trying to get roles list] [error: ${err.message}]`);
+    console.error(`[message: Error trying to get roles list] [error: ${err.message}]`);
     res.status(500).json(err.message);
   } else {
     res.status(response.status).json(response.data);
