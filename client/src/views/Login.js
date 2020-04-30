@@ -14,7 +14,7 @@ import {
   Alert,
 } from "shards-react";
 import Button from "../components/common/Button";
-import AuthService from "../api/services/authService";
+import { AuthService } from "../api/services";
 import validations from "../utils/ValidationsUtil";
 import constants from "../utils/Constants";
 import store from "../redux/store";
@@ -42,7 +42,7 @@ class Login extends React.Component {
     }
 
     this.toogleCheckbox.bind(this);
-    this.login.bind(this);
+    this.login = this.login.bind(this);
     this.invalidateError.bind(this);
   };
 
@@ -104,7 +104,7 @@ class Login extends React.Component {
             <Card small>
               <CardBody className="px-4">
                 <h5 className="login__titulo text-center mt-5 mb-4">Ingresa a tu cuenta</h5>
-                <Form onSubmit={e => this.login(e)} noValidate>
+                <Form onSubmit={this.login} noValidate>
                   <FormGroup>
                     <label htmlFor="email">Email</label>
                     <FormInput

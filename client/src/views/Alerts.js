@@ -22,10 +22,11 @@ import Constants from "../utils/Constants";
 //services
 import { VehiclesService, AlertsService } from "../api/services"
 import { to } from "await-to-js";
-import store from "../redux/store";
+import { connect } from "react-redux";
+// import store from "../redux/store";
 import "../styles/alerts.css";
 
-export default class Alerts extends React.Component {
+class Alerts extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -45,12 +46,20 @@ export default class Alerts extends React.Component {
     this.handleOnchangeSpeed = this.handleOnchangeSpeed.bind(this);
   }
 
-  async componentDidMount() {
-    await this.loadVehicles();
+  
+
+  componentDidMount() {
+    this.loadVehicles()
+    // .then(() => {
+    //   console.log('done')
+    // })
+    // .catch(error => {
+    //   console.error(error)
+    // })
   }
 
   async loadVehicles() {
-    const userId = store.getState().userInfo.id;
+    const userId = this.props.userId;
     const [err, response] = await to(VehiclesService.searchVehicles(userId));
     if (!err && response.paging.total) {
       const vehicleSppiners = {};
@@ -65,6 +74,12 @@ export default class Alerts extends React.Component {
         vehicles: response.data,
         showSppiner: false,
         vehicleSppiners: vehicleSppiners
+      });
+    } else {
+      this.setState({
+        vehicles: [],
+        showSppiner: false,
+        vehicleSppiners: {}
       });
     }
   }
@@ -214,3 +229,10 @@ const Error = (props) => (
     </div>
   </Container>
 );
+
+function mapStateToProps(state) {
+  const { userInfo } = state
+  return { userId: userInfo.id }
+}
+
+export default connect(mapStateToProps)(Alerts)

@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot renders 1`] = `
+<div
+  className="main-content-container px-4 h-100 container-fluid"
+>
+  <div
+    className="h-100 no-gutters row"
+  >
+    <div
+      className="mx-auto login col"
+    >
+      <div
+        className="card card-small"
+      >
+        <div
+          className="px-4 card-body"
+        >
+          <h5
+            className="login__titulo text-center mt-5 mb-4"
+          >
+            Ingresa a tu cuenta
+          </h5>
+          <form
+            className=""
+            noValidate={true}
+            onSubmit={[Function]}
+          >
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                autoComplete="email"
+                className="form-control"
+                id="email"
+                onChange={[Function]}
+                placeholder="Dirección de correo"
+                type="email"
+              />
+              <div
+                className="invalid-feedback"
+              >
+                Campo requerido
+              </div>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="password"
+              >
+                Contraseña
+              </label>
+              <input
+                className="form-control"
+                id="password"
+                onChange={[Function]}
+                placeholder="Contraseña"
+                type="password"
+              />
+              <div
+                className="invalid-feedback"
+              >
+                Campo requerido
+              </div>
+            </div>
+            <div
+              className="form-group"
+            >
+              <button
+                className="d-table mx-auto btn btn-accent"
+                onClick={[Function]}
+                type="submit"
+              >
+                Iniciar Sesión
+              </button>
+            </div>
+            <div
+              className="form-group"
+            />
+          </form>
+        </div>
+      </div>
+      <div
+        className="px-2 pt-3 login__justify_links"
+      >
+        <a
+          href="/forgot-password"
+          onClick={[Function]}
+        >
+          Olvidaste tu contraseña?
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

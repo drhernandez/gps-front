@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alerts component snapshot renders 1`] = `
+<div
+  className="main-content-container px-4 container-fluid"
+>
+  <div
+    className="page-header py-4 no-gutters row"
+  >
+    <div
+      className="text-sm-left mb-3 col-sm-12 text-center text-md-left mb-sm-0 col-12 col-sm-4"
+    >
+      <span
+        className="text-uppercase page-subtitle"
+      />
+      <h3
+        className="page-title"
+      >
+        Alertas
+      </h3>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="spinner-border text-primary"
+    />
+  </div>
+</div>
+`;
