@@ -41,16 +41,9 @@ class Login extends React.Component {
       showSppiner: false
     }
 
-    this.toogleCheckbox.bind(this);
     this.login = this.login.bind(this);
     this.invalidateError.bind(this);
   };
-
-  toogleCheckbox() {
-    this.setState({
-      remember: !this.state.remember
-    })
-  }
 
   async login(e) {
     e.preventDefault()

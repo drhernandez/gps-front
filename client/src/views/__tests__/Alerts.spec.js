@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 const mockStore = configureStore([]);
 
-jest.mock("../../api/services/vehiclesService", () => ({ searchVehicles: jest.fn(), getVehicleAlerts: jest.fn() }))
-import VehiclesService from '../../api/services/vehiclesService'
+jest.mock("../../api/services/vehiclesService", () => ({ searchVehicles: jest.fn(), getVehicleAlerts: jest.fn() }));
+import VehiclesService from '../../api/services/vehiclesService';
 
-import Alerts from '../Alerts'
+import Alerts from '../Alerts';
 
 function flushPromises() {
   return new Promise(resolve => setImmediate(resolve));
@@ -76,10 +76,45 @@ describe('Alerts component', () => {
     );
 
     await flushPromises();
-
     wrapper.update();
   
     expect(wrapper.find('Card').length).toBe(1)
     expect(wrapper.find('CardHeader').text()).toBe('Frod Fiesta - AA111AA')
+  })
+
+  it("should call updateAlert when save button is pressed", async () => {
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Alerts />
+      </Provider>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    const updateAlertsSpy = jest.spyOn(wrapper.find('Alerts').instance(), "updateAlerts");
+    const btn = wrapper.find('#save-btn-0');
+    expect(btn.length).toBe(1);
+
+    btn.simulate("click");
+    expect(updateAlertsSpy).toHaveBeenCalled();
+  })
+
+  it("toogleAlert should invert alert.active property", async () => {
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Alerts />
+      </Provider>
+    );
+
+    await flushPromises();
+    wrapper.update();
+
+    const inst = wrapper.find('Alerts').instance();
+    expect(inst.state.vehicles[0].alerts.speed.active).toBe(true);
+    inst.toogleAlert(inst.state.vehicles[0].alerts.speed)
+    expect(inst.state.vehicles[0].alerts.speed.active).toBe(false);
   })
 });

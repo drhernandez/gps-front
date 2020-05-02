@@ -49,13 +49,7 @@ class Alerts extends React.Component {
   
 
   componentDidMount() {
-    this.loadVehicles()
-    // .then(() => {
-    //   console.log('done')
-    // })
-    // .catch(error => {
-    //   console.error(error)
-    // })
+    this.loadVehicles();
   }
 
   async loadVehicles() {
@@ -149,7 +143,7 @@ class Alerts extends React.Component {
 
         {!this.state.showSppiner &&
           <Row>
-            {this.state.vehicles.map((vehicle) => (
+            {this.state.vehicles.map((vehicle,index) => (
               <Col key={vehicle.id} xl="5" lg="6">
                 <Card small className="mb-4">
                   <CardHeader className="border-bottom">
@@ -164,7 +158,7 @@ class Alerts extends React.Component {
                             <strong className="text-muted d-block mb-2">
                               Alarma de movimiento
                             </strong>
-                            <FormCheckbox toggle small
+                            <FormCheckbox id={'cbx-' + index + '-mvmnt'} toggle small
                               checked={vehicle.alerts.movement.active}
                               onChange={() => this.toogleAlert(vehicle.alerts.movement)}>
                               {vehicle.alerts.movement.active ? 'Activada' : 'Desactivada'}
@@ -176,7 +170,7 @@ class Alerts extends React.Component {
                             </strong>
                             <Row>
                               <Col lg="12" xl="5" className="px-3 py-1">
-                                <FormCheckbox toggle small
+                                <FormCheckbox id={'cbx-' + index + '-speed'} toggle small
                                   checked={vehicle.alerts.speed.active}
                                   onChange={() => this.toogleAlert(vehicle.alerts.speed)}>
                                   {vehicle.alerts.speed.active ? 'Activada' : 'Desactivada'}
@@ -199,7 +193,7 @@ class Alerts extends React.Component {
                           </div>
                         </ListGroupItem>
                         <ListGroupItem className="pt-0">
-                          <Button block onClick={() => this.updateAlerts(vehicle)} label="Guardar" showSppiner={this.state.vehicleSppiners[vehicle.id]}></Button>
+                          <Button id={'save-btn-' + index} block onClick={() => this.updateAlerts(vehicle)} label="Guardar" showSppiner={this.state.vehicleSppiners[vehicle.id]}></Button>
                         </ListGroupItem>
                       </ListGroup>
                     </Form> 
