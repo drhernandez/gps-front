@@ -23,7 +23,6 @@ import Constants from "../utils/Constants";
 import { VehiclesService, AlertsService } from "../api/services"
 import { to } from "await-to-js";
 import { connect } from "react-redux";
-// import store from "../redux/store";
 import "../styles/alerts.css";
 
 class Alerts extends React.Component {

@@ -42,7 +42,7 @@ class Login extends React.Component {
     }
 
     this.login = this.login.bind(this);
-    this.invalidateError.bind(this);
+    this.invalidateError = this.invalidateError.bind(this);
   };
 
   async login(e) {

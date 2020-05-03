@@ -1,4 +1,13 @@
 module.exports = {
+  "globals": {
+    "google": {
+      "maps": {
+        "Animation": {
+          DROP: "DROP"
+        }
+      }
+    }
+  },
   "moduleNameMapper": {
     "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
   },

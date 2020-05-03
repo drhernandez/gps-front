@@ -16,8 +16,8 @@ import PageTitle from "./../components/common/PageTitle";
 import Gmap from "./../components/common/maps/Gmap";
 import { Marker } from "./../components/common/maps/Marker";
 import to from "await-to-js";
+import { connect } from "react-redux";
 import { VehiclesService } from "../api/services"
-import store from "../redux/store";
 
 const alerts = {
   generic: {
@@ -26,7 +26,7 @@ const alerts = {
   }
 }
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +40,11 @@ export default class Home extends React.Component {
         body: {}
       }
     }
+
+    this.loadVehicles = this.loadVehicles.bind(this);
+    this.getCurrentLocation = this.getCurrentLocation.bind(this);
+    this.handleDeviceOnChange = this.handleDeviceOnChange.bind(this);
+    this.invalidateAlert = this.invalidateAlert.bind(this);
   };
 
   componentDidMount() {
@@ -51,8 +56,7 @@ export default class Home extends React.Component {
   }
 
   async loadVehicles() {
-    const userId = store.getState().userInfo.id;
-    const [err, response] = await to(VehiclesService.searchVehicles(userId));
+    const [err, response] = await to(VehiclesService.searchVehicles(this.props.userId));
     if (!err && response.paging.total) {
       this.setState({
         vehicles: response.data
@@ -72,6 +76,17 @@ export default class Home extends React.Component {
         alert: {
           visible: false,
           body: {}
+        }
+      })
+    } else {
+      this.setState({
+        trackings: [],
+        markers: [],
+        center: null,
+        zoom: null,
+        alert: {
+          visible: true,
+          body: alerts.generic
         }
       })
     }
@@ -120,7 +135,7 @@ export default class Home extends React.Component {
             <Card small className="mb-4">
               <CardHeader>
                 <Form className="add-new-post">
-                  <FormSelect id="feInputState" defaultValue="default" onChange={(event) => this.handleDeviceOnChange(event)}>
+                  <FormSelect id="feInputState" defaultValue="default" onChange={this.handleDeviceOnChange}>
                     <option value="default" disabled>Elija un vehículo...</option>
                     {this.state.vehicles.map((vehicle, idx) => (
                       <option key={vehicle.id} value={vehicle.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
@@ -131,8 +146,6 @@ export default class Home extends React.Component {
               <CardBody>
                 <Gmap
                   isMarkerShown
-                  containerElement={<div style={{ height: '450px' }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
                   zoom={this.state.zoom}
                   markers={this.state.markers}
                   center={this.state.center}
@@ -145,3 +158,10 @@ export default class Home extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { userInfo } = state
+  return { userId: userInfo.id }
+}
+
+export default connect(mapStateToProps)(Home)

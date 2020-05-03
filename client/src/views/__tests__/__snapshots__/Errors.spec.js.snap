@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Errors view snapshot renders 1`] = `
+<div
+  className="main-content-container px-4 pb-4 container-fluid"
+>
+  <div
+    className="error"
+  >
+    <div
+      className="error__content"
+    >
+      <h2>
+        500
+      </h2>
+      <h3>
+        Something went wrong!
+      </h3>
+      <p>
+        There was a problem on our end. Please try again later.
+      </p>
+      <button
+        className="btn btn-primary btn-pill"
+        onClick={[Function]}
+      >
+        ← Go Back
+      </button>
+    </div>
+  </div>
+</div>
+`;
