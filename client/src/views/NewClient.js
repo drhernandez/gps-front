@@ -62,8 +62,8 @@ class NewClient extends React.Component {
       showSppiner: false,
       roles: []
     }
-    this.createNewClient.bind(this);
-    this.invalidateError.bind(this);
+    this.createNewClient = this.createNewClient.bind(this);
+    this.invalidateError = this.invalidateError.bind(this);
   };
 
   async componentDidMount() {
