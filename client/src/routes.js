@@ -10,7 +10,7 @@ import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
 import Errors from "./views/Errors";
-import UserProfileLite from "./views/UserProfileLite";
+import UserProfile from "./views/UserProfile";
 import NewClient from "./views/NewClient";
 import ClientsAdmin from "./views/ClientsAdmin";
 import ClientTracking from "./views/ClientTracking";
@@ -94,7 +94,7 @@ export default [
     path: "/user-profile",
     layout: DefaultLayout,
     isPublic: false,
-    component: UserProfileLite,
+    component: UserProfile,
     roles: [CLIENTE, ADMIN]
   },
   {
