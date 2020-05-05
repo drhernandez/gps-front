@@ -45,29 +45,25 @@ export default class AddVehicle extends React.Component {
       plate: null
     }
 
-    this.getBrands.bind(this);
-    this.getModelsByBrand.bind(this);
-    this.saveVehicle.bind(this);
-    this.handleBrandSelection.bind(this);
-    this.handleBrandLineSelection.bind(this);
-    this.invalidateError.bind(this);
+    this.getBrands = this.getBrands.bind(this);
+    this.saveVehicle = this.saveVehicle.bind(this);
+    this.handleBrandSelection = this.handleBrandSelection.bind(this);
+    this.handleBrandLineSelection = this.handleBrandLineSelection.bind(this);
+    this.invalidateError = this.invalidateError.bind(this);
   }
 
-  async componentDidMount() {
-    const brands = await this.getBrands();
-    this.setState({
-      brands: brands
-    })
+  componentDidMount() {
+    this.getBrands();
+    
   }
 
   async getBrands() {
     const [err, brands] = await to(VehiclesService.getBrands());
-    return err ? [] : brands;
-  }
-
-  async getModelsByBrand(brandId) {
-    const [err, brandLines] = await to(VehiclesService.getBrandLines(brandId));
-    return err ? [] : brandLines
+    if (!err) {
+      this.setState({
+        brands: brands
+      })
+    }
   }
 
   async saveVehicle(e) {
@@ -115,10 +111,10 @@ export default class AddVehicle extends React.Component {
     this.invalidateError("brand");
     const brandId = e.target.value;
     const brand = this.state.brands.find(brand => brand.id == brandId);
-    const brandlines = await this.getModelsByBrand(brand.id);
+    const [err, brandlines] = await to(VehiclesService.getBrandLines(brandId));
     this.setState({
       brand: brand.name,
-      brandLines: brandlines
+      brandLines: err ? [] : brandlines
     });
   }
 
@@ -142,7 +138,7 @@ export default class AddVehicle extends React.Component {
 
   render() {
     return (
-      <Form className="w-100 main-container p-2" onSubmit={(e) => this.saveVehicle(e)} noValidate>
+      <Form className="w-100 main-container p-2" onSubmit={this.saveVehicle} noValidate>
         <FormGroup className="m-0">
           <Row form>
             {/* Brand */}
@@ -150,7 +146,7 @@ export default class AddVehicle extends React.Component {
               <label htmlFor="brand">Marca</label>
               <FormSelect 
                 id="brand" 
-                onChange={(e) => this.handleBrandSelection(e)}
+                onChange={this.handleBrandSelection}
                 invalid={this.state.errors.brand.required}
               >
                 <option key="0"> Seleccione una opción... </option>
@@ -167,7 +163,7 @@ export default class AddVehicle extends React.Component {
               <label htmlFor="brandline">Categoría</label>
               <FormSelect 
                 id="brandline" 
-                onChange={(e) => this.handleBrandLineSelection(e)}
+                onChange={this.handleBrandLineSelection}
                 invalid={this.state.errors.brandline.required}
               >
                 <option key="0"> Seleccione una opción... </option>
