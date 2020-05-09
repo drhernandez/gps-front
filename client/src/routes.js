@@ -10,7 +10,7 @@ import Home from "./views/Home";
 import HeatMap from "./views/HeatMap";
 import Alerts from "./views/Alerts";
 import Errors from "./views/Errors";
-import UserProfileLite from "./views/UserProfileLite";
+import UserProfile from "./views/UserProfile";
 import NewClient from "./views/NewClient";
 import ClientsAdmin from "./views/ClientsAdmin";
 import ClientTracking from "./views/ClientTracking";
@@ -26,7 +26,11 @@ export default [
     isPublic: true,
     component: (props) => {
       const state = store.getState();
-      return state.userInfo != null && state.userInfo.role.name === ADMIN ? <Redirect to="/new-client" /> : <Redirect to="/home" />
+      if (state.userInfo != null) {
+        return state.userInfo.role.name === ADMIN ? <Redirect to="/new-client" /> : <Redirect to="/home" />
+      } else {
+        return <Redirect to="/signin" />
+      }
     },
     roles: []
   },
@@ -94,7 +98,7 @@ export default [
     path: "/user-profile",
     layout: DefaultLayout,
     isPublic: false,
-    component: UserProfileLite,
+    component: UserProfile,
     roles: [CLIENTE, ADMIN]
   },
   {

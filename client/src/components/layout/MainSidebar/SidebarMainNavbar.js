@@ -5,12 +5,6 @@ import { Navbar, NavbarBrand } from "shards-react";
 
 import { toogleSidebarAction } from "../../../redux/actions/actions";
 
-function mapDispatchToProps(dispatch) {
-  return {
-    toogleSidebarAction: () => dispatch(toogleSidebarAction())
-  }
-}
-
 class SidebarMainNavbar extends React.Component {
   render() {
     const { hideLogoText } = this.props.hideLogoText;
@@ -63,5 +57,11 @@ SidebarMainNavbar.propTypes = {
 SidebarMainNavbar.defaultProps = {
   hideLogoText: false
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toogleSidebarAction: () => dispatch(toogleSidebarAction())
+  }
+}
 
 export default connect(null, mapDispatchToProps)(SidebarMainNavbar);

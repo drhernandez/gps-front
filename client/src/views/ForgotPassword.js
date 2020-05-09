@@ -40,8 +40,8 @@ class ForgotPassword extends React.Component {
       showSppiner: false
     }
 
-    this.restorePassword.bind(this);
-    this.invalidateError.bind(this);
+    this.restorePassword = this.restorePassword.bind(this);
+    this.invalidateError = this.invalidateError.bind(this);
   };
 
   async restorePassword(e) {

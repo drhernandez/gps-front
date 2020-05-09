@@ -1,31 +1,32 @@
 import React from "react";
 import { connect } from 'react-redux'
-import store from "../../../redux/store";
 import { Nav } from "shards-react";
 
 import SidebarNavItem from "./SidebarNavItem";
 
-const mapStateToProps = state => {
-  return { navItems: state.navItems };
-};
-
-const getNavItems = (props) => {
-  const state = store.getState();
-  if (state.userInfo != null) {
-    const userRole = state.userInfo.role.name;
-    return props.navItems.filter(navItem => navItem.roles.includes(userRole));
-  } else {
-    return [];
-  }
-}
-
 class SidebarNavItems extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      navItems: []
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.userInfo) {
+      const navItems = this.props.navItems.filter(navItem => navItem.roles.includes(this.props.userInfo.role.name))
+      this.setState({
+        navItems: navItems
+      })
+    }
+  }
 
   render() {
     return (
       <div className="nav-wrapper">
         <Nav className="nav--no-borders flex-column">
-          {getNavItems(this.props).map((item, idx) => (
+          {this.state.navItems.map((item, idx) => (
             <SidebarNavItem key={idx} item={item} />
           ))}
         </Nav>
@@ -33,5 +34,13 @@ class SidebarNavItems extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  const { userInfo , navItems} = state
+  return { 
+    userInfo: userInfo,
+    navItems: navItems
+   };
+};
 
 export default connect(mapStateToProps, null)(SidebarNavItems);

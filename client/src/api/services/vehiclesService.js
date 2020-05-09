@@ -83,13 +83,15 @@ export default class VehiclesService {
   }
 
   static async getVehicleAlerts(vehicleID) {
-    const [err, [speed, movement]] = await to(Promise.all(
+    const [err, alerts] = await to(Promise.all(
       [this.getVehicleSpeedAlert(vehicleID), this.getVehicleMovementAlert(vehicleID)])
     );
     if (err) {
       console.log(`[message: Error getting alerts for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
       throw err;
     }
+
+    const [speed, movement] = alerts
 
     return { speed, movement }
   }

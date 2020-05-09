@@ -3,7 +3,7 @@ import { isNullOrUndefined } from "util";
 const MIN_LENGHT = "(?=.{8,})";
 const HAVE_UPPERCASE = "(?=.*[A-Z])";
 const HAVE_NUMERIC = "(?=.*[0-9])";
-const HAVE_SPECIAL_CHARACTERS = "(?=.[!@#\$%\^&])";
+const HAVE_SPECIAL_CHARACTERS = "(?=.[!.@#\$%\^&])";
 // const HAVE_SPECIAL_CHARACTERS = "(?=.[!@#%&])";
 
 const PASSWORD_STRENGHT_1 = [MIN_LENGHT];
@@ -15,7 +15,7 @@ function validateRequired(value) {
 };
 
 function validateNumber(value) {
-  return !isNaN(value);
+  return !isNullOrUndefined(value) && !isNaN(value);
 }
 
 function validateEmail(value) {
@@ -34,7 +34,7 @@ function validatePassword(value, passwordStrenght) {
   validations.forEach(element => {
     isValid &= new RegExp(element).test(value);  
   });
-  return isValid;
+  return !!isValid;
 }
 
 export default {

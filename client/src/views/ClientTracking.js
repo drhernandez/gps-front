@@ -46,8 +46,8 @@ class ClientTracking extends React.Component {
         ...errorMessages.generic
       }
     }
-    this.search.bind(this);
-    this.handleDeviceOnChange.bind(this);
+    this.search = this.search.bind(this);
+    this.handleDeviceOnChange = this.handleDeviceOnChange.bind(this);
   };
 
   componentWillUnmount() {
@@ -66,7 +66,6 @@ class ClientTracking extends React.Component {
 
     const [err, user] = await to(UsersService.getUserByEmail(email));
     if (err != null) {
-      console.log(err);
       this.setState({
         searchBarDisabled: false,
         alert: {
@@ -163,11 +162,11 @@ class ClientTracking extends React.Component {
             <CardHeader className="mt-3">
               <Row>
                 <Col>
-                  <NavbarSearch disabled={this.state.searchBarDisabled} placeholder="Buscar clientes por email..." searchFunction={(e) => this.search(e)} />
+                  <NavbarSearch disabled={this.state.searchBarDisabled} placeholder="Buscar clientes por email..." searchFunction={this.search} />
                 </Col>
                 <Col>
                   <Form className="add-new-post">
-                    <FormSelect id="feInputState" defaultValue="default" disabled={this.state.user == null} onChange={(event) => this.handleDeviceOnChange(event)}>
+                    <FormSelect id="feInputState" defaultValue="default" disabled={this.state.user == null} onChange={this.handleDeviceOnChange}>
                       <option value="default" disabled>Elija un vehículo...</option>
                       {this.state.user && this.state.user.vehicles.map((vehicle, idx) => (
                         <option key={vehicle.id} value={vehicle.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
