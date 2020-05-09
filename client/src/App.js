@@ -22,7 +22,6 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    debugger
     const token = localStorage.getItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
     if (token) {
       const [err, tokenInfo] = await to(AuthService.verifyToken(token));
