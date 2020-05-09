@@ -7,10 +7,6 @@ import {Col} from "shards-react";
 import SidebarMainNavbar from "./SidebarMainNavbar";
 import SidebarNavItems from "./SidebarNavItems";
 
-const mapStateToProps = state => {
-  return { menuVisible: state.menuVisible };
-};
-
 class MainSidebar extends React.Component {
 
   render() {
@@ -44,6 +40,10 @@ MainSidebar.propTypes = {
 
 MainSidebar.defaultProps = {
   hideLogoText: false
+};
+
+const mapStateToProps = state => {
+  return { menuVisible: state.menuVisible };
 };
 
 export default connect(mapStateToProps, null)(MainSidebar);

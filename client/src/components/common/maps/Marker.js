@@ -6,14 +6,6 @@ class Marker {
     this.animation = animation;
     this.position = new Position(lat, lng);
   }
-  // Getter
-  // get area() {
-  //   return this.calcArea();
-  // }
-  // Método
-  // calcArea() {
-  //   return this.height * this.width;
-  // }
 }
 
 class Position {

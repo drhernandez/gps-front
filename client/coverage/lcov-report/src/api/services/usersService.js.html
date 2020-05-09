@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -85,29 +85,29 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BaseService from './baseService';
@@ -116,25 +116,25 @@ const restClient = new BaseService();
 &nbsp;
 export default class UsersService {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async createUser(user) {
-    const [err, response] = <span class="cstat-no" title="statement not covered" >await to(restClient.post(`/users`, null, user));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error creating user] [error: ${JSON.stringify(err)}]`);</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+  static async createUser(user) {
+    const [err, response] = await to(restClient.post(`/users`, null, user));
+    if (err) {
+      console.log(`[message: Error creating user] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return response.data;</span>
+    return response.data;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async getUserByEmail(email) {
+  static async getUserByEmail(email) {
 &nbsp;
-    const [err, response] = <span class="cstat-no" title="statement not covered" >await to(restClient.get(`/users?email=${email}`));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error getting user ${email}] [error: ${JSON.stringify(err)}]`);</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+    const [err, response] = await to(restClient.get(`/users?email=${email}`));
+    if (err) {
+      console.log(`[message: Error getting user ${email}] [error: ${JSON.stringify(err)}]`);
+      throw err;
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return response.data;</span>
+    return response.data;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -144,7 +144,7 @@ export default class UsersService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue May 05 2020 19:17:57 GMT-0300 (Argentina Standard Time)
+                at Sat May 09 2020 18:04:11 GMT-0300 (Argentina Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

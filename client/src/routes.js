@@ -26,7 +26,11 @@ export default [
     isPublic: true,
     component: (props) => {
       const state = store.getState();
-      return state.userInfo != null && state.userInfo.role.name === ADMIN ? <Redirect to="/new-client" /> : <Redirect to="/home" />
+      if (state.userInfo != null) {
+        return state.userInfo.role.name === ADMIN ? <Redirect to="/new-client" /> : <Redirect to="/home" />
+      } else {
+        return <Redirect to="/signin" />
+      }
     },
     roles: []
   },

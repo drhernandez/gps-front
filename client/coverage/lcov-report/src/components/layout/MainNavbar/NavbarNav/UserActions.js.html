@@ -29,9 +29,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -120,9 +120,7 @@
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
 <a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,20 +138,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,7 +157,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -186,11 +176,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
 import { Link } from "react-router-dom";
-import store from "../../../../redux/store";
+import { connect } from "react-redux";
 import {
   Dropdown,
   DropdownToggle,
@@ -204,22 +200,14 @@ import {
 import AuthService from "../../../../api/services/authService";
 &nbsp;
 &nbsp;
-export default class UserActions extends React.Component {
+class UserActions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
-      userInfo: undefined
+      visible: false
     };
 &nbsp;
     this.toggleUserActions = this.toggleUserActions.bind(this);
-  }
-&nbsp;
-  componentDidMount() {
-    const state = store.getState();
-    this.setState({
-      userInfo: state.userInfo
-    })
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  to</span>ggleUserActions() {
@@ -236,7 +224,7 @@ export default class UserActions extends React.Component {
     return (
       &lt;NavItem tag={Dropdown} caret toggle={this.toggleUserActions}&gt;
         &lt;DropdownToggle caret tag={NavLink} className="d-flex align-items-center h-100 text-nowrap px-3"&gt;
-          &lt;span className="d-none d-inline-block"&gt;{this.state.userInfo &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.state.userInfo.name + " " + this.state.userInfo.lastName}</span>&lt;/span&gt;
+          &lt;span className="d-none d-inline-block"&gt;{this.props.userInfo &amp;&amp; this.props.userInfo.name + " " + this.props.userInfo.lastName}&lt;/span&gt;
         &lt;/DropdownToggle&gt;
         &lt;Collapse tag={DropdownMenu} right small open={this.state.visible}&gt;
           &lt;DropdownItem tag={Link} to="user-profile"&gt;
@@ -254,14 +242,20 @@ export default class UserActions extends React.Component {
     );
   }
 }
-&nbsp;</pre></td></tr></table></pre>
+&nbsp;
+function mapStateToProps(state) {
+  const { userInfo } = state
+  return { userInfo: userInfo }
+}
+&nbsp;
+export default connect(mapStateToProps)(UserActions)</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue May 05 2020 19:17:57 GMT-0300 (Argentina Standard Time)
+                at Sat May 09 2020 18:04:11 GMT-0300 (Argentina Standard Time)
             </div>
         </div>
         <script src="../../../../../prettify.js"></script>

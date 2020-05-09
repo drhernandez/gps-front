@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test 1`] = `
+<footer
+  className="main-footer d-flex p-2 px-3 bg-white border-top"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="d-flex align-items-center h-100 row"
+    >
+      <span
+        className="copyright ml-auto my-auto mr-2"
+      >
+        Copyright © 2019 DesignRevision
+      </span>
+    </div>
+  </div>
+</footer>
+`;

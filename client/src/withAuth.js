@@ -2,30 +2,32 @@ import React from "react";
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
 import Constants from "./utils/Constants";
-import store from "./redux/store";
 
 const withAuth = (WrappedComponent, route) => {
-  
-  const mapStateToProps = state => {
-    return { userInfo: state.userInfo };
-  };
+  class HOC extends React.Component {
+    
+    constructor(props) {
+      super(props)
+      this.canAccess = this.__proto__.canAccess.bind(this)
+    }
 
-  const canAccess = (route) => {
-    const state = store.getState();
-    return state.userInfo !== null && route.roles.includes(state.userInfo.role.name);
-  }
-
-  const HOC = class extends React.Component {
+    canAccess(route) {
+      return this.props.userInfo != null && route.roles.includes(this.props.userInfo.role.name);
+    }
     
     render() {
       
-      if (route.isPublic || canAccess(route)) {
+      if (route.isPublic || this.canAccess(route)) {
         return <WrappedComponent {...this.props} />
       }
 
       localStorage.removeItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
       return <Redirect to="/signin" />
     }
+  };
+
+  const mapStateToProps = state => {
+    return { userInfo: state.userInfo };
   };
 
   return connect(mapStateToProps, null)(HOC);

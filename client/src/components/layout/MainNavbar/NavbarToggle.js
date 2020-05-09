@@ -2,12 +2,6 @@ import React from "react";
 import { connect } from 'react-redux'
 import { toogleSidebarAction } from "../../../redux/actions/actions";
 
-function mapDispatchToProps(dispatch) {
-  return {
-    toogleSidebarAction: () => dispatch(toogleSidebarAction())
-  }
-}
-
 class NavbarToggle extends React.Component {
 
   render() {
@@ -19,6 +13,12 @@ class NavbarToggle extends React.Component {
         </a>
       </nav>
     )
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toogleSidebarAction: () => dispatch(toogleSidebarAction())
   }
 }
 

@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">92.31% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/13</span>
+                <span class='fraction'>12/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.67% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">92.31% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/13</span>
+                <span class='fraction'>12/13</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,31 +94,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,27 +132,27 @@ const restClient = new BaseService();
 &nbsp;
 export default class AuthService {
   
-<span class="fstat-no" title="function not covered" >  st</span>atic async login(email, password) {
+  static async login(email, password) {
 &nbsp;
-    const [err, response] = <span class="cstat-no" title="statement not covered" >await to(restClient.post(`/auth/login`, null, { email, password }));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error trying to login] [error: ${JSON.stringify(err)}]`)</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+    const [err, response] = await to(restClient.post(`/auth/login`, null, { email, password }));
+    if (err) {
+      console.log(`[message: Error trying to login] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
     
-<span class="cstat-no" title="statement not covered" >    localStorage.setItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY, response.data.token);</span>
-<span class="cstat-no" title="statement not covered" >    return jwt.decode(response.data.token, { json: true });</span>
+    localStorage.setItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY, response.data.token);
+    return jwt.decode(response.data.token, { json: true });
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async verifyToken(token) {
+  static async verifyToken(token) {
     
-    const [err] = <span class="cstat-no" title="statement not covered" >await to(restClient.get(`/auth/validate`));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error validating token] [error: ${JSON.stringify(err)}]`)</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+    const [err] = await to(restClient.get(`/auth/validate`));
+    if (err) {
+      console.log(`[message: Error validating token] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return jwt.decode(token, { json: true });</span>
+    return jwt.decode(token, { json: true });
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic logout() {
@@ -165,7 +165,7 @@ export default class AuthService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue May 05 2020 19:17:57 GMT-0300 (Argentina Standard Time)
+                at Sat May 09 2020 18:04:11 GMT-0300 (Argentina Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

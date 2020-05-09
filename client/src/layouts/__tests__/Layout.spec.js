@@ -8,6 +8,7 @@ const mockStore = configureStore([]);
 
 import Default from "../Default"
 import Simple from "../Simple"
+import getItems from '../../data/sidebar-nav-items'
 
 let store;
 
@@ -15,9 +16,14 @@ describe("Layouts", () => {
 
   beforeEach(async () => {
     store = mockStore({
+      menuVisible: true,
+      navItems: getItems(),
       userInfo: {
-        id: 1
-      },
+        id: 1,
+        role: {
+          name: 'ADMIN'
+        }
+      }
     });
   });
 

@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -89,70 +89,76 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
 import Constants from "./utils/Constants";
-import store from "./redux/store";
 &nbsp;
-const withAuth = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(W</span>rappedComponent, route) =&gt; {</span>
-  
-  const mapStateToProps = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >st</span>ate =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return { userInfo: state.userInfo };</span>
-  };
-&nbsp;
-  const canAccess = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(r</span>oute) =&gt; {</span>
-    const state = <span class="cstat-no" title="statement not covered" >store.getState();</span>
-<span class="cstat-no" title="statement not covered" >    return state.userInfo !== null &amp;&amp; route.roles.includes(state.userInfo.role.name);</span>
-  }
-&nbsp;
-  const HOC = <span class="cstat-no" title="statement not covered" >class extends React.Component {</span>
+const withAuth = (WrappedComponent, route) =&gt; {
+  class HOC extends React.Component {
     
-<span class="fstat-no" title="function not covered" >    re</span>nder() {
+    constructor(props) {
+      super(props)
+      this.canAccess = this.__proto__.canAccess.bind(this)
+    }
+&nbsp;
+    canAccess(route) {
+      return this.props.userInfo != null &amp;&amp; route.roles.includes(this.props.userInfo.role.name);
+    }
+    
+    render() {
       
-<span class="cstat-no" title="statement not covered" >      if (route.isPublic || canAccess(route)) {</span>
-<span class="cstat-no" title="statement not covered" >        return &lt;WrappedComponent {...this.props} /&gt;</span>
+      if (route.isPublic || this.canAccess(route)) {
+        return &lt;WrappedComponent {...this.props} /&gt;
       }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      localStorage.removeItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);</span>
-<span class="cstat-no" title="statement not covered" >      return &lt;Redirect to="/signin" /&gt;</span>
+      localStorage.removeItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
+      return &lt;Redirect to="/signin" /&gt;
     }
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return connect(mapStateToProps, null)(HOC);</span>
+  const mapStateToProps = state =&gt; {
+    return { userInfo: state.userInfo };
+  };
+&nbsp;
+  return connect(mapStateToProps, null)(HOC);
 }
 &nbsp;
 export default withAuth;</pre></td></tr></table></pre>
@@ -162,7 +168,7 @@ export default withAuth;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue May 05 2020 19:17:57 GMT-0300 (Argentina Standard Time)
+                at Sat May 09 2020 18:04:11 GMT-0300 (Argentina Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

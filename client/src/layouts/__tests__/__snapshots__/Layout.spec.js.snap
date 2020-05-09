@@ -8,7 +8,7 @@ exports[`Layouts Default snapshot 1`] = `
     className="row"
   >
     <aside
-      className="main-sidebar px-0 col-12 col-md-3 col-lg-2"
+      className="main-sidebar px-0 col-12 open col-md-3 col-lg-2"
     >
       <div
         className="main-navbar"
@@ -64,7 +64,77 @@ exports[`Layouts Default snapshot 1`] = `
       >
         <ul
           className="nav--no-borders flex-column nav"
-        />
+        >
+          <li
+            className="nav-item"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/new-client"
+              onClick={[Function]}
+            >
+              <div
+                className="d-inline-block item-icon-wrapper"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<i class=\\"material-icons\\">person_add</i>",
+                  }
+                }
+              />
+              <span>
+                Alta de cliente
+              </span>
+              
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/clients"
+              onClick={[Function]}
+            >
+              <div
+                className="d-inline-block item-icon-wrapper"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<i class=\\"material-icons\\">build</i>",
+                  }
+                }
+              />
+              <span>
+                Administrar clientes
+              </span>
+              
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/tracking"
+              onClick={[Function]}
+            >
+              <div
+                className="d-inline-block item-icon-wrapper"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<i class=\\"material-icons\\">my_location</i>",
+                  }
+                }
+              />
+              <span>
+                Tracking de clientes
+              </span>
+              
+            </a>
+          </li>
+        </ul>
       </div>
     </aside>
     <main
@@ -213,7 +283,9 @@ exports[`Layouts Default snapshot 1`] = `
                 >
                   <span
                     className="d-none d-inline-block"
-                  />
+                  >
+                    undefined undefined
+                  </span>
                 </a>
                 <div
                   className="collapse dropdown-menu dropdown-menu-small dropdown-menu-right"

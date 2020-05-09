@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import store from "../../../../redux/store";
+import { connect } from "react-redux";
 import {
   Dropdown,
   DropdownToggle,
@@ -14,22 +14,14 @@ import {
 import AuthService from "../../../../api/services/authService";
 
 
-export default class UserActions extends React.Component {
+class UserActions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
-      userInfo: undefined
+      visible: false
     };
 
     this.toggleUserActions = this.toggleUserActions.bind(this);
-  }
-
-  componentDidMount() {
-    const state = store.getState();
-    this.setState({
-      userInfo: state.userInfo
-    })
   }
 
   toggleUserActions() {
@@ -46,7 +38,7 @@ export default class UserActions extends React.Component {
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="d-flex align-items-center h-100 text-nowrap px-3">
-          <span className="d-none d-inline-block">{this.state.userInfo && this.state.userInfo.name + " " + this.state.userInfo.lastName}</span>
+          <span className="d-none d-inline-block">{this.props.userInfo && this.props.userInfo.name + " " + this.props.userInfo.lastName}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="user-profile">
@@ -64,3 +56,10 @@ export default class UserActions extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { userInfo } = state
+  return { userInfo: userInfo }
+}
+
+export default connect(mapStateToProps)(UserActions)

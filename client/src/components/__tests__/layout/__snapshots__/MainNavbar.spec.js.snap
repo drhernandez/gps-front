@@ -1,0 +1,513 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainNavbar components MainNavbar snapshot 1`] = `
+<div
+  className="main-navbar bg-white sticky-top"
+>
+  <div
+    className="p-0 container"
+    style={
+      Object {
+        "maxWidth": "100%",
+      }
+    }
+  >
+    <nav
+      className="d-flex flex-row-reverse  p-0 navbar navbar-light"
+    >
+      <ul
+        className="border-left flex-row navbar-nav"
+      >
+        <li
+          className="border-right dropdown notifications nav-item"
+        >
+          <a
+            className="nav-link-icon text-center nav-link"
+            onClick={[Function]}
+          >
+            <div
+              className="nav-link-icon__wrapper"
+            >
+              <i
+                className="material-icons"
+              >
+                
+              </i>
+              <span
+                className="badge badge-danger badge-pill"
+              >
+                2
+              </span>
+            </div>
+          </a>
+          <div
+            className="dropdown-menu dropdown-menu-small collapse"
+            style={
+              Object {
+                "display": false,
+                "height": null,
+              }
+            }
+          >
+            <button
+              className="dropdown-item"
+              onClick={[Function]}
+              tabIndex="0"
+            >
+              <div
+                className="notification__icon-wrapper"
+              >
+                <div
+                  className="notification__icon"
+                >
+                  <i
+                    className="material-icons"
+                  >
+                    
+                  </i>
+                </div>
+              </div>
+              <div
+                className="notification__content"
+              >
+                <span
+                  className="notification__category"
+                >
+                  Analytics
+                </span>
+                <p>
+                  Your website’s active users count increased by
+                   
+                  <span
+                    className="text-success text-semibold"
+                  >
+                    28%
+                  </span>
+                   in the last week. Great job!
+                </p>
+              </div>
+            </button>
+            <button
+              className="dropdown-item"
+              onClick={[Function]}
+              tabIndex="0"
+            >
+              <div
+                className="notification__icon-wrapper"
+              >
+                <div
+                  className="notification__icon"
+                >
+                  <i
+                    className="material-icons"
+                  >
+                    
+                  </i>
+                </div>
+              </div>
+              <div
+                className="notification__content"
+              >
+                <span
+                  className="notification__category"
+                >
+                  Sales
+                </span>
+                <p>
+                  Last week your store’s sales count decreased by
+                   
+                  <span
+                    className="text-danger text-semibold"
+                  >
+                    5.52%
+                  </span>
+                  . It could have been worse!
+                </p>
+              </div>
+            </button>
+            <button
+              className="notification__all text-center dropdown-item"
+              onClick={[Function]}
+              tabIndex="0"
+            >
+              View all Notifications
+            </button>
+          </div>
+        </li>
+        <div
+          className="nav-item dropdown"
+        >
+          <a
+            aria-haspopup={true}
+            className="d-flex align-items-center h-100 text-nowrap px-3 dropdown-toggle nav-link"
+            onClick={[Function]}
+          >
+            <span
+              className="d-none d-inline-block"
+            >
+              test test
+            </span>
+          </a>
+          <div
+            className="collapse dropdown-menu dropdown-menu-small dropdown-menu-right"
+            role="menu"
+            style={
+              Object {
+                "display": false,
+                "height": null,
+              }
+            }
+            tabIndex="-1"
+          >
+            <a
+              className="dropdown-item"
+              href="/user-profile"
+              onClick={[Function]}
+              tabIndex="0"
+            >
+              <i
+                className="material-icons"
+              >
+                
+              </i>
+               Profile
+            </a>
+            <a
+              className="dropdown-item"
+              href="/edit-user-profile"
+              onClick={[Function]}
+              tabIndex="0"
+            >
+              <i
+                className="material-icons"
+              >
+                
+              </i>
+               Edit Profile
+            </a>
+            <div
+              className="dropdown-divider"
+              onClick={[Function]}
+              tabIndex="-1"
+            />
+            <a
+              className="text-danger dropdown-item"
+              href="/logout"
+              onClick={[Function]}
+              tabIndex="0"
+            >
+              <i
+                className="material-icons text-danger"
+              >
+                
+              </i>
+               Logout
+            </a>
+          </div>
+        </div>
+      </ul>
+      <nav
+        className="nav"
+      >
+        <a
+          className="nav-link nav-link-icon toggle-sidebar d-sm-inline d-md-inline d-lg-none text-center"
+          href="#"
+          onClick={[Function]}
+        >
+          <i
+            className="material-icons"
+          >
+            
+          </i>
+        </a>
+      </nav>
+    </nav>
+  </div>
+</div>
+`;
+
+exports[`MainNavbar components NavbarNav snapshot 1`] = `
+<ul
+  className="border-left flex-row navbar-nav"
+>
+  <li
+    className="border-right dropdown notifications nav-item"
+  >
+    <a
+      className="nav-link-icon text-center nav-link"
+      onClick={[Function]}
+    >
+      <div
+        className="nav-link-icon__wrapper"
+      >
+        <i
+          className="material-icons"
+        >
+          
+        </i>
+        <span
+          className="badge badge-danger badge-pill"
+        >
+          2
+        </span>
+      </div>
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-small collapse"
+      style={
+        Object {
+          "display": false,
+          "height": null,
+        }
+      }
+    >
+      <button
+        className="dropdown-item"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        <div
+          className="notification__icon-wrapper"
+        >
+          <div
+            className="notification__icon"
+          >
+            <i
+              className="material-icons"
+            >
+              
+            </i>
+          </div>
+        </div>
+        <div
+          className="notification__content"
+        >
+          <span
+            className="notification__category"
+          >
+            Analytics
+          </span>
+          <p>
+            Your website’s active users count increased by
+             
+            <span
+              className="text-success text-semibold"
+            >
+              28%
+            </span>
+             in the last week. Great job!
+          </p>
+        </div>
+      </button>
+      <button
+        className="dropdown-item"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        <div
+          className="notification__icon-wrapper"
+        >
+          <div
+            className="notification__icon"
+          >
+            <i
+              className="material-icons"
+            >
+              
+            </i>
+          </div>
+        </div>
+        <div
+          className="notification__content"
+        >
+          <span
+            className="notification__category"
+          >
+            Sales
+          </span>
+          <p>
+            Last week your store’s sales count decreased by
+             
+            <span
+              className="text-danger text-semibold"
+            >
+              5.52%
+            </span>
+            . It could have been worse!
+          </p>
+        </div>
+      </button>
+      <button
+        className="notification__all text-center dropdown-item"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        View all Notifications
+      </button>
+    </div>
+  </li>
+  <div
+    className="nav-item dropdown"
+  >
+    <a
+      aria-haspopup={true}
+      className="d-flex align-items-center h-100 text-nowrap px-3 dropdown-toggle nav-link"
+      onClick={[Function]}
+    >
+      <span
+        className="d-none d-inline-block"
+      >
+        test test
+      </span>
+    </a>
+    <div
+      className="collapse dropdown-menu dropdown-menu-small dropdown-menu-right"
+      role="menu"
+      style={
+        Object {
+          "display": false,
+          "height": null,
+        }
+      }
+      tabIndex="-1"
+    >
+      <a
+        className="dropdown-item"
+        href="/user-profile"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        <i
+          className="material-icons"
+        >
+          
+        </i>
+         Profile
+      </a>
+      <a
+        className="dropdown-item"
+        href="/edit-user-profile"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        <i
+          className="material-icons"
+        >
+          
+        </i>
+         Edit Profile
+      </a>
+      <div
+        className="dropdown-divider"
+        onClick={[Function]}
+        tabIndex="-1"
+      />
+      <a
+        className="text-danger dropdown-item"
+        href="/logout"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        <i
+          className="material-icons text-danger"
+        >
+          
+        </i>
+         Logout
+      </a>
+    </div>
+  </div>
+</ul>
+`;
+
+exports[`MainNavbar components NavbarToggle snapshot 1`] = `
+<nav
+  className="nav"
+>
+  <a
+    className="nav-link nav-link-icon toggle-sidebar d-sm-inline d-md-inline d-lg-none text-center"
+    href="#"
+    onClick={[Function]}
+  >
+    <i
+      className="material-icons"
+    >
+      
+    </i>
+  </a>
+</nav>
+`;
+
+exports[`MainNavbar components UserActions snapshot 1`] = `
+<div
+  className="nav-item dropdown"
+>
+  <a
+    aria-haspopup={true}
+    className="d-flex align-items-center h-100 text-nowrap px-3 dropdown-toggle nav-link"
+    onClick={[Function]}
+  >
+    <span
+      className="d-none d-inline-block"
+    >
+      test test
+    </span>
+  </a>
+  <div
+    className="collapse dropdown-menu dropdown-menu-small dropdown-menu-right"
+    role="menu"
+    style={
+      Object {
+        "display": false,
+        "height": null,
+      }
+    }
+    tabIndex="-1"
+  >
+    <a
+      className="dropdown-item"
+      href="/user-profile"
+      onClick={[Function]}
+      tabIndex="0"
+    >
+      <i
+        className="material-icons"
+      >
+        
+      </i>
+       Profile
+    </a>
+    <a
+      className="dropdown-item"
+      href="/edit-user-profile"
+      onClick={[Function]}
+      tabIndex="0"
+    >
+      <i
+        className="material-icons"
+      >
+        
+      </i>
+       Edit Profile
+    </a>
+    <div
+      className="dropdown-divider"
+      onClick={[Function]}
+      tabIndex="-1"
+    />
+    <a
+      className="text-danger dropdown-item"
+      href="/logout"
+      onClick={[Function]}
+      tabIndex="0"
+    >
+      <i
+        className="material-icons text-danger"
+      >
+        
+      </i>
+       Logout
+    </a>
+  </div>
+</div>
+`;

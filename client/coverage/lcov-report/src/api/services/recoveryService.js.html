@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -87,31 +87,31 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BaseService from './baseService';
@@ -120,27 +120,27 @@ const restClient = new BaseService();
 &nbsp;
 export default class RecoveryService {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async generateToken(email) {
-    const [err] = <span class="cstat-no" title="statement not covered" >await to(restClient.post(`/recovery`, null, { email }));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error trying to generate recovery token] [error: ${JSON.stringify(err)}]`)</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+  static async generateToken(email) {
+    const [err] = await to(restClient.post(`/recovery`, null, { email }));
+    if (err) {
+      console.log(`[message: Error trying to generate recovery token] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async validateRecoveryId(recoveryToken) {
-    const [err] = <span class="cstat-no" title="statement not covered" >await to(restClient.get(`/recovery/validate`, { 'x-recovery-token': recoveryToken }));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error trying to validate recovery token ${recoveryToken}] [error: ${JSON.stringify(err)}]`)</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+  static async validateRecoveryId(recoveryToken) {
+    const [err] = await to(restClient.get(`/recovery/validate`, { 'x-recovery-token': recoveryToken }));
+    if (err) {
+      console.log(`[message: Error trying to validate recovery token ${recoveryToken}] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async resetPassword(recoveryToken, password) {
-    const [err] = <span class="cstat-no" title="statement not covered" >await to(restClient.put(`/recovery/change-password`, { 'x-recovery-token': recoveryToken }, {password}));</span>
-<span class="cstat-no" title="statement not covered" >    if (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`[message: Error trying to reset password with token ${recoveryToken}] [error: ${JSON.stringify(err)}]`)</span>
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+  static async resetPassword(recoveryToken, password) {
+    const [err] = await to(restClient.put(`/recovery/change-password`, { 'x-recovery-token': recoveryToken }, {password}));
+    if (err) {
+      console.log(`[message: Error trying to reset password with token ${recoveryToken}] [error: ${JSON.stringify(err)}]`)
+      throw err;
     }
   }
 }</pre></td></tr></table></pre>
@@ -150,7 +150,7 @@ export default class RecoveryService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue May 05 2020 19:17:57 GMT-0300 (Argentina Standard Time)
+                at Sat May 09 2020 18:04:11 GMT-0300 (Argentina Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
