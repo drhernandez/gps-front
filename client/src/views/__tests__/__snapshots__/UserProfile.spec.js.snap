@@ -1,0 +1,331 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResetPassword component snapshot renders 1`] = `
+<div
+  className="main-content-container px-4 container-fluid"
+>
+  <div
+    className="page-header py-4 no-gutters row"
+  >
+    <div
+      className="ml-sm-auto mr-sm-auto text-center text-md-left mb-sm-0 col-12 col-sm-4 col-md-12"
+    >
+      <span
+        className="text-uppercase page-subtitle"
+      >
+        Overview
+      </span>
+      <h3
+        className="page-title"
+      >
+        User Profile
+      </h3>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-lg-4"
+    >
+      <div
+        className="mb-4 pt-3 card card-small"
+      >
+        <div
+          className="border-bottom text-center card-header"
+        >
+          <div
+            className="mb-3 mx-auto"
+          >
+            <img
+              alt="Sierra Brooks"
+              className="rounded-circle"
+              width="110"
+            />
+          </div>
+          <h4
+            className="mb-0"
+          >
+            Sierra Brooks
+          </h4>
+          <span
+            className="text-muted d-block mb-2"
+          >
+            Project Manager
+          </span>
+          <button
+            className="mb-2 btn btn-outline-primary btn-sm btn-pill"
+            onClick={[Function]}
+          >
+            <i
+              className="material-icons mr-1"
+            >
+              person_add
+            </i>
+             Follow
+          </button>
+        </div>
+        <ul
+          className="list-group list-group-flush"
+        >
+          <li
+            className="px-4 list-group-item"
+          >
+            <div
+              className="progress-wrapper"
+            >
+              <strong
+                className="text-muted d-block mb-2"
+              >
+                Workload
+              </strong>
+              <div
+                className="progress-sm progress"
+              >
+                <div
+                  aria-valuemax={100}
+                  aria-valuemin="0"
+                  aria-valuenow={74}
+                  className="progress-bar bg-primary"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "width": "74%",
+                    }
+                  }
+                >
+                  <span
+                    className="progress-value"
+                  >
+                    74
+                    %
+                  </span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li
+            className="p-4 list-group-item"
+          >
+            <strong
+              className="text-muted d-block mb-2"
+            >
+              Description
+            </strong>
+            <span>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      className="col-lg-8"
+    >
+      <div
+        className="mb-4 card card-small"
+      >
+        <div
+          className="border-bottom card-header"
+        >
+          <h6
+            className="m-0"
+          >
+            Account Details
+          </h6>
+        </div>
+        <ul
+          className="list-group list-group-flush"
+        >
+          <li
+            className="p-3 list-group-item"
+          >
+            <div
+              className="row"
+            >
+              <div
+                className="col"
+              >
+                <form
+                  className=""
+                >
+                  <div
+                    className="form-row"
+                  >
+                    <div
+                      className="form-group col-md-6"
+                    >
+                      <label
+                        htmlFor="feFirstName"
+                      >
+                        First Name
+                      </label>
+                      <input
+                        className="form-control"
+                        id="feFirstName"
+                        onChange={[Function]}
+                        placeholder="First Name"
+                        value="Sierra"
+                      />
+                    </div>
+                    <div
+                      className="form-group col-md-6"
+                    >
+                      <label
+                        htmlFor="feLastName"
+                      >
+                        Last Name
+                      </label>
+                      <input
+                        className="form-control"
+                        id="feLastName"
+                        onChange={[Function]}
+                        placeholder="Last Name"
+                        value="Brooks"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="form-row"
+                  >
+                    <div
+                      className="form-group col-md-6"
+                    >
+                      <label
+                        htmlFor="feEmail"
+                      >
+                        Email
+                      </label>
+                      <input
+                        autoComplete="email"
+                        className="form-control"
+                        id="feEmail"
+                        onChange={[Function]}
+                        placeholder="Email Address"
+                        type="email"
+                        value="sierra@example.com"
+                      />
+                    </div>
+                    <div
+                      className="form-group col-md-6"
+                    >
+                      <label
+                        htmlFor="fePassword"
+                      >
+                        Password
+                      </label>
+                      <input
+                        autoComplete="current-password"
+                        className="form-control"
+                        id="fePassword"
+                        onChange={[Function]}
+                        placeholder="Password"
+                        type="password"
+                        value="EX@MPL#P@$$w0RD"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="form-group"
+                  >
+                    <label
+                      htmlFor="feAddress"
+                    >
+                      Address
+                    </label>
+                    <input
+                      className="form-control"
+                      id="feAddress"
+                      onChange={[Function]}
+                      placeholder="Address"
+                      value="1234 Main St."
+                    />
+                  </div>
+                  <div
+                    className="form-row"
+                  >
+                    <div
+                      className="form-group col-md-6"
+                    >
+                      <label
+                        htmlFor="feCity"
+                      >
+                        City
+                      </label>
+                      <input
+                        className="form-control"
+                        id="feCity"
+                        onChange={[Function]}
+                        placeholder="City"
+                      />
+                    </div>
+                    <div
+                      className="form-group col-md-4"
+                    >
+                      <label
+                        htmlFor="feInputState"
+                      >
+                        State
+                      </label>
+                      <select
+                        className="form-control custom-select"
+                        id="feInputState"
+                      >
+                        <option>
+                          Choose...
+                        </option>
+                        <option>
+                          ...
+                        </option>
+                      </select>
+                    </div>
+                    <div
+                      className="form-group col-md-2"
+                    >
+                      <label
+                        htmlFor="feZipCode"
+                      >
+                        Zip
+                      </label>
+                      <input
+                        className="form-control"
+                        id="feZipCode"
+                        onChange={[Function]}
+                        placeholder="Zip"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="form-row"
+                  >
+                    <div
+                      className="form-group col-md-12"
+                    >
+                      <label
+                        htmlFor="feDescription"
+                      >
+                        Description
+                      </label>
+                      <textarea
+                        className="form-control"
+                        id="feDescription"
+                        rows="5"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-accent"
+                    onClick={[Function]}
+                  >
+                    Update Account
+                  </button>
+                </form>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;

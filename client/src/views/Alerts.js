@@ -22,10 +22,10 @@ import Constants from "../utils/Constants";
 //services
 import { VehiclesService, AlertsService } from "../api/services"
 import { to } from "await-to-js";
-import store from "../redux/store";
+import { connect } from "react-redux";
 import "../styles/alerts.css";
 
-export default class Alerts extends React.Component {
+class Alerts extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -45,12 +45,14 @@ export default class Alerts extends React.Component {
     this.handleOnchangeSpeed = this.handleOnchangeSpeed.bind(this);
   }
 
-  async componentDidMount() {
-    await this.loadVehicles();
+  
+
+  componentDidMount() {
+    this.loadVehicles();
   }
 
   async loadVehicles() {
-    const userId = store.getState().userInfo.id;
+    const userId = this.props.userId;
     const [err, response] = await to(VehiclesService.searchVehicles(userId));
     if (!err && response.paging.total) {
       const vehicleSppiners = {};
@@ -65,6 +67,12 @@ export default class Alerts extends React.Component {
         vehicles: response.data,
         showSppiner: false,
         vehicleSppiners: vehicleSppiners
+      });
+    } else {
+      this.setState({
+        vehicles: [],
+        showSppiner: false,
+        vehicleSppiners: {}
       });
     }
   }
@@ -134,7 +142,7 @@ export default class Alerts extends React.Component {
 
         {!this.state.showSppiner &&
           <Row>
-            {this.state.vehicles.map((vehicle) => (
+            {this.state.vehicles.map((vehicle,index) => (
               <Col key={vehicle.id} xl="5" lg="6">
                 <Card small className="mb-4">
                   <CardHeader className="border-bottom">
@@ -149,7 +157,7 @@ export default class Alerts extends React.Component {
                             <strong className="text-muted d-block mb-2">
                               Alarma de movimiento
                             </strong>
-                            <FormCheckbox toggle small
+                            <FormCheckbox id={'cbx-' + index + '-mvmnt'} toggle small
                               checked={vehicle.alerts.movement.active}
                               onChange={() => this.toogleAlert(vehicle.alerts.movement)}>
                               {vehicle.alerts.movement.active ? 'Activada' : 'Desactivada'}
@@ -161,7 +169,7 @@ export default class Alerts extends React.Component {
                             </strong>
                             <Row>
                               <Col lg="12" xl="5" className="px-3 py-1">
-                                <FormCheckbox toggle small
+                                <FormCheckbox id={'cbx-' + index + '-speed'} toggle small
                                   checked={vehicle.alerts.speed.active}
                                   onChange={() => this.toogleAlert(vehicle.alerts.speed)}>
                                   {vehicle.alerts.speed.active ? 'Activada' : 'Desactivada'}
@@ -184,7 +192,7 @@ export default class Alerts extends React.Component {
                           </div>
                         </ListGroupItem>
                         <ListGroupItem className="pt-0">
-                          <Button block onClick={() => this.updateAlerts(vehicle)} label="Guardar" showSppiner={this.state.vehicleSppiners[vehicle.id]}></Button>
+                          <Button id={'save-btn-' + index} block onClick={() => this.updateAlerts(vehicle)} label="Guardar" showSppiner={this.state.vehicleSppiners[vehicle.id]}></Button>
                         </ListGroupItem>
                       </ListGroup>
                     </Form> 
@@ -214,3 +222,10 @@ const Error = (props) => (
     </div>
   </Container>
 );
+
+function mapStateToProps(state) {
+  const { userInfo } = state
+  return { userId: userInfo.id }
+}
+
+export default connect(mapStateToProps)(Alerts)

@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddVehicle component snapshot test 1`] = `
+<form
+  className="w-100 main-container p-2"
+  noValidate={true}
+  onSubmit={[Function]}
+>
+  <div
+    className="m-0 form-group"
+  >
+    <div
+      className="form-row"
+    >
+      <div
+        className="form-group col-md-4"
+      >
+        <label
+          htmlFor="brand"
+        >
+          Marca
+        </label>
+        <select
+          className="form-control custom-select"
+          id="brand"
+          onChange={[Function]}
+        >
+          <option>
+             Seleccione una opción... 
+          </option>
+        </select>
+        <div
+          className="invalid-feedback"
+        >
+          Campo requerido
+        </div>
+      </div>
+      <div
+        className="form-group col-md-4"
+      >
+        <label
+          htmlFor="brandline"
+        >
+          Categoría
+        </label>
+        <select
+          className="form-control custom-select"
+          id="brandline"
+          onChange={[Function]}
+        >
+          <option>
+             Seleccione una opción... 
+          </option>
+        </select>
+        <div
+          className="invalid-feedback"
+        >
+          Campo requerido
+        </div>
+      </div>
+      <div
+        className="form-group col-md-4"
+      >
+        <label
+          htmlFor="plate"
+        >
+          Patente
+        </label>
+        <input
+          className="form-control"
+          id="plate"
+          onChange={[Function]}
+          placeholder="Patente"
+        />
+        <div
+          className="invalid-feedback"
+        >
+          Campo requerido
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="mb-0 form-group"
+  >
+    <button
+      className="d-table ml-auto btn btn-accent"
+      onClick={[Function]}
+      type="submit"
+    >
+      Guardar vehículo
+    </button>
+  </div>
+</form>
+`;

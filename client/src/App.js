@@ -5,7 +5,7 @@ import Constants from "./utils/Constants";
 import routes from "./routes";
 import withAuth from "./withAuth";
 import AuthService from "./api/services/authService";
-import store from "./redux/store";
+import { connect } from "react-redux";
 import { setUserInfoAction } from "./redux/actions/actions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,13 +22,12 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+    debugger
     const token = localStorage.getItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY);
     if (token) {
       const [err, tokenInfo] = await to(AuthService.verifyToken(token));
       if (!err && tokenInfo) {
-        await store.dispatch(setUserInfoAction(tokenInfo.user));
-      } else {
-        console.log(err);
+        await this.props.setUserInfo(tokenInfo.user)
       }
     }
 
@@ -38,7 +37,6 @@ class App extends React.Component {
   }
 
   render() {
-    
     if (this.state.showSppiner) {
 
       return <Spinner style={{ position: "absolute", left: "50%", top: "30%", marginLeft: "-25px" }} animation="border" variant="primary" />
@@ -76,4 +74,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    setUserInfo: (payload) => dispatch(setUserInfoAction(payload))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClientsAdmin component snapshot renders 1`] = `
+<div
+  className="main-content-container px-4 container-fluid"
+>
+  <div
+    className="page-header py-4 no-gutters row"
+  >
+    <div
+      className="text-sm-left mb-3 col-sm-12 text-center text-md-left mb-sm-0 col-12 col-sm-4"
+    >
+      <span
+        className="text-uppercase page-subtitle"
+      >
+        Clientes
+      </span>
+      <h3
+        className="page-title"
+      >
+        Administrar
+      </h3>
+    </div>
+  </div>
+  <div
+    className="py-4 no-gutters row"
+  >
+    <div
+      className="mx-auto w-75 mb-4 card card-small"
+    >
+      <div
+        className="mt-3 card-header"
+      >
+        <form
+          className="main-navbar__search w-100 d-none d-md-flex d-lg-flex"
+          onSubmit={[Function]}
+        >
+          <div
+            className="input-group input-group-seamless"
+          >
+            <div
+              className="input-group-prepend"
+            >
+              <span
+                className="input-group-text"
+              >
+                <i
+                  className="material-icons"
+                >
+                  search
+                </i>
+              </span>
+            </div>
+            <input
+              className="navbar-search search_box form-control"
+              disabled={false}
+              id="search-input"
+              placeholder="Buscar clientes por email..."
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

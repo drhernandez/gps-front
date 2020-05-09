@@ -1,14 +1,27 @@
 /*global google*/
 import React from "react";
+import { compose, withProps } from "recompose"
 import { 
+  withScriptjs,
   withGoogleMap, 
   GoogleMap, 
   Marker 
 } from "react-google-maps"
 import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 
-const Gmap = withGoogleMap((props) =>
+
+const Gmap = compose(
+  withProps({
+    googleMapURL: "https://maps.google.com/maps/api/js?libraries=visualization&key=AIzaSyBSXFATeoNxGsNmpht2nvYKmpI_HWZ3-V0",
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `450px` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withScriptjs,
+  withGoogleMap
+)((props) =>
   <GoogleMap
+    key='map-component'
     zoom={props.zoom || 12}
     center={props.center || { lat: -31.412130, lng: -64.188510 }}
   >
@@ -25,3 +38,4 @@ const Gmap = withGoogleMap((props) =>
 );
 
 export default Gmap;
+

@@ -58,13 +58,13 @@ class ClientsAdmin extends React.Component {
         ...errorMessages.generic
       }
     }
-    this.showAddVehicleForm.bind(this);
-    this.search.bind(this);
-    this.setDevicePhysicalId.bind(this);
-    this.addVehicle.bind(this);
-    this.deleteVehicle.bind(this);
-    this.invalidateError.bind(this);
-    this.toogleSppiner.bind(this);
+    this.showAddVehicleForm = this.showAddVehicleForm.bind(this);
+    this.search = this.search.bind(this);
+    this.setDevicePhysicalId = this.setDevicePhysicalId.bind(this);
+    this.addVehicle = this.addVehicle.bind(this);
+    this.deleteVehicle = this.deleteVehicle.bind(this);
+    this.invalidateError = this.invalidateError.bind(this);
+    this.toogleSppiner = this.toogleSppiner.bind(this);
   };
 
   showAddVehicleForm(event) {
