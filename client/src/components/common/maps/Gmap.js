@@ -9,10 +9,11 @@ import {
 } from "react-google-maps"
 import HeatmapLayer from "react-google-maps/lib/components/visualization/HeatmapLayer";
 
+const mapKey = process.env.REACT_APP_GOOGLE_MAP_KEY
 
 const Gmap = compose(
   withProps({
-    googleMapURL: "https://maps.google.com/maps/api/js?libraries=visualization&key=AIzaSyBSXFATeoNxGsNmpht2nvYKmpI_HWZ3-V0",
+    googleMapURL: `https://maps.google.com/maps/api/js?libraries=visualization&key=${mapKey}`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `450px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
