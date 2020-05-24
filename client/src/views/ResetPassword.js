@@ -1,5 +1,6 @@
 import React from "react";
 import to from "await-to-js";
+import queryString from 'query-string'
 import { Link, withRouter } from "react-router-dom";
 import {
   Container,
@@ -57,12 +58,17 @@ class ResetPassword extends React.Component {
   }
 
   async validateRecoveryId() {
-    const recoveryId = this.props.match.params.recovery_id;
-    const [err] = await to(RecoveryService.validateRecoveryId(recoveryId));
-    this.setState({
-      isRecoveryIdValid: !err,
-      showSppiner: !this.state.showSppiner
-    })
+    const values = queryString.parse(this.props.location.search)
+    if (!values || !values.token) {
+      this.props.history.push("/signin");
+    } else {
+      const recoveryId = values.token;
+      const [err] = await to(RecoveryService.validateRecoveryId(recoveryId));
+      this.setState({
+        isRecoveryIdValid: !err,
+        showSppiner: !this.state.showSppiner
+      })
+    }
   }
 
   hasFieldWithError(errors) {

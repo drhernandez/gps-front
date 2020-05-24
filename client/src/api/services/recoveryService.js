@@ -13,7 +13,7 @@ export default class RecoveryService {
   }
 
   static async validateRecoveryId(recoveryToken) {
-    const [err] = await to(restClient.get(`/recovery/validate`, { 'x-recovery-token': recoveryToken }));
+    const [err] = await to(restClient.post(`/recovery/validate`, { 'x-recovery-token': recoveryToken }));
     if (err) {
       console.log(`[message: Error trying to validate recovery token ${recoveryToken}] [error: ${JSON.stringify(err)}]`)
       throw err;

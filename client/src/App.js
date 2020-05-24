@@ -27,6 +27,8 @@ class App extends React.Component {
       const [err, tokenInfo] = await to(AuthService.verifyToken(token));
       if (!err && tokenInfo) {
         await this.props.setUserInfo(tokenInfo.user)
+      } else {
+        localStorage.removeItem(Constants.LocalStorageKeys.ACCESS_TOKEN_KEY)
       }
     }
 

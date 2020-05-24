@@ -28,6 +28,7 @@
     "lodash": "^4.17.15",
     "lodash.find": "^4.6.0",
     "path": "^0.12.7",
+    "query-string": "^6.12.1",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.6.3",

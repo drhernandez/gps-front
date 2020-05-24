@@ -60,7 +60,7 @@ export default [
     roles: []
   },
   {
-    path: "/reset-password/:recovery_id",
+    path: "/reset-password",
     layout: SimpleLayout,
     isPublic: true,
     component: ResetPassword,

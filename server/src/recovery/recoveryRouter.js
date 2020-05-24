@@ -14,14 +14,14 @@ router.post('', async function (req, res) {
   }
 })
 
-router.get('/validate', async function (req, res) {
+router.post('/validate', async function (req, res) {
 
   const [err, response] = await to(authClient.post(`/recovery/validate`, req.headers));
   if (err) {
     console.error(`[message: Error trying to validate recovery token] [error: ${err.message}]`);
     res.status(500).json(err.message);
   } else {
-    res.status(response.status).json(response.data);
+    res.status(response.status).end()
   }
 })
 
