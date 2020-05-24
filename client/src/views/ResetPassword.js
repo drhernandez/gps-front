@@ -53,7 +53,7 @@ class ResetPassword extends React.Component {
   };
 
   componentDidMount() {
-    this.validateRecoveryId();
+    // this.validateRecoveryId();
   }
 
   async validateRecoveryId() {
@@ -122,8 +122,8 @@ class ResetPassword extends React.Component {
   render() {
     return (
       <Container fluid className="main-content-container px-4 h-100">
-
-        {this.state.showSppiner &&
+        <h1>HOLA</h1>
+        {/* {this.state.showSppiner &&
           <Row>
             <Spinner animation="border" variant="primary" />
           </Row>
@@ -195,7 +195,7 @@ class ResetPassword extends React.Component {
           <Alert theme="danger">
             Lo sentimos, este link es inválido o ya ha sido utilizado.
           </Alert>
-        }
+        } */}
       </Container>
     );
   }
