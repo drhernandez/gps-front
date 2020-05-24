@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(cors(corsOptions));
 }
 
-app.get("/ping", (req, res, next) => "pong");
+app.get("/ping", (req, res, next) => res.send("pong"));
 app.use("/api/alerts", cleanHeaders, alertsRouter);
 app.use("/api/users", cleanHeaders, usersRouter);
 app.use("/api/vehicles", cleanHeaders, vehiclesRouter);
