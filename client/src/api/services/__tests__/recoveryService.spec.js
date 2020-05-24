@@ -6,8 +6,7 @@ jest.mock('../baseService', () => {
     return {
       post: jest.fn()
         .mockReturnValueOnce(Promise.reject('Test error'))
-        .mockReturnValueOnce(Promise.resolve()),
-      get: jest.fn()
+        .mockReturnValueOnce(Promise.resolve())
         .mockReturnValueOnce(Promise.reject('Test error'))
         .mockReturnValueOnce(Promise.resolve()),
       put: jest.fn()
