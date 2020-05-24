@@ -37,6 +37,7 @@ class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: queryString.parse(this.props.location.search).token,
       isRecoveryIdValid: true,
       errors: errorsDefault,
       showSppiner: true,
@@ -58,12 +59,10 @@ class ResetPassword extends React.Component {
   }
 
   async validateRecoveryId() {
-    const values = queryString.parse(this.props.location.search)
-    if (!values || !values.token) {
+    if (!this.state.token) {
       this.props.history.push("/signin");
     } else {
-      const recoveryId = values.token;
-      const [err] = await to(RecoveryService.validateRecoveryId(recoveryId));
+      const [err] = await to(RecoveryService.validateRecoveryId(this.state.token));
       this.setState({
         isRecoveryIdValid: !err,
         showSppiner: !this.state.showSppiner
@@ -96,9 +95,8 @@ class ResetPassword extends React.Component {
       })
     }
     else {
-      const recoveryId = this.props.match.params.recovery_id;
       const password = e.target.password.value;
-      const [err] = await to(RecoveryService.resetPassword(recoveryId, password));
+      const [err] = await to(RecoveryService.resetPassword(this.state.token, password));
 
       this.setState({
         showAlert: true,
