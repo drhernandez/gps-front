@@ -1,5 +1,6 @@
 import React from "react";
 import to from "await-to-js";
+import queryString from 'query-string'
 import { Link, withRouter } from "react-router-dom";
 import {
   Container,
@@ -53,17 +54,21 @@ class ResetPassword extends React.Component {
   };
 
   componentDidMount() {
-    // this.validateRecoveryId();
+    this.validateRecoveryId();
   }
 
   async validateRecoveryId() {
-    const recoveryId = this.props.match.params.recovery_id;
-    const [err] = await to(RecoveryService.validateRecoveryId(recoveryId));
-    console.log("isRecoveryIdValid: ", !err)
-    this.setState({
-      isRecoveryIdValid: !err,
-      showSppiner: !this.state.showSppiner
-    })
+    const values = queryString.parse(this.props.location.search)
+    if (!values || !values.token) {
+      this.props.history.push("/signin");
+    } else {
+      const recoveryId = values.token;
+      const [err] = await to(RecoveryService.validateRecoveryId(recoveryId));
+      this.setState({
+        isRecoveryIdValid: !err,
+        showSppiner: !this.state.showSppiner
+      })
+    }
   }
 
   hasFieldWithError(errors) {
@@ -122,80 +127,75 @@ class ResetPassword extends React.Component {
   render() {
     return (
       <Container fluid className="main-content-container px-4 h-100">
-        <h1>HOLA</h1>
-        {/* {this.state.showSppiner &&
+
+        {this.state.showSppiner &&
           <Row>
             <Spinner animation="border" variant="primary" />
           </Row>
         }
 
-        {
-          console.log("showsppiner: ", this.state.showSppiner) && console.log("isValid: ", this.state.isRecoveryIdValid) 
-        }
-
         {!this.state.showSppiner && this.state.isRecoveryIdValid &&
-        <h1>hola</h1>
-          // <Row noGutters className="h-100">
-          //   <Col className="mx-auto reset-pass">
-          //     <Card small>
-          //       <CardBody className="px-4">
-          //         <h5 className="reset-pass__titulo text-center mt-5 mb-4">Elige una nueva contraseña</h5>
-          //         <Form onSubmit={e => this.changePassword(e)} noValidate>
-          //           <FormGroup>
-          //             <label htmlFor="password">Contraseña</label>
-          //             <FormInput
-          //               type="password"
-          //               id="password"
-          //               placeholder="Contraseña"
-          //               autoComplete="current-password"
-          //               invalid={this.state.errors.password.required || this.state.errors.password.valid || this.state.errors.confirmPassword.valid}
-          //               onChange={() => this.invalidateError("password")}
-          //             />
-          //             {this.state.errors.password.required && <FormFeedback>Campo requerido</FormFeedback>}
-          //             {this.state.errors.password.valid && <FormFeedback>La contraseña debe contener un mínimo
-          //             de 8 caracteres, una mayúscula y un número </FormFeedback>}
-          //           </FormGroup>
-          //           <FormGroup>
-          //             <label htmlFor="confirmPassword">Repetir contraseña</label>
-          //             <FormInput
-          //               type="password"
-          //               id="confirmPassword"
-          //               placeholder="Repetir contraseña"
-          //               invalid={this.state.errors.confirmPassword.required || this.state.errors.confirmPassword.valid}
-          //               onChange={() => this.invalidateError("confirmPassword")}
-          //             />
-          //             {this.state.errors.confirmPassword.required && <FormFeedback>Campo requerido</FormFeedback>}
-          //             {this.state.errors.confirmPassword.valid && <FormFeedback>Las contraseñas no coinciden</FormFeedback>}
-          //           </FormGroup>
-          //           <FormGroup>
-          //             {
-          //               this.state.isExecutingRequest && !this.hasFieldWithError(this.state.errors) ? 
-          //                 <Spinner animation="border" variant="primary" className="d-table mx-auto" /> :
-          //                 <Button type="submit" pill className="d-table mx-auto">Cambiar contraseña</Button>  
-          //             }
-          //           </FormGroup>
-          //           <FormGroup>
-          //           <Alert className="mb-3" open={this.state.showAlert}
-          //             theme={this.state.passwordUpdated ? constants.Themes.SUCCESS : constants.Themes.ERROR}>
-          //             {this.state.passwordUpdated ? this.state.alertSuccessText : this.state.alertErrorText}
-          //           </Alert>
-          //           </FormGroup>
-          //         </Form>
-          //       </CardBody>
-          //     </Card>
-          //     <div className="px-2 pt-3 reset-pass__justify_links">
-          //       <Link to="/signin">Volver al login</Link>
-          //       <Link to="/signup">Crea una cuenta nueva</Link>
-          //     </div>
-          //   </Col>
-          // </Row>
+          <Row noGutters className="h-100">
+            <Col className="mx-auto reset-pass">
+              <Card small>
+                <CardBody className="px-4">
+                  <h5 className="reset-pass__titulo text-center mt-5 mb-4">Elige una nueva contraseña</h5>
+                  <Form onSubmit={e => this.changePassword(e)} noValidate>
+                    <FormGroup>
+                      <label htmlFor="password">Contraseña</label>
+                      <FormInput
+                        type="password"
+                        id="password"
+                        placeholder="Contraseña"
+                        autoComplete="current-password"
+                        invalid={this.state.errors.password.required || this.state.errors.password.valid || this.state.errors.confirmPassword.valid}
+                        onChange={() => this.invalidateError("password")}
+                      />
+                      {this.state.errors.password.required && <FormFeedback>Campo requerido</FormFeedback>}
+                      {this.state.errors.password.valid && <FormFeedback>La contraseña debe contener un mínimo
+                      de 8 caracteres, una mayúscula y un número </FormFeedback>}
+                    </FormGroup>
+                    <FormGroup>
+                      <label htmlFor="confirmPassword">Repetir contraseña</label>
+                      <FormInput
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Repetir contraseña"
+                        invalid={this.state.errors.confirmPassword.required || this.state.errors.confirmPassword.valid}
+                        onChange={() => this.invalidateError("confirmPassword")}
+                      />
+                      {this.state.errors.confirmPassword.required && <FormFeedback>Campo requerido</FormFeedback>}
+                      {this.state.errors.confirmPassword.valid && <FormFeedback>Las contraseñas no coinciden</FormFeedback>}
+                    </FormGroup>
+                    <FormGroup>
+                      {
+                        this.state.isExecutingRequest && !this.hasFieldWithError(this.state.errors) ? 
+                          <Spinner animation="border" variant="primary" className="d-table mx-auto" /> :
+                          <Button type="submit" pill className="d-table mx-auto">Cambiar contraseña</Button>  
+                      }
+                    </FormGroup>
+                    <FormGroup>
+                    <Alert className="mb-3" open={this.state.showAlert}
+                      theme={this.state.passwordUpdated ? constants.Themes.SUCCESS : constants.Themes.ERROR}>
+                      {this.state.passwordUpdated ? this.state.alertSuccessText : this.state.alertErrorText}
+                    </Alert>
+                    </FormGroup>
+                  </Form>
+                </CardBody>
+              </Card>
+              <div className="px-2 pt-3 reset-pass__justify_links">
+                <Link to="/signin">Volver al login</Link>
+                <Link to="/signup">Crea una cuenta nueva</Link>
+              </div>
+            </Col>
+          </Row>
         }
 
         {!this.state.showSppiner && !this.state.isRecoveryIdValid &&
           <Alert theme="danger">
             Lo sentimos, este link es inválido o ya ha sido utilizado.
           </Alert>
-        } */}
+        }
       </Container>
     );
   }
