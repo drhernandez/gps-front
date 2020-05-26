@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow, mount } from 'enzyme';
 import { Router } from "react-router-dom";
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, createLocation } from 'history'
 
 jest.mock("../../api/services/recoveryService", () => ({ validateRecoveryId: jest.fn(), resetPassword: jest.fn()}))
 import RecoveryService from "../../api/services/recoveryService";
@@ -28,10 +28,10 @@ describe('ResetPassword component', () => {
 
   it("snapshot renders", () => {
     const history = createMemoryHistory()
-    const match = { params: { recovery_id: 'abc123' } }
+    const location = { search: '?token=123' }
     const component = renderer.create(
       <Router history={history}>
-        <ResetPassword match={match} />
+        <ResetPassword location={location} />
       </Router>
     );
 
@@ -39,10 +39,9 @@ describe('ResetPassword component', () => {
   });
 
   it("should have redirect links for login and create account", async () => {
-    debugger
-    const match = { params: { recovery_id: 'abc123' } }
+    const location = { search: '?token=123' }
     const wrapper = shallow(
-      <ResetPassword.WrappedComponent match={match}/>
+      <ResetPassword.WrappedComponent location={location} />
     );
 
     await flushPromises();
@@ -54,10 +53,9 @@ describe('ResetPassword component', () => {
   });
 
   it("should have redirect links for login and create account", async () => {
-    debugger
-    const match = { params: { recovery_id: 'abc123' } }
+    const location = { search: '?token=123' }
     const wrapper = shallow(
-      <ResetPassword.WrappedComponent match={match} />
+      <ResetPassword.WrappedComponent location={location} />
     );
 
     await flushPromises();
@@ -70,11 +68,10 @@ describe('ResetPassword component', () => {
 
   it("Should redirect to /signin after password successfully changed", async () => {
     const history = createMemoryHistory({
-      initialEntries: ['/reset-password']
+      initialEntries: ['/reset-password?token=123']
     });
-    const match = { params: { recovery_id: 'abc123' } }
     const wrapper = mount(
-      <Router history={history} match={match}>
+      <Router history={history}>
         <ResetPassword />
       </Router>
     );
@@ -92,6 +89,7 @@ describe('ResetPassword component', () => {
       persist: () => { }
     }
 
+    debugger
     expect(history.location.pathname).toBe("/reset-password")
 
     wrapper.find('ResetPassword').instance().changePassword(mockedEvent);

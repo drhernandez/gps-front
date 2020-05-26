@@ -63,11 +63,16 @@ class HeatMap extends React.Component {
   async getTrackings(event) {
     event.preventDefault();
     event.persist();
-    const vehicleID = event.target.value;
-    const [err, trackings] = await to(VehiclesService.getTrackings(vehicleID));
-    if (!err && trackings.length) {
+    const filters = {
+      deviceId: event.target.value,
+      startDate: new Date(),
+      finishDate: new Date()
+    }
+    filters.startDate.setMonth(filters.startDate.getMonth() - 1);
+    const [err, response] = await to(VehiclesService.searchTrackings(filters));
+    if (!err && response.paging.total) {
       this.setState({
-        trackings: trackings,
+        trackings: response.data,
         alert: {
           visible: false,
           body: {}
@@ -82,7 +87,7 @@ class HeatMap extends React.Component {
         zoom: null,
         alert: {
           visible: true,
-          body: !err && !trackings.length ? alerts.trackingsNotFound : alerts.generic
+          body: !err && !response.paging.total ? alerts.trackingsNotFound : alerts.generic
         }
       })
     }
@@ -116,7 +121,7 @@ class HeatMap extends React.Component {
                   <FormSelect id="feInputState" defaultValue="default" onChange={this.getTrackings}>
                     <option value="default" disabled>Elija un vehículo...</option>
                     {this.state.vehicles.map((vehicle, idx) => (
-                      <option key={vehicle.id} value={vehicle.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
+                      <option key={vehicle.id} value={vehicle.device.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
                     ))}
                   </FormSelect>
                 </Form>
@@ -142,8 +147,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(HeatMap)
-
-// function getDefaultIcon() {
-//   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#ea4234"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
-//   return { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg), scaledSize: { width: 40, height: 40 } }
-// }
