@@ -52,10 +52,43 @@ export default class VehiclesService {
     return response.data;
   }
 
-  static async getTrackings(vehicleID) {
-    const [err, response] = await to(restClient.get(`/vehicles/${vehicleID}/trackings`));
+  static async searchTrackings(filters) {
+    const allowedProperties = ['deviceId', 'speed', 'page', 'limit', 'startDate', 'finishDate']
+
+    if (!filters.deviceId) {
+      console.log(`[message: Error trying to search trackings with filters: ${JSON.stringify(filters)}] [error: parameter deviceId is required]`);
+      throw new Error("parameter deviceId is required for trackings search")
+    }
+
+    if (filters.limit > 1000) {
+      console.log(`[message: Error trying to search trackings with filters: ${JSON.stringify(filters)}] [error: limit cant be greater than 1000]`);
+      throw new Error("parameter limit cant be greater than 1000")
+    }
+
+    try {
+      filters.startDate = filters.startDate && filters.startDate.toISOString().slice(0, -1)
+      filters.finishDate = filters.finishDate && filters.finishDate.toISOString().slice(0, -1)
+    } catch (err) {
+      console.log(`[message: Error trying to search trackings with filters: ${JSON.stringify(filters)}] [error: ${err}]`);
+      throw err;
+    }
+
+    filters.page = filters.page || 1
+    filters.limit = filters.limit || 1000
+
+    let searchUrl = `/trackings/search?`
+    Object.entries(filters).filter(([key, _]) => allowedProperties.includes(key)).forEach(([key, value]) => {
+      if (key === 'deviceId' && value) { searchUrl += `&device_id=${value}` }
+      if (key === 'speed' && value) { searchUrl += `&speed=${value}` }
+      if (key === 'page') { searchUrl += `&page=${value}` }
+      if (key === 'limit') { searchUrl += `&limit=${value}` }
+      if (key === 'startDate' && value) { searchUrl += `&time_start=${value}` }
+      if (key === 'finishDate' && value) { searchUrl += `&time_end=${value}` }
+    })
+
+    const [err, response] = await to(restClient.get(searchUrl))
     if (err) {
-      console.log(`[message: Error getting trackings for vehiclie: ${vehicleID}] [error: ${JSON.stringify(err)}]`);
+      console.log(`[message: Error trying to search trackings with filters: ${JSON.stringify(filters)}] [error: ${JSON.stringify(err)}]`);
       throw err;
     }
 

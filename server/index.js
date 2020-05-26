@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const alertsRouter = require('./src/alerts/alertsRouter')
 const usersRouter = require('./src/users/usersRouter')
 const vehiclesRouter = require('./src/vehicles/vehiclesRouter')
+const trackingsRouter = require('./src/trackings/trackingsRouter')
 const authRouter = require('./src/auth/authRouter')
 const recoveryRouter = require('./src/recovery/recoveryRouter');
 const rolesRouter = require('./src/roles/rolesRouter');
@@ -32,6 +33,7 @@ app.get("/ping", (req, res, next) => res.send("pong"));
 app.use("/api/alerts", cleanHeaders, alertsRouter);
 app.use("/api/users", cleanHeaders, usersRouter);
 app.use("/api/vehicles", cleanHeaders, vehiclesRouter);
+app.use("/api/trackings", cleanHeaders, trackingsRouter);
 app.use("/api/auth", cleanHeaders, authRouter);
 app.use("/api/recovery", cleanHeaders, recoveryRouter);
 app.use("/api/roles", cleanHeaders, rolesRouter);
