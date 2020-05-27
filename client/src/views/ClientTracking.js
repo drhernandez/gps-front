@@ -85,7 +85,6 @@ class ClientTracking extends React.Component {
     else {
       let [err, results] = await to(VehiclesService.searchVehicles(user.id));
       if (err != null) {
-        console.log(err);
         this.setState({
           searchBarDisabled: false,
           alert: {
