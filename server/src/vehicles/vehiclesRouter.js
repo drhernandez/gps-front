@@ -27,17 +27,6 @@ router.get('/:id/location', async (req, res, next) => {
   }
 });
 
-router.get('/:id/trackings', async (req, res, next) => {
-  
-  const [err, response] = await to(apiClient.get(`/vehicles/${req.params.id}/trackings`, req.headers));
-  if (err) {
-    console.error(`[message: Error trying to get trackings for vehicle ${req.params.id}] [error: ${err.message}]`);
-    res.status(500).json(err.message);
-  } else {
-    res.status(response.status).json(response.data);
-  }
-});
-
 router.get('/:id/alerts/speed', async (req, res, next) => {
 
   const [err, response] = await to(apiClient.get(`/vehicles/${req.params.id}/alerts/speed`, req.headers));
