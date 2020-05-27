@@ -88,7 +88,6 @@ class ClientsAdmin extends React.Component {
 
     const [err, user] = await to(UsersService.getUserByEmail(email));
     if (err != null) {
-      console.log(err);
       this.setState({
         searchBarDisabled: false,
         alert: {
@@ -108,7 +107,6 @@ class ClientsAdmin extends React.Component {
     else {
       let [err, results] = await to(VehiclesService.searchVehicles(user.id));
       if (err != null) {
-        console.log(err);
         this.setState({
           searchBarDisabled: false,
           alert: {
@@ -167,7 +165,6 @@ class ClientsAdmin extends React.Component {
     this.toogleSppiner(index, "delete");
     const [err] = await to(VehiclesService.deleteVehicle(vehicleId));
     if (err) {
-      console.log(err);
       this.toogleSppiner(index, "delete");
       this.setState({
         searchBarDisabled: false,
@@ -223,8 +220,6 @@ class ClientsAdmin extends React.Component {
       const [err, result] = await to(VehiclesService.activate(vehicleId, devicePhysicalId));
       
       if (err) {
-        // ver que onda
-        console.log(err);
         this.setState({
           alert: {
             visible: true,
