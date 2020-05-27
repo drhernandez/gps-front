@@ -226,15 +226,36 @@ describe('Vehicles service', () => {
     expect(response.lng).toBe(-15.3123)
   })
 
-  it('should return an error trying to get trackings', async () => {
-    const [err, response] = await to(VehiclesService.getTrackings(1))
+  it('should return an error trying to search trackings with deviceId null', async () => {
+    const [err, response] = await to(VehiclesService.searchTrackings({}))
+
+    expect(err.message).toEqual('parameter deviceId is required for trackings search')
+    expect(response).toBe(undefined)
+  })
+
+  it('should return an error trying to search trackings with invalid date format', async () => {
+    const [err, response] = await to(VehiclesService.searchTrackings({ deviceId: 1, startDate: "test" }))
+
+    expect(err.message).toEqual("filters.startDate.toISOString is not a function")
+    expect(response).toBe(undefined)
+  })
+
+  it('should return an error trying to search trackings with invalid limit', async () => {
+    const [err, response] = await to(VehiclesService.searchTrackings({ deviceId: 1, limit: 5000 }))
+
+    expect(err.message).toEqual("parameter limit cant be greater than 1000")
+    expect(response).toBe(undefined)
+  })
+
+  it('should return an error trying to search trackings', async () => {
+    const [err, response] = await to(VehiclesService.searchTrackings({ deviceId: 1}))
 
     expect(err).toEqual('Test error')
     expect(response).toBe(undefined)
   })
 
-  it('should return vehicle`s trackings', async () => {
-    const [err, response] = await to(VehiclesService.getTrackings(1))
+  it('should return trackings', async () => {
+    const [err, response] = await to(VehiclesService.searchTrackings({ deviceId: 1 }))
 
     expect(err).toBe(null)
     expect(response).toHaveLength(4)

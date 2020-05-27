@@ -1,25 +1,5 @@
 import to from 'await-to-js'
 
-// jest.mock('axios', () => {
-//   return function () {
-//     return {
-//       create: jest.fn()
-//         .mockReturnValue({
-//           request: jest.fn()
-//             .mockReturnValueOnec(Promise.reject({
-//               response: {
-//                 status: 401,
-//                 data: {
-//                   errorCode: "error",
-//                   message: "test error"
-//                 }
-//               },
-//               config: {}
-//             }))
-//         })
-//     };
-//   };
-// });
 jest.mock('axios', () => ({ create: jest.fn() }))
 import axios from 'axios'
 

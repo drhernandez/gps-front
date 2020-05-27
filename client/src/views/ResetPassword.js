@@ -37,7 +37,7 @@ class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: queryString.parse(this.props.location.search).token,
+      token: queryString.parse(props.location.search).token,
       isRecoveryIdValid: true,
       errors: errorsDefault,
       showSppiner: true,

@@ -8,7 +8,7 @@ describe('Routes test', () => {
       "/signin",
       "/logout",
       "/forgot-password",
-      "/reset-password/:recovery_id",
+      "/reset-password",
       "/errors",
       "/home",
       "/heat-map",
