@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node node_modules/.bin/jest  --coverage --runInBand --silent"
+    "test": "node node_modules/.bin/jest --coverage --runInBand --silent"
   },
   "author": "",
   "license": "ISC",
