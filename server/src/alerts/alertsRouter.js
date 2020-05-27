@@ -4,10 +4,10 @@ const to = require("await-to-js").default;
 const apiClient = require("../clients").ApiClient;
 
 router.put('/speed/:id', async function (req, res) {
-  
+
   const speedAlertId = req.params.id;
   const body = req.body;
-
+  debugger
   const [err, response] = await to(apiClient.put(`/alerts/speeds/${speedAlertId}`, req.headers, body));
   if (err) {
     console.error(`[message: Error trying to update speed alert with id: ${speedAlertId}] [error: ${err.message}]`);
