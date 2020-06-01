@@ -28,7 +28,6 @@ export default class AlertsService {
     ])
     );
 
-    debugger
     if (err) {
       console.log(`[message: Error updating alerts] [error: ${JSON.stringify(err)}]`);
       throw err;
