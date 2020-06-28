@@ -8,22 +8,18 @@ exports[`Home component snapshot renders 1`] = `
     className="page-header py-4 no-gutters row"
   >
     <div
-      className="col"
+      className="mb-3 col-sm-12 text-center text-lg-left mb-sm-0 col-12 col-sm-4"
     >
-      <div
-        className="text-sm-left mb-3 col-sm-12 text-center text-md-left mb-sm-0 col-12 col-sm-4"
+      <span
+        className="text-uppercase page-subtitle"
       >
-        <span
-          className="text-uppercase page-subtitle"
-        >
-          Mapa
-        </span>
-        <h3
-          className="page-title"
-        >
-          Ubicación actual
-        </h3>
-      </div>
+        Mapa
+      </span>
+      <h3
+        className="page-title"
+      >
+        Ubicación actual
+      </h3>
     </div>
     <div
       className="col"

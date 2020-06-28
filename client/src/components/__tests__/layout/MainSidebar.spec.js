@@ -76,10 +76,13 @@ describe('MainSidebar components', () => {
         htmlAfter: ""
       }
     }
+
     const component = renderer.create(
-      <Router history={history}>
-        <SidebarNavItem {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <SidebarNavItem {...props} />
+        </Router>
+      </Provider>
     )
 
     expect(component.toJSON()).toMatchSnapshot()

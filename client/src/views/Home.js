@@ -120,9 +120,7 @@ class Home extends React.Component {
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <Col>
-            <PageTitle title="Ubicación actual" subtitle="Mapa" className="text-sm-left mb-3 col-sm-12" />
-          </Col>
+          <PageTitle title="Ubicación actual" subtitle="Mapa" className="mb-3 col-sm-12" />
           <Col>
             <Alert open={this.state.alert.visible} className="m-0" theme={this.state.alert.body.type}>
               {this.state.alert.body.message}

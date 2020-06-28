@@ -8,7 +8,7 @@ exports[`ClientsAdmin component snapshot renders 1`] = `
     className="page-header py-4 no-gutters row"
   >
     <div
-      className="text-sm-left mb-3 col-sm-12 text-center text-md-left mb-sm-0 col-12 col-sm-4"
+      className="text-sm-left mb-3 col-sm-12 text-center text-lg-left mb-sm-0 col-12 col-sm-4"
     >
       <span
         className="text-uppercase page-subtitle"
@@ -26,13 +26,13 @@ exports[`ClientsAdmin component snapshot renders 1`] = `
     className="py-4 no-gutters row"
   >
     <div
-      className="mx-auto w-75 mb-4 card card-small"
+      className="mx-auto w-100 mb-4 card card-small"
     >
       <div
         className="mt-3 card-header"
       >
         <form
-          className="main-navbar__search w-100 d-none d-md-flex d-lg-flex"
+          className="main-navbar__search w-100 d-none d-flex"
           onSubmit={[Function]}
         >
           <div

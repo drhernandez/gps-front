@@ -8,7 +8,7 @@ exports[`ResetPassword component snapshot renders 1`] = `
     className="page-header py-4 no-gutters row"
   >
     <div
-      className="ml-sm-auto mr-sm-auto text-center text-md-left mb-sm-0 col-12 col-sm-4 col-md-12"
+      className="ml-sm-auto mr-sm-auto text-center text-lg-left mb-sm-0 col-12 col-sm-4 col-md-12"
     >
       <span
         className="text-uppercase page-subtitle"
