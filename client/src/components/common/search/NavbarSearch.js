@@ -9,7 +9,8 @@ import {
 import "../../../styles/search.css";
 
 export default (props) => (
-  <Form onSubmit={props.searchFunction} className="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+  // <Form onSubmit={props.searchFunction} className="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+  <Form onSubmit={props.searchFunction} className="main-navbar__search w-100 d-none d-flex">
     <InputGroup seamless>
       <InputGroupAddon type="prepend">
         <InputGroupText>

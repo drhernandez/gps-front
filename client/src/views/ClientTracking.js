@@ -160,10 +160,10 @@ class ClientTracking extends React.Component {
           <Card small className="mx-auto w-100 mb-4">
             <CardHeader className="mt-3">
               <Row>
-                <Col>
+                <Col className="col-12 col-md-6 pb-2">
                   <NavbarSearch disabled={this.state.searchBarDisabled} placeholder="Buscar clientes por email..." searchFunction={this.search} />
                 </Col>
-                <Col>
+                <Col className="col-12 col-md-6">
                   <Form className="add-new-post">
                     <FormSelect id="feInputState" defaultValue="default" disabled={this.state.user == null} onChange={this.handleDeviceOnChange}>
                       <option value="default" disabled>Elija un vehículo...</option>

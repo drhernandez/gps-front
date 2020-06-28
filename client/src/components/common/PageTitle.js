@@ -7,7 +7,7 @@ const PageTitle = ({ title, subtitle, className, ...attrs }) => {
   const classes = classNames(
     className,
     "text-center",
-    "text-md-left",
+    "text-lg-left",
     "mb-sm-0"
   );
 
