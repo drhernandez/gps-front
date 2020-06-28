@@ -8,7 +8,7 @@ exports[`ClientTracking component snapshot renders 1`] = `
     className="page-header py-4 no-gutters row"
   >
     <div
-      className="text-sm-left mb-3 col-sm-12 text-center text-md-left mb-sm-0 col-12 col-sm-4"
+      className="text-sm-left mb-3 col-sm-12 text-center text-lg-left mb-sm-0 col-12 col-sm-4"
     >
       <span
         className="text-uppercase page-subtitle"
