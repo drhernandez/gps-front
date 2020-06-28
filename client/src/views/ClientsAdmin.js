@@ -272,7 +272,7 @@ class ClientsAdmin extends React.Component {
         }
 
         <Row noGutters className="py-4">
-          <Card small className="mx-auto w-75 mb-4">
+          <Card small className="mx-auto w-100 mb-4">
             <CardHeader className="mt-3">
               <NavbarSearch disabled={this.state.searchBarDisabled} placeholder="Buscar clientes por email..." searchFunction={(e) => this.search(e)}/>
             </CardHeader>
