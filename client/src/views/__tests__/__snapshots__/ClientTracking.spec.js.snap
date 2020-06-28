@@ -35,10 +35,10 @@ exports[`ClientTracking component snapshot renders 1`] = `
           className="row"
         >
           <div
-            className="col"
+            className="col-12 col-md-6 pb-2 col"
           >
             <form
-              className="main-navbar__search w-100 d-none d-md-flex d-lg-flex"
+              className="main-navbar__search w-100 d-none d-flex"
               onSubmit={[Function]}
             >
               <div
@@ -67,7 +67,7 @@ exports[`ClientTracking component snapshot renders 1`] = `
             </form>
           </div>
           <div
-            className="col"
+            className="col-12 col-md-6 col"
           >
             <form
               className="add-new-post"
