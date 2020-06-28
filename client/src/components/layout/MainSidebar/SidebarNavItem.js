@@ -1,22 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import { NavLink as RouteNavLink } from "react-router-dom";
 import { NavItem, NavLink } from "shards-react";
 
-const SidebarNavItem = ({ item }) => (
+import { toogleSidebarAction } from "../../../redux/actions/actions";
+
+const SidebarNavItem = (props) => (
   <NavItem>
-    <NavLink tag={RouteNavLink} to={item.to}>
-      {item.htmlBefore && (
+    <NavLink tag={RouteNavLink} to={props.item.to} onClick={props.toogleSidebarAction}>
+      {props.item.htmlBefore && (
         <div
           className="d-inline-block item-icon-wrapper"
-          dangerouslySetInnerHTML={{ __html: item.htmlBefore }}
+          dangerouslySetInnerHTML={{ __html: props.item.htmlBefore }}
         />
       )}
-      {item.title && <span>{item.title}</span>}
-      {item.htmlAfter && (
+      {props.item.title && <span>{props.item.title}</span>}
+      {props.item.htmlAfter && (
         <div
           className="d-inline-block item-icon-wrapper"
-          dangerouslySetInnerHTML={{ __html: item.htmlAfter }}
+          dangerouslySetInnerHTML={{ __html: props.item.htmlAfter }}
         />
       )}
     </NavLink>
@@ -30,4 +33,10 @@ SidebarNavItem.propTypes = {
   item: PropTypes.object
 };
 
-export default SidebarNavItem;
+const mapDispatchToProps = dispatch => {
+  return {
+    toogleSidebarAction: () => dispatch(toogleSidebarAction())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SidebarNavItem);
