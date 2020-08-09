@@ -38,21 +38,106 @@ exports[`HeatMap component snapshot renders 1`] = `
           className="card-header"
         >
           <form
-            className="add-new-post"
+            className=""
           >
-            <select
-              className="form-control custom-select"
-              defaultValue="default"
-              id="feInputState"
-              onChange={[Function]}
+            <div
+              className="row"
             >
-              <option
-                disabled={true}
-                value="default"
+              <div
+                className="col-12 col-lg-5 mb-1 col"
               >
-                Elija un vehículo...
-              </option>
-            </select>
+                <select
+                  className="form-control custom-select"
+                  defaultValue="default"
+                  id="feInputState"
+                  onChange={[Function]}
+                >
+                  <option
+                    disabled={true}
+                    value="default"
+                  >
+                    Elija un vehículo...
+                  </option>
+                </select>
+              </div>
+              <div
+                className="col-12 col-lg-4 d-flex mb-1 col"
+                style={
+                  Object {
+                    "maxHeight": "35px",
+                  }
+                }
+              >
+                <div
+                  className="react-datepicker-wrapper"
+                >
+                  <div
+                    className="react-datepicker__input-container"
+                  >
+                    <input
+                      className="form-control"
+                      disabled={true}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Desde"
+                      readOnly={false}
+                      type="text"
+                      value="09/07/2020"
+                    />
+                  </div>
+                </div>
+                <div
+                  className="react-datepicker-wrapper"
+                >
+                  <div
+                    className="react-datepicker__input-container"
+                  >
+                    <input
+                      className="form-control"
+                      disabled={true}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Hasta"
+                      readOnly={false}
+                      type="text"
+                      value="09/08/2020"
+                    />
+                  </div>
+                </div>
+                <span
+                  className="input-group-text"
+                  style={
+                    Object {
+                      "fontSize": "1rem!important",
+                    }
+                  }
+                >
+                  <i
+                    className="material-icons"
+                  >
+                    
+                  </i>
+                </span>
+              </div>
+              <div
+                className="col-12 col-lg-2 col"
+              >
+                <button
+                  className="update-btn btn btn-accent btn-block"
+                  disabled={true}
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Actualizar
+                </button>
+              </div>
+            </div>
           </form>
         </div>
         <div
