@@ -16,6 +16,7 @@ export default class Button extends React.Component {
           outline={this.props.outline}
           size={this.props.size}
           onClick={this.props.onClick}
+          disabled={this.props.disabled}
         >
           {this.props.showSppiner ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/> : this.props.label}
         </ShardsButton>      
