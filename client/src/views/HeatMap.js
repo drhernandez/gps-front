@@ -19,7 +19,6 @@ import to from "await-to-js";
 import { connect } from "react-redux";
 import { VehiclesService } from "../api/services"
 import { subMonths } from "date-fns";
-import "../styles/heatMap.css"
 
 const alerts = {
   generic: {
