@@ -8,14 +8,17 @@ import {
   CardBody,
   FormSelect,
   Form,
-  Alert
+  Alert,
+  DatePicker
 } from "shards-react";
 import constants from "../utils/Constants";
 import PageTitle from "./../components/common/PageTitle";
+import Button from "../components/common/Button";
 import Gmap from "./../components/common/maps/Gmap";
 import to from "await-to-js";
 import { connect } from "react-redux";
 import { VehiclesService } from "../api/services"
+import { subMonths } from "date-fns";
 
 const alerts = {
   generic: {
@@ -40,11 +43,19 @@ class HeatMap extends React.Component {
       alert: {
         visible: false,
         body: {}
-      }
+      },
+      selectedDevice: null,
+      startDate: subMonths(new Date(), 1),
+      endDate: new Date(),
+      showSppiner: false,
+      disableDates: true
     }
 
     this.loadVehicles = this.loadVehicles.bind(this);
     this.getTrackings = this.getTrackings.bind(this);
+    this.handleDeviceOnChange = this.handleDeviceOnChange.bind(this);
+    this.setStartDate = this.setStartDate.bind(this);
+    this.setEndDate = this.setEndDate.bind(this);
   };
 
   componentDidMount() {
@@ -59,16 +70,16 @@ class HeatMap extends React.Component {
       });
     }
   }
-  
-  async getTrackings(event) {
-    event.preventDefault();
-    event.persist();
+
+  async getTrackings(deviceId) {
+    this.setState({
+      disableDates: true
+    })
     const filters = {
-      deviceId: event.target.value,
-      startDate: new Date(),
-      finishDate: new Date()
+      deviceId: deviceId,
+      startDate: this.state.startDate,
+      finishDate: this.state.endDate
     }
-    filters.startDate.setMonth(filters.startDate.getMonth() - 1);
     const [err, response] = await to(VehiclesService.searchTrackings(filters));
     if (!err && response.paging.total) {
       this.setState({
@@ -76,7 +87,9 @@ class HeatMap extends React.Component {
         alert: {
           visible: false,
           body: {}
-        }
+        },
+        disableDates: false,
+        showSppiner: false
       });
     }
     else {
@@ -88,14 +101,33 @@ class HeatMap extends React.Component {
         alert: {
           visible: true,
           body: !err && !response.paging.total ? alerts.trackingsNotFound : alerts.generic
-        }
+        },
+        disableDates: false,
+        showSppiner: false
       })
     }
   }
 
   handleDeviceOnChange(event) {
     event.persist();
-    this.getTrackings(event.target.value);
+    event.preventDefault();
+    const deviceId = event.target.value
+    this.setState({
+      selectedDevice: deviceId
+    })
+    this.getTrackings(deviceId);
+  }
+
+  setStartDate(date) {
+    this.setState({
+      startDate: date
+    })
+  }
+
+  setEndDate(date) {
+    this.setState({
+      endDate: date
+    })
   }
 
   render() {
@@ -115,13 +147,56 @@ class HeatMap extends React.Component {
           <Col>
             <Card small className="mb-4">
               <CardHeader>
-                <Form className="add-new-post">
-                  <FormSelect id="feInputState" defaultValue="default" onChange={this.getTrackings}>
-                    <option value="default" disabled>Elija un vehículo...</option>
-                    {this.state.vehicles.map((vehicle, idx) => (
-                      <option key={vehicle.id} value={vehicle.device.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
-                    ))}
-                  </FormSelect>
+                <Form>
+                  <Row>
+                    <Col className="col-12 col-lg-5 mb-1">
+                      <FormSelect id="feInputState" defaultValue="default" onChange={this.handleDeviceOnChange}>
+                        <option value="default" disabled>Elija un vehículo...</option>
+                        {this.state.vehicles.map((vehicle, idx) => (
+                          <option key={vehicle.id} value={vehicle.device.id}>{`${vehicle.brand} ${vehicle.brand_line} - ${vehicle.plate}`}</option>
+                        ))}
+                      </FormSelect>
+                    </Col>
+                    <Col className="col-12 col-lg-4 d-flex mb-1" style={{ maxHeight: "35px" }}>
+                      <DatePicker
+                        placeholderText="Desde"
+                        dateFormat="dd/MM/yyyy"
+                        selected={this.state.startDate}
+                        onChange={date => this.setStartDate(date)}
+                        maxDate={new Date()}
+                        dropdownMode="select"
+                        disabled={this.state.disableDates}
+                        popperModifiers={{
+                          preventOverflow: {
+                            enabled: true,
+                          },
+                        }}
+                      />
+                      <DatePicker
+                        placeholderText="Hasta"
+                        dateFormat="dd/MM/yyyy"
+                        selected={this.state.endDate}
+                        onChange={date => this.setEndDate(date)}
+                        minDate={this.state.startDate}
+                        dropdownMode="select"
+                        disabled={this.state.disableDates}
+                        popperModifiers={{
+                          preventOverflow: {
+                            enabled: true,
+                          },
+                        }}
+                      />
+                      <span className="input-group-text" style={{ fontSize: "1rem!important" }}>
+                        <i className="material-icons"></i>
+                      </span>
+                    </Col>
+                    <Col className="col-12 col-lg-2">
+                      <Button className="update-btn" block theme="accent" label="Actualizar"
+                        disabled={this.state.disableDates} showSppiner={this.state.showSppiner}
+                        onClick={e => this.getTrackings(this.state.selectedDevice)}
+                      />
+                    </Col>
+                  </Row>
                 </Form>
               </CardHeader>
               <CardBody>
