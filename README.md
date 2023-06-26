@@ -1,2 +1,2 @@
 # gps-front
-FrontEnd for gps-api
+FrontEnd for GPS Tracker project
